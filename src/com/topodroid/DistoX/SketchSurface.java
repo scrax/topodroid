@@ -13,6 +13,8 @@ package com.topodroid.DistoX;
 
 // import java.io.StringWriter;
 import java.io.PrintWriter;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
 
 import java.util.Collections;
 import java.util.ArrayList;
@@ -35,7 +37,7 @@ class SketchSurface extends SketchShot
   SparseArray< SketchVertex > mVertices;
   SparseArray< PointF > mCorners;   // corners of forward surface: index-of-vertex, canvas-point
 
-  ArrayList< SketchSide > mSides;
+  SparseArray< SketchSide > mSides;
   ArrayList< SketchTriangle > mTriangles;
   int maxkey_vtx;
   // int maxkey_sds;
@@ -53,13 +55,22 @@ class SketchSurface extends SketchShot
    *  they are displayed in the draw method
    */
   ArrayList< SketchBorder >   mBorders;
+/* if MODE_EDIT
   ArrayList< SketchVertex >   mInsideVertices; 
   ArrayList< SketchTriangle > mInsideTriangles;
   ArrayList< SketchTriangle > mOutsideTriangles;
+*/
 
   SketchPainter mPainter;
   // SketchTriangle mSelectedTriangle;
 
+  // sides are indexed by two vertex indices (v1,v2)
+  //   if ( v1 > v2 ) idx = (v1+2)*(v1+1)/2 + v2
+  private int sideIndex( int v1, int v2 )
+  {
+    if ( v1 > v2 ) return ((v1+2)*(v1+1))/2 + v2;
+    return ((v2+2)*(v2+1))/2 + v1;
+  }
 
   SketchSurface( String s1, String s2, SketchPainter painter )
   {
@@ -67,13 +78,32 @@ class SketchSurface extends SketchShot
     mVertices   = new SparseArray< SketchVertex >();
     mCorners    = new SparseArray< PointF >();
     mTriangles  = new ArrayList< SketchTriangle >();
-    mSides      = new ArrayList<SketchSide>();
+    mSides      = new SparseArray<SketchSide>();
     mBorders    = new ArrayList< SketchBorder >();
+/* if MODE_EDIT
     mInsideTriangles = new ArrayList< SketchTriangle >();
     mInsideVertices  = new ArrayList< SketchVertex >();
+*/
     mPainter    = painter;
     mSelectedVertex = null;
-    reset();
+    maxkey_vtx = -1;
+  }
+
+  SketchSurface( String s1, String s2, SketchPainter painter, int nv, int nt )
+  {
+    super( s1, s2 );
+    mVertices   = new SparseArray< SketchVertex >(nv);
+    mCorners    = new SparseArray< PointF >();
+    mTriangles  = new ArrayList< SketchTriangle >(nt);
+    mSides      = new SparseArray<SketchSide>();
+    mBorders    = new ArrayList< SketchBorder >();
+/* if MODE_EDIT
+    mInsideTriangles = new ArrayList< SketchTriangle >();
+    mInsideVertices  = new ArrayList< SketchVertex >();
+*/
+    mPainter    = painter;
+    mSelectedVertex = null;
+    maxkey_vtx = -1;
   }
 
   // void dump()
@@ -81,6 +111,7 @@ class SketchSurface extends SketchShot
   //   Log.v("DistoX", "Surface v " + mVertices.size() + " t " + mTriangles.size() );
   // }
         
+/* if MODE_EDIT
   int findTrianglesInside( ArrayList<PointF> border )
   {
     mInsideTriangles.clear();
@@ -143,6 +174,7 @@ class SketchSurface extends SketchShot
       refineTriangleAtVertex( t, mSelectedVertex, 0.5f, 0.5f, true );
     }
   }
+*/
  
   // project on (cos_clino*sin_azi, -cos_clino*cos_azimuth, -sin_clino)
   private float computeProjections( SketchTriangle tri, Sketch3dInfo info )
@@ -169,6 +201,7 @@ class SketchSurface extends SketchShot
     info.worldToSceneOrigin( v3, p ); tri.p3.x = p.x; tri.p3.y = p.y;
   }
 
+/* if MODE_EDIT
   boolean refineTriangleAtVertex( SketchTriangle t, SketchVertex vv, float t2, float t3, boolean add )
   {
     Vector w1=null, w2=null, w3=null;
@@ -186,7 +219,7 @@ class SketchSurface extends SketchShot
       w2 = t.v1;  j = t.i;
       w3 = t.v2;  k = t.j;
     } else {
-      /* not found vertex */
+      // not found vertex
     }
     if ( w1 != null ) {
       Vector v2 = new Vector( w1.x*t2+w2.x*(1-t2), w1.y*t2+w2.y*(1-t2), w1.z*t2+w2.z*(1-t2) );
@@ -238,7 +271,7 @@ class SketchSurface extends SketchShot
       first = ( v12.distance( v3 ) > v13.distance( v2 ) );
       i = t.k; j = t.i; k = t.j;
     } else {
-      /* not found vertex */
+      // not found vertex 
       return false;
     }
     int h2 = addVertex( v12 );    
@@ -258,12 +291,14 @@ class SketchSurface extends SketchShot
     }
     return true;
   }
+*/
 
   // synchronized boolean removeTriangle( SketchTriangle t )
   // {
   //   return mTriangles.remove( t );
   // }
 
+/* UNUSED
   SketchBorder getBorderAt( String name, DistoXNum num ) 
   {
     Vector s0 = null;
@@ -285,21 +320,23 @@ class SketchSurface extends SketchShot
     }
     return null;
   }
+*/
 
   SketchVertex getSelectedVertex( ) { return mSelectedVertex; }
 
   void setSelectedVertex( SketchVertex v ) { mSelectedVertex = v; }
 
-  private void reset()
-  {
-    mVertices.clear();
-    mTriangles.clear();
-    mSides.clear();
-    mBorders.clear();
+  // UNUSED
+  // private void reset()
+  // {
+  //   mVertices.clear();
+  //   mTriangles.clear();
+  //   mSides.clear();
+  //   mBorders.clear();
 
-    maxkey_vtx = -1;
-    // maxkey_sds = -1;
-  }
+  //   maxkey_vtx = -1;
+  //   // maxkey_sds = -1;
+  // }
 
   void clearHighlight()
   {
@@ -327,6 +364,7 @@ class SketchSurface extends SketchShot
     }
   }
 
+/* if MODE_EDIT
   int refineToMaxSide( float max_size )
   {
     if ( mSides.size() == 0 ) return 0;
@@ -477,6 +515,7 @@ class SketchSurface extends SketchShot
       }
     }
   }
+*/
 
   // private float determinant( PointF p0, PointF p1, PointF p2 )
   // {
@@ -486,26 +525,31 @@ class SketchSurface extends SketchShot
   // --------------------------------------------------------
   // borders
 
-  private SketchSide getSide( int v1, int v2 )
-  {
-    for ( SketchSide side : mSides ) {
-      if ( side.v1 == v1 && side.v2 == v2 ) return side;
-      if ( side.v1 == v2 && side.v2 == v1 ) return side;
-    }
-    return null;
-  }
+  /** called by checkSide() below
+   */
+  // private SketchSide getSide( int v1, int v2 )
+  // {
+  //   return mSide.get( siteIndex( v1, v2 ) );
+  //   // for ( SketchSide side : mSides ) {
+  //   //   if ( ( side.v1 == v1 && side.v2 == v2 ) || ( side.v1 == v2 && side.v2 == v1 ) ) return side;
+  //   // }
+  //   // return null;
+  // }
 
   /** called by computeSides() below
    */
   private void checkSide( SketchTriangle tri, int i, int j, Vector v1, Vector v2 ) 
   {
-    SketchSide side = getSide( i, j );
+    int idx = sideIndex( i, j );
+    SketchSide side = mSides.get( idx, null );
+    // SketchSide side = getSide( i, j );
     if ( side == null ) {
-      int idx = mSides.size();
+      // int idx = mSides.size();
       side = new SketchSide( this, idx, i, j ); 
       if ( v1 != null && v2 != null ) side.length = v1.distance( v2 );
-      mSides.add( side );
-      mSides.get( idx ).t1 = tri;
+      side.t1 = tri;
+      // mSides.add( side );
+      mSides.put( idx, side );
     } else {
       if ( side.t1 == null ) {
         Log.e("DistoX", "null triangle-1 side");
@@ -513,7 +557,7 @@ class SketchSurface extends SketchShot
       } else if ( side.t2 == null ) {
         side.t2 = tri;
       } else {
-        Log.e("DistoX", "multi T side " + side.t1.i + " " + side.t1.j + " " + side.t1.k + "  " + side.t2.i + " " + side.t2.j + " " + side.t2.k + "  " + tri.i + " " + tri.j + " " + tri.k );
+        // Log.e("DistoX", "multi T side " + side.t1.i + " " + side.t1.j + " " + side.t1.k + "  " + side.t2.i + " " + side.t2.j + " " + side.t2.k + "  " + tri.i + " " + tri.j + " " + tri.k );
       }
     }
   }      
@@ -524,7 +568,8 @@ class SketchSurface extends SketchShot
   {
     mSides.clear();
     for ( SketchTriangle t : mTriangles ) {
-      if ( ! t.splitted ) {
+      // MODE_EDIT if ( ! t.splitted ) 
+      {
         checkSide( t, t.i, t.j, null, null );
         checkSide( t, t.j, t.k, null, null );
         checkSide( t, t.k, t.i, null, null );
@@ -532,6 +577,7 @@ class SketchSurface extends SketchShot
     }
   }
 
+/* if MODE_EDIT
   private void computeSidesWithLength()
   {
     mSides.clear();
@@ -543,6 +589,7 @@ class SketchSurface extends SketchShot
       }
     }
   }
+*/
 
   /** called by SkecthModel
    * compute the borders of a surface.
@@ -552,9 +599,16 @@ class SketchSurface extends SketchShot
   {
     computeSides( );
     ArrayList< SketchSide > tmp = new ArrayList<SketchSide>();
-    for ( SketchSide s : mSides ) {
-      if ( s.t2 == null ) { tmp.add( s ); }
+    // for ( SketchSide s : mSides ) {
+    //   if ( s.t2 == null ) { tmp.add( s ); }
+    // }
+    int size = mSides.size();
+    for ( int k=0; k<size; ++k ) {
+      int key = mSides.keyAt( k );
+      SketchSide side = mSides.get( key );
+      if ( side.t2 == null ) tmp.add( side ); 
     }
+
     mBorders.clear();
     // Log.v("DistoX", "compute borders ns " + tmp.size() );
     while ( tmp.size() > 0 ) {
@@ -606,7 +660,7 @@ class SketchSurface extends SketchShot
   // VERTICES
 
   /** add a vertex with a given index ( for loadTh3 )
-   * @param n    vertex index
+   * @param n   vertex key
    * @reurn the new-vertex index
    */
   int addVertex( int n, float x, float y, float z ) {
@@ -622,14 +676,16 @@ class SketchSurface extends SketchShot
   private int addVertex( Vector v ) { return addVertex( v.x, v.y, v.z ); }
 
   /** add a vertex given X,Y,Z (or return an already existing close vertex)
-   * @return the vertex index
+   * @return the vertex key (index)
    */
+  final double EPS = 0.01;
   private int addVertex( float x, float y, float z )
   {
     int size = mVertices.size();
     for ( int k = 0; k<size; ++ k ) {
-      SketchVertex v = mVertices.valueAt( k );
-      if ( Math.abs( x - v.x ) < 0.1 && Math.abs( y - v.y ) <  0.1 && Math.abs( z - v.z ) < 0.1 ) {
+      int key = mVertices.keyAt( k );
+      SketchVertex v = mVertices.get( key );
+      if ( Math.abs( x - v.x ) < EPS && Math.abs( y - v.y ) <  EPS && Math.abs( z - v.z ) < EPS ) {
         return v.index;
       }
     }
@@ -639,14 +695,14 @@ class SketchSurface extends SketchShot
     return maxkey_vtx;
   }
 
-  /** get a vertex given the  index
-   * @param index    vertex index
+  /** get a vertex given the key
+   * @param key    vertex key (index)
    * @return the vertex
    * used by SketchBorder
    */
-  SketchVertex getVertex( int index ) 
+  SketchVertex getVertex( int key ) 
   {
-    return mVertices.get( index );
+    return mVertices.get( key );
   }
 
   // --------------------------------------------------------
@@ -671,15 +727,15 @@ class SketchSurface extends SketchShot
   // }
 
   // from loadTh3 Therion
-  // void addSide( int index, int v1, int v2 )
+  // void addSide( int key, int v1, int v2 )
   // {
   //   SketchVertex w1 = mVertices.get( v1 );
   //   SketchVertex w2 = mVertices.get( v2 );
   //   if ( w1 == null || w2 == null ) {
   //     Log.e("DistoX", "ERROR side without vertex: " + v1 + " " + v2 );
   //   }
-  //   mSides.put( index, new SketchSide( this, index, v1, v2 ) );
-  //   if ( index > maxkey_sds ) maxkey_sds = index;
+  //   mSides.put( key, new SketchSide( this, key, v1, v2 ) );
+  //   if ( key > maxkey_sds ) maxkey_sds = key;
   // }
 
   // SketchSide getSide( int i, int j )
@@ -695,9 +751,9 @@ class SketchSurface extends SketchShot
 
   // SketchTriangle addTriangle3V( Vector v1, Vector v2, Vector v3 )
   // {
-  //   int ka = addVertex( t.mA );
-  //   int kb = addVertex( t.mB );
-  //   int kc = addVertex( t.mC );
+  //   int ka = addVertex( t.mV[0] );
+  //   int kb = addVertex( t.mV[1] );
+  //   int kc = addVertex( t.mV[2] );
   //   addTriangle( ka, kb, kc );
   // }
 
@@ -1057,19 +1113,62 @@ class SketchSurface extends SketchShot
   //   // Log.v("DistoX", "Nr. triangles " + nt );
   // }
 
-  void makeTriangles( Sketch3dInfo info, ConvexHull hull ) 
+  // called by SkecthModel
+  void makeConvexHullTriangles( Sketch3dInfo info, ConvexHull hull ) 
   {
-    Vector unit = info.shotUnit();    // shot unit-vector
+    // Vector unit = info.shotUnit();    // shot unit-vector
     ArrayList< Triangle > tri = hull.mTri;
     ArrayList< Vector > pts = new ArrayList<Vector>();
     for ( Triangle t : tri ) {
       // Triangle has vertces mA mB mC and outgoing normal mN 
-      int ka = addVertex( t.mA );
-      int kb = addVertex( t.mB );
-      int kc = addVertex( t.mC );
+      int ka = addVertex( t.mV[0] );
+      int kb = addVertex( t.mV[1] );
+      int kc = addVertex( t.mV[2] );
       addTriangle( ka, kb, kc );
     }
     computeBorders();
+  }
+
+  // POWERCRUST
+  void makePowercrustTriangles( Sketch3dInfo info, Powercrust pc )
+  {
+    // Vector unit = info.shotUnit();    // shot unit-vector
+    int np = pc.nrPoles();
+    int[] vtx = new int[np];
+    for ( int n=0; n<np; ++n ) {
+      vtx[n] = addVertex( new Vector( (float)pc.poleX(), (float)pc.poleY(), (float)pc.poleZ() ) );
+      if ( pc.nextPole() == 0 ) break;
+    }
+    int nf = pc.nrFaces();
+    for ( int n=0; n<nf; ++n ) {
+      int sz = pc.faceSize();
+      if ( sz == 3 ) {
+        int ka = vtx[ pc.faceVertex(0) ];
+        int kb = vtx[ pc.faceVertex(1) ];
+        int kc = vtx[ pc.faceVertex(2) ];
+        addTriangle( ka, kb, kc );
+      } else if ( sz > 3 ) {
+        int idx[] = new int[sz];
+        float x = 0;
+        float y = 0;
+        float z = 0;
+        for ( int s=0; s<sz; ++s ) {
+          idx[s] = vtx[ pc.faceVertex( s ) ];
+          SketchVertex v = getVertex( idx[s] );
+          x += v.x;
+          y += v.y;
+          z += v.z;
+        }
+        x /= sz;
+        y /= sz;
+        z /= sz;
+        int idc = addVertex( x, y, z );
+        for ( int s=0; s<sz; ++s ) {
+          addTriangle( idx[s], idx[(s+1)%sz], idc );
+        }
+      }
+      if ( pc.nextFace() == 0 ) break;
+    }
   }
 
   // void makeTriangles( SketchSectionSet ss, Sketch3dInfo info, ArrayList< SketchFixedPath > splays1,
@@ -1277,7 +1376,9 @@ class SketchSurface extends SketchShot
   {
     // Log.v("DistoX", "SketchSurface::selectTriangleAt() " + x + " " + y );
     if ( tri != null ) {
-      if ( tri.contains( x, y ) > 0 ) return tri;
+      // if ( tri.contains( x, y ) > 0 ) // FORE SURFACE
+      if ( tri.contains( x, y ) < 0 ) // BACK SURFACE
+        return tri;
       // else try the sides
       // SketchTriangle tri2 = mSides.get(tri.sjk).otherTriangle( tri );
       // if ( tri2 != null && tri2.contains(x,y) > 0 ) return tri2;
@@ -1290,9 +1391,13 @@ class SketchSurface extends SketchShot
     SketchTriangle ret = null;
     float d0 = 0.0f;
     for ( SketchTriangle tri1 : mTriangles ) {
-      if ( tri1.contains( x, y ) > 0 ) {
+      // if ( tri1.contains( x, y ) > 0 ) // FORE SURFACE
+      if ( tri1.contains( x, y ) < 0 ) // BACK SURFACE
+      {
         float d = tri1.dotNormal( info.ne, info.ns, info.nv );
-        if ( d > d0 ) {
+        // if ( d > d0 ) // FORE SURFACE
+        if ( d < d0 ) // BACK SURFACE
+        {
           ret = tri1;
           d0 = d;
         } 
@@ -1301,6 +1406,7 @@ class SketchSurface extends SketchShot
     return ret;
   }
 
+/* if MODE_EDIT
   // stretch inside triangles
   void makeStretch( ArrayList< Vector > pts, ArrayList< Vector > border3d )
   {
@@ -1349,6 +1455,7 @@ class SketchSurface extends SketchShot
       }  
     } 
   }
+*/
 
   private void drawBorders( Canvas canvas, Matrix matrix, Sketch3dInfo info, int activity_mode )
   {
@@ -1475,6 +1582,7 @@ class SketchSurface extends SketchShot
     }
   }
 
+/* if MODE_EDIT
   // DEBUG show inside triangles blue
   private void drawInsideTriangles( Canvas canvas, Matrix matrix, Sketch3dInfo info )
   {
@@ -1492,6 +1600,7 @@ class SketchSurface extends SketchShot
       }
     }
   }
+*/
 
     // if ( mSelectedTriangle != null ) {
     //   Path path1 = new Path();
@@ -1523,10 +1632,12 @@ class SketchSurface extends SketchShot
     //   canvas.drawPath( path1, mPainter.redPaint );
     // }
   
-  synchronized void draw( Canvas canvas, Matrix matrix, Sketch3dInfo info, int activity_mode )
+  synchronized void draw( Canvas canvas, Matrix matrix, Sketch3dInfo info, int activity_mode, boolean draw_fore )
   {
     drawSurfaceBack( canvas, matrix, info, activity_mode );
-    drawSurfaceFor( canvas, matrix, info, activity_mode );
+    if ( draw_fore ) {
+      drawSurfaceFor( canvas, matrix, info, activity_mode );
+    }
     drawVertices( canvas, matrix, info, activity_mode );
     // drawInsideTriangles( canvas, matrix, info, activity_mode );
     drawBorders( canvas, matrix, info, activity_mode );
@@ -1558,7 +1669,8 @@ class SketchSurface extends SketchShot
     pw.format("  vertex\n");
     int size = mVertices.size();
     for ( int k = 0; k < size; ++k ) {
-      SketchVertex v = mVertices.valueAt( k );
+      int key = mVertices.keyAt( k );
+      SketchVertex v = mVertices.get( key );
       v.toTherion( pw );
     }
     pw.format("  endvertex\n");
@@ -1573,5 +1685,23 @@ class SketchSurface extends SketchShot
     }
     pw.format("  endtriangle\n");
     pw.format("end%s\n\n", what );
+  }
+
+  void toTdr( BufferedOutputStream bos, short what ) throws IOException
+  {
+    SketchModel.toTdr( bos, what );
+    SketchModel.toTdr( bos, st1 );
+    SketchModel.toTdr( bos, st2 );
+
+    int szv = mVertices.size(); // this is big: use four bytes
+    int szt = mTriangles.size();
+    // Log.v("DistoX", "surface " + st1 + " " + st2 + " V " + szv + " T " + szt );
+    SketchModel.toTdr( bos, (short)(szv) );
+    SketchModel.toTdr( bos, (short)(szt) );
+    for ( int k = 0; k < szv; ++k ) {
+      int key = mVertices.keyAt( k );
+      mVertices.get( key ).toTdr( bos );
+    }
+    for ( SketchTriangle t : mTriangles ) t.toTdr( bos );
   }
 }

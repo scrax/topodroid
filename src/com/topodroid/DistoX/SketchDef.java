@@ -26,14 +26,15 @@ class SketchDef
 
     public final static int DISPLAY_NGBH = 0;
     public final static int DISPLAY_SINGLE = 1;
-    public final static int DISPLAY_ALL = 2;
-    public final static int DISPLAY_MAX = 3;
+    public final static int DISPLAY_ALL  = 2;
+    public final static int DISPLAY_NONE = 3;
+    public final static int DISPLAY_MAX  = 4;
 
     public static final int MODE_MOVE    = 0;
     public static final int MODE_DRAW    = 1;
     public static final int MODE_EDIT    = 2;  // change the surface as a whole
     public static final int MODE_SELECT  = 3;  // select a point to edit
-    public static final int MODE_STEP    = 4;  // step to another leg
+    // public static final int MODE_STEP    = 4;  // step to another leg
     // public static final int MODE_HEAD = 5;
     // public static final int MODE_JOIN = 6;
 

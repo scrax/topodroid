@@ -51,9 +51,13 @@ class SymbolLineLibrary extends SymbolLibrary
 
   boolean isStyleStraight( int k ) { return ( k < 0 || k >= mSymbolNr )? true : ((SymbolLine)mSymbols.get(k)).mStyleStraight; }
 
+  boolean isClosed( int k ) { return ( k < 0 || k >= mSymbolNr )? false : ((SymbolLine)mSymbols.get(k)).mClosed; }
+
   int getStyleX( int k ) { return ( k < 0 || k >= mSymbolNr )? 1 : ((SymbolLine)mSymbols.get(k)).mStyleX; }
 
   String getLineGroup( int k ) { return ( k < 0 || k >= mSymbolNr )? null : ((SymbolLine)mSymbols.get(k)).mGroup; }
+
+  boolean isWall( int k ) { return ( k < 0 || k >= mSymbolNr )? false : "wall".equals(((SymbolLine)mSymbols.get(k)).mGroup); }
 
   Paint getLinePaint( int k, boolean reversed )
   {
@@ -138,11 +142,11 @@ class SymbolLineLibrary extends SymbolLibrary
 
     if ( isSymbolEnabled( fname ) ) return true;
     Symbol symbol = getSymbolByFilename( fname );
+    // APP_SAVE SYMNBOLS
     if ( symbol == null ) {
       // Log.v( TopoDroidApp.TAG, "load missing line " + fname );
       File file = new File( TDPath.APP_SAVE_LINE_PATH + fname );
       if ( ! file.exists() ) return false;
-
       symbol = new SymbolLine( file.getPath(), file.getName(), locale, iso );
       addSymbol( symbol );
     } else {

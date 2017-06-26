@@ -36,6 +36,7 @@ class TDColor
   static final int FIXED_YELLOW = 0xffffff33;
   static final int FIXED_ORANGE = 0xffff9966;
   static final int FIXED_BLUE   = 0xff6699ff;
+  static final int VERYDARK_GRAY = 0xff444444;
   static final int DARK_GRAY    = 0xff666666;
   // static final int LIGHT_GRAY   = 0xffaaaaaa;
   static final int MID_GRAY     = 0xff999999;
@@ -50,6 +51,7 @@ class TDColor
   static final int FULL_VIOLET  = 0xffff00ff;
   static final int WHITE        = 0xffffffff;
   static final int DARK_RED     = 0xff331100;
+  static final int TRANSPARENT  = 0x00000000;
 
   static final int NORMAL       = WHITE;
   static final int NORMAL2      = LIGHT_GRAY;

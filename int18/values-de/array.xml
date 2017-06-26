@@ -17,6 +17,7 @@
   <string-array name="wallsType">
      <item name="none">Keine automatischen Wände</item>
      <item name="convex">Konvex</item>
+     <item name="delaunay">Delaunay-Triangulierung</item>
   </string-array>
 
   <string-array name="zoomCtrl">

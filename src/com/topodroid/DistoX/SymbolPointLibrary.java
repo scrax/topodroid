@@ -31,6 +31,8 @@ class SymbolPointLibrary extends SymbolLibrary
   // ArrayList< SymbolPoint > mPoint;    // enabled points
   int mPointUserIndex;
   int mPointLabelIndex;
+  int mPointPhotoIndex;
+  int mPointAudioIndex;
   // int mPointDangerIndex;
   int mPointSectionIndex;
 
@@ -39,6 +41,8 @@ class SymbolPointLibrary extends SymbolLibrary
     super( "p_" );
     mPointUserIndex   = 0;
     mPointLabelIndex  = -1;
+    mPointPhotoIndex  = -1;
+    mPointAudioIndex  = -1;
     // mPointDangerIndex = -1;
     mPointSectionIndex = -1;
     loadSystemPoints( res );
@@ -156,11 +160,11 @@ class SymbolPointLibrary extends SymbolLibrary
 
     if ( isSymbolEnabled( fname ) ) return true;
     Symbol symbol = getSymbolByFilename( fname );
+    // APP_SAVE SYMBOLS
     if ( symbol == null ) {
       // Log.v( TopoDroidApp.TAG, "load missing point " + fname );
       File file = new File( TDPath.APP_SAVE_POINT_PATH + fname );
       if ( ! file.exists() ) return false;
-
       symbol = new SymbolPoint( file.getPath(), file.getName(), locale, iso );
       addSymbol( symbol );
     } else {
@@ -181,6 +185,8 @@ class SymbolPointLibrary extends SymbolLibrary
     super.makeEnabledList();
     mPointUserIndex    = getSymbolIndexByThName( "user" );
     mPointLabelIndex   = getSymbolIndexByThName( "label" );
+    mPointPhotoIndex   = getSymbolIndexByThName( "photo" );
+    mPointAudioIndex   = getSymbolIndexByThName( "audio" );
     // mPointDangerIndex  = getSymbolIndexByThName( "danger" );
     mPointSectionIndex = getSymbolIndexByThName( "section" ); 
   }

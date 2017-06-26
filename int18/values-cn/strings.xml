@@ -84,7 +84,7 @@
    
     <string name="device_algo_failed">自动算法失败\n使用线性算法...</string>
     <!-- TODO string name="device_address">Address %1$s</string -->
-    <string name="device_busy">设备忙...</string>
+    <!-- UNUSED string name="device_busy">设备忙...</string -->
     <string name="device_illegal_addr">非法的存储地址</string>
     <string name="device_info">设备信息</string>
     <string name="device_model_set">你是否想要切换设备</string>
@@ -151,6 +151,8 @@
     <!-- UNUSED string name="pairing_failed">配对失败</string -->
 
     <string name="illegal_data_value">非法数值</string>
+    <!-- TODO string name="photo_title">PHOTO</string -->
+    <!-- TODO string name="photo_text">Enter photo comment</string -->
     <string name="label_title">标签</string>
     <string name="label_text">输入标签文本</string>
     <!-- UNUSED string name="altitude">标高</string -->
@@ -216,6 +218,7 @@
 
     <string name="no_bt">蓝牙未启动</string>
     <string name="no_calib">未校准</string>
+    <!-- TODO string name="no_calib_check">No calibration-check shot</string -->
     <string name="no_calibration">无校准选择</string>
     <string name="no_capture_app">无图像捕捉软件</string>
     <string name="no_cave3d">Cave3D 未安装</string>
@@ -247,6 +250,7 @@
     <string name="menu_attach">连接</string>
     <!-- UNUSED string name="menu_attached">连接</string -->
     <!-- UNUSED string name="menu_ready">就绪</string -->
+    <!-- TODO string name="menu_calib_check">CALIBR. CHECK</string -->
     <string name="menu_close">关闭</string>
     <string name="menu_delete">删除</string>
     <string name="menu_detach">断开连接</string>
@@ -291,6 +295,19 @@
     <!-- TODO string name="popup_erase_point">Erase points</string -->
     <!-- TODO string name="popup_erase_line">Erase lines</string -->
     <!-- TODO string name="popup_erase_area">Erase areas</string -->
+
+    <!-- TODO string name="popup_select_all">Select all</string -->
+    <!-- TODO string name="popup_select_point">Select points</string -->
+    <!-- TODO string name="popup_select_line">Select lines</string -->
+    <!-- TODO string name="popup_select_area">Select areas</string -->
+    <!-- TODO string name="popup_select_shot">Select shots</string -->
+    <!-- TODO string name="popup_select_station">Select stations</string -->
+
+    <!-- TODO string name="popup_cont_none">None</string -->
+    <!-- TODO string name="popup_cont_start">Start point</string -->
+    <!-- TODO string name="popup_cont_end">End point</string -->
+    <!-- TODO string name="popup_cont_both">Both points</string -->
+    <!-- TODO string name="popup_cont_continue">Continue</string -->
 
     <string name="connected_none">未连接</string>
     <string name="connected_already">已连接</string>
@@ -339,6 +356,7 @@
     <!-- UNUSED string name="converted_tdr2th2">转换草图为二进制文件到 th2</string -->
     <!-- UNUSED string name="convert_tdr2th2">重写th2草图文件?</string -->
     <string name="section_area">切面区域: %1$.1f</string>
+    <!-- TODO string name="scrap_outline">Sketch outline</string -->
 
     <!-- UNUSED string name="sensor">传感器</string -->
     <string name="sensor_gravity">重力传感器</string>
@@ -356,6 +374,8 @@
     <!-- UNUSED string name="shot_clino">倾角测量</string -->
     <!-- UNUSED string name="shot_compass">方位角测量</string -->
     <string name="shot_delete">删除测量 ?</string>
+    <!-- TODO string name="shots_delete">Delete shots ?</string -->
+    <!-- TODO string name="shot_check">Mark shot as check-shot?</string -->
     <string name="shot_from">来自</string>
     <string name="shot_info">输入测量数据</string>
     <!-- UNUSED string name="shot_length">主线测量</string -->
@@ -395,6 +415,10 @@
     <string name="toggle_failed">启动DistoX失败</string>
     <string name="toggle_ok">启动 DistoX 校准模式</string>
     <string name="undelete_text">点击项目恢复</string>
+    <!-- TODO string name="undelete_shot">Shots</string -->
+    <!-- TODO string name="undelete_overshoot">Overshoots</string -->
+    <!-- TODO string name="undelete_check">Checks</string -->
+    <!-- TODO string name="undelete_plot">Sketches</string -->
     <!-- TODO string name="delete_whole_leg">Delete whole leg</string -->
     <string name="visible_border">显示边界</string>
     <!-- UNUSED string name="vthreshold">垂直边界</string -->
@@ -418,6 +442,7 @@
     <string name="stat_duplicate">复制单个测量数据 %1$d %2$.1f %3$s</string>
     <string name="stat_leg">主线 %1$d %2$.1f %3$s</string>
     <string name="stat_length">长度 %1$.1f %2$s</string>
+    <!-- TODO string name="stat_projlen">Plan length %1$.1f %2$s</string -->
     <string name="stat_loop">环测 %1$d</string>
     <string name="stat_origin">零测量点: %1$s</string>
     <!-- TODO string name="stat_azimuth">Profile projection azimuth: %1$.1f</string -->
@@ -513,6 +538,7 @@
 
     <string name="popup_do_splay">侧线测量</string>
     <string name="popup_do_leg">主线测量</string>
+    <!-- TODO string name="popup_do_gm_data">Calib. shot</string -->
 
     <!-- UNUSED string name="btn_3d">3D</string -->
     <string name="btn_import">输入</string>
@@ -524,6 +550,7 @@
     <string name="symbol_mine">采矿学</string>
     <string name="symbol_paleo">古生物学</string>
     <string name="symbol_speleo">洞穴学</string>
+    <!-- TODO string name="symbol_extra">Speleo (2)</string -->
 
     <string name="symbol_reload">绘图工具</string>
 
@@ -540,7 +567,7 @@
     <string name="sketch_mode_ngbh">附近测量</string>
     <string name="sketch_mode_all">所有测量</string>
     <string name="sketch_delete">删除 3D 模式 ?</string>
-    <string name="sketch_no_split">不精细. 减去最大长度提高精度.</string>
+    <!-- UNUSED string name="sketch_no_split">不精细. 减去最大长度提高精度.</string -->
     <string name="length">距离 [米]</string>
     <string name="azimuth">方位角 [deg]</string>
     <string name="clino">倾角 [deg]</string>
@@ -581,7 +608,9 @@
     <string name="help_help">帮助</string>
     <!-- UNUSED string name="help_manual">用户手册</string -->
     <string name="help_measure">测量距离</string>
+    <!-- TODO string name="help_measure_type">Measuring mode: fixed point or polyline</string -->
     
+    <!-- TODO string name="help_calib_check">Calibration-check shots</string -->
     <string name="help_close">关闭窗口</string>
     <string name="help_coeff">显示校准系数</string>
     <string name="help_continue">继续画线</string>
@@ -678,18 +707,19 @@
     <string name="help_trash_model">删除3D模型</string>
     <string name="help_head_model">标定 3D 模型</string>
     <!-- UNUSED string name="help_erase_model">擦除区域</string -->
-    <string name="help_cut_model">剪切区域</string>
-    <string name="help_stretch_model">延伸区域</string>
+    <!-- UNUSED string name="help_cut_model">剪切区域</string -->
+    <!-- UNUSED string name="help_stretch_model">延伸区域</string -->
     <!-- UNUSED string name="help_extrude_model">挤压拉伸区域</string -->
-    <string name="help_refine_center">以三角中心改善表面</string>
-    <string name="help_refine_sides">以三角变改善表面</string>
-    <string name="help_refine_point">以点改善表面</string>
-    <string name="help_refine_triangle">以长边改善表面</string>
+    <!-- UNUSED string name="help_refine_center">以三角中心改善表面</string -->
+    <!-- UNUSED string name="help_refine_sides">以三角变改善表面</string -->
+    <!-- UNUSED string name="help_refine_point">以点改善表面</string -->
+    <!-- UNUSED string name="help_refine_triangle">以长边改善表面</string -->
   
 
     <string name="title_azimut">延展参照</string>
     <!-- TODO string name="title_audio">Audio comment</string -->
     <string name="title_calib">校准</string>
+    <!-- TODO string name="title_calib_check">Calibration-check shots</string -->
     <string name="title_coverage">校准数据分布</string>
     <string name="title_coeff">校准系数</string>
     <string name="title_contour">轮廓</string>
@@ -721,6 +751,7 @@
     <string name="title_projection">投影轮廓方位 %1$d</string>
     <string name="title_refs">参考草图</string>
     <string name="title_scraps">测量草图</string>
+    <!-- TODO string name="title_scraps_outline">Sketch outline</string -->
     <string name="title_select">选择</string>
     <string name="title_shift">转换</string>
     <string name="title_shot_delete">删除测射 ?</string>

@@ -42,6 +42,7 @@ public class DBlock
   View   mView;
   int    mPos;     // position in the list
   int    mVisible; // whether is visible in the list
+  boolean mMultiSelected; // whether the block is in multiselect list
 
   long   mId;
   long   mSurveyId;
@@ -83,11 +84,13 @@ public class DBlock
   public static final int BLOCK_SURVEY     = 0; // flags
   public static final int BLOCK_SURFACE    = 1;
   public static final int BLOCK_DUPLICATE  = 2;
-  // public static final int BLOCK_BACKSHOT   = 3;
+  public static final int BLOCK_COMMENTED  = 3;
+  // public static final int BLOCK_BACKSHOT   = 4;
 
   public boolean isSurvey() { return mFlag == BLOCK_SURVEY; }
   public boolean isSurface() { return mFlag == BLOCK_SURFACE; }
   public boolean isDuplicate() { return mFlag == BLOCK_DUPLICATE; }
+  public boolean isCommented() { return mFlag == BLOCK_COMMENTED; }
   // public boolean isBackshot() { return mFlag == BLOCK_BACKSHOT; }
 
   void setTypeBlankLeg( ) { if ( mType == BLOCK_BLANK ) mType = BLOCK_BLANK_LEG; }
@@ -99,6 +102,7 @@ public class DBlock
   static boolean isSplay( int t ) { return t == BLOCK_SPLAY || t == BLOCK_X_SPLAY; }
 
   boolean isSplay() { return mType == BLOCK_SPLAY || mType == BLOCK_X_SPLAY; }
+  boolean isXSplay() { return mType == BLOCK_X_SPLAY; }
 
   // static int getExtend( int ext ) { return ( ext < EXTEND_UNSET )? ext : ext - EXTEND_FVERT; }
   static int getExtend( int ext ) { return ext; }
@@ -147,6 +151,7 @@ public class DBlock
     mView = null; // view is set by the DBlockAdapter
     mPos  = 0;
     mVisible = View.VISIBLE;
+    mMultiSelected = false;
     mId = 0;
     mSurveyId = 0;
     // mName = "";
@@ -173,6 +178,7 @@ public class DBlock
     mView = null; // view is set by the DBlockAdapter
     mPos  = 0;
     mVisible = View.VISIBLE;
+    mMultiSelected = false;
     mId = 0;
     mSurveyId = 0;
     // mName = "";
@@ -300,6 +306,8 @@ public class DBlock
       pw.format( "*" );
     } else if ( mFlag == BLOCK_SURFACE ) {
       pw.format( "-" );
+    // } else if ( mFlag == BLOCK_COMMENTED ) {
+    //   pw.format( "^" );
     // } else if ( mFlag == BLOCK_BACKSHOT ) {
     //   pw.format( "+" );
     }
@@ -308,7 +316,7 @@ public class DBlock
   private void formatComment( PrintWriter pw )
   {
     if ( mComment == null || mComment.length() == 0 ) return;
-    pw.format(" N");
+    pw.format(" %s", mComment);
   }
 
   public String toString( boolean show_id )
@@ -325,9 +333,20 @@ public class DBlock
       mFrom, mTo,
       mLength*ul, mBearing*ua, mClino*ua, mExtendTag[ (int)(mExtend) + 1 ] );
     formatFlag( pw );
+    if ( mWithPhoto ) { pw.format("#"); }
     formatComment( pw );
-    if ( mWithPhoto ) { pw.format(" #"); }
     // TDLog.Log( TDLog.LOG_DATA, sw.getBuffer().toString() );
+    return sw.getBuffer().toString();
+  }
+
+  public String toShortString( boolean show_id )
+  {
+    float ul = TDSetting.mUnitLength;
+    float ua = TDSetting.mUnitAngle;
+    StringWriter sw = new StringWriter();
+    PrintWriter pw  = new PrintWriter(sw);
+    if ( show_id ) pw.format("%d ", mId );
+    pw.format(Locale.US, "<%s-%s> %.2f %.1f %.1f", mFrom, mTo, mLength*ul, mBearing*ua, mClino*ua );
     return sw.getBuffer().toString();
   }
 
@@ -337,8 +356,8 @@ public class DBlock
     PrintWriter pw  = new PrintWriter(sw);
     pw.format("[%c]", mExtendTag[ (int)(mExtend) + 1 ] );
     formatFlag( pw );
+    if ( mWithPhoto ) { pw.format("#"); }
     formatComment( pw );
-    if ( mWithPhoto ) { pw.format(" #"); }
     return sw.getBuffer().toString();
   }
 

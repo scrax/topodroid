@@ -72,6 +72,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.ListView;
@@ -97,6 +98,7 @@ public class ShotWindow extends Activity
                         , OnLongClickListener
                         , ILister
                         , INewPlot
+                        , IPhotoInserter
 {
   final static int BTN_DOWNLOAD  = 0;
   final static int BTN_BLUETOOTH = 1;
@@ -122,6 +124,13 @@ public class ShotWindow extends Activity
                         0,
                         0,
                         0
+                      };
+
+  private static int izonsF[] = {
+                        R.drawable.iz_left,
+                        R.drawable.iz_right,
+                        R.drawable.iz_delete,
+                        R.drawable.iz_cancel
                       };
 
   private static int menus[] = {
@@ -174,6 +183,10 @@ public class ShotWindow extends Activity
   int mButtonSize = 42;
   private Button[] mButton1;
   private int mNrButton1 = 0;
+
+  // private RelativeLayout mFooter = null;
+  private Button[] mButtonF;
+  private int mNrButtonF = 4;
 
   public void setRefAzimuth( float azimuth, long fixed_extend )
   {
@@ -464,6 +477,30 @@ public class ShotWindow extends Activity
 
   private boolean mSkipItemClick = false;
 
+  private void multiSelect( int pos )
+  {
+    // if ( ! mDataAdapter.isMultiSelect() ) {
+    //   mFooter.setVisibility( View.VISIBLE );
+    // }
+    if ( mDataAdapter.multiSelect( pos ) ) {
+      // mFooter.setVisibility( View.VISIBLE );
+      mListView.setAdapter( mFooterView.mAdapter );
+      mListView.invalidate();
+    } else {
+      // mFooter.setVisibility( View.GONE );
+      mListView.setAdapter( mButtonView1.mAdapter );
+      mListView.invalidate();
+    }
+  }
+
+  private void clearMultiSelect( )
+  {
+    mDataAdapter.clearMultiSelect( );
+    // mFooter.setVisibility( View.GONE );
+    mListView.setAdapter( mButtonView1.mAdapter );
+    mListView.invalidate();
+  }
+
   @Override 
   public void onItemClick(AdapterView<?> parent, View view, int pos, long id)
   {
@@ -478,13 +515,20 @@ public class ShotWindow extends Activity
     }
     if ( closeMenu() ) return;
 
+    if ( mDataAdapter.isMultiSelect() ) {
+      multiSelect( pos );
+      return;
+    }
+
     // TDLog.Log( TDLog.LOG_INPUT, "ShotWindow onItemClick id " + id);
     DBlock blk = mDataAdapter.get(pos);
+    Log.v( "DistoX", "ShotWindow onItemClick id " + id + " pos " + pos + " blk " + blk.mFrom + " " + blk.mTo );
     onBlockClick( blk, pos );
   }
 
   void onBlockClick( DBlock blk, int pos )
   {
+    Log.v("DistoX", "on block click: on_open " + mOnOpenDialog );
     if ( mOnOpenDialog ) return;
     mOnOpenDialog = true;
     mShotPos = pos;
@@ -506,6 +550,9 @@ public class ShotWindow extends Activity
     // onBlockLongClick( blk );
     if ( blk.isSplay() ) {
       highlightBlock( blk );
+    } else {
+      // Log.v("DistoX", "multi select " + pos );
+      multiSelect( pos );
     }
     return true;
   }
@@ -561,11 +608,12 @@ public class ShotWindow extends Activity
     } else if ( TDSetting.mLevelOverBasic && p++ == pos ) { // RECOVER
       List< DBlock > shots1 = mApp.mData.selectAllShots( mApp.mSID, TopoDroidApp.STATUS_DELETED );
       List< DBlock > shots2 = mApp.mData.selectAllShots( mApp.mSID, TopoDroidApp.STATUS_OVERSHOOT );
+      List< DBlock > shots3 = mApp.mData.selectAllShots( mApp.mSID, TopoDroidApp.STATUS_CHECK );
       List< PlotInfo > plots     = mApp.mData.selectAllPlots( mApp.mSID, TopoDroidApp.STATUS_DELETED );
-      if ( shots1.size() == 0 && shots2.size() == 0 && plots.size() == 0 ) {
+      if ( shots1.size() == 0 && shots2.size() == 0 && shots3.size() == 0 && plots.size() == 0 ) {
         Toast.makeText( mActivity, R.string.no_undelete, Toast.LENGTH_SHORT ).show();
       } else {
-        (new UndeleteDialog(mActivity, this, mApp.mData, mApp.mSID, shots1, shots2, plots ) ).show();
+        (new UndeleteDialog(mActivity, this, mApp.mData, mApp.mSID, shots1, shots2, shots3, plots ) ).show();
       }
       // updateDisplay( );
     } else if ( TDSetting.mLevelOverNormal && p++ == pos ) { // PHOTO
@@ -687,15 +735,15 @@ public class ShotWindow extends Activity
     mApp.mActivity.startSplitSurvey( old_sid, old_id ); // SPLIT SURVEY
   }
 
-  void doDeleteShot( long id, DBlock blk, boolean leg )
+  void doDeleteShot( long id, DBlock blk, int status, boolean leg )
   {
-    mApp.mData.deleteShot( id, mApp.mSID, true ); // forward = true
+    mApp.mData.deleteShot( id, mApp.mSID, status, true ); // forward = true
     if ( blk != null && blk.type() == DBlock.BLOCK_MAIN_LEG ) {
-      if ( leg ) { // delete whole leg
+      if ( leg ) {
         for ( ++id; ; ++id ) {
           DBlock b = mApp.mData.selectShot( id, mApp.mSID );
           if ( b == null || b.type() != DBlock.BLOCK_SEC_LEG ) break;
-          mApp.mData.deleteShot( id, mApp.mSID, true ); // forward = true
+          mApp.mData.deleteShot( id, mApp.mSID, status, true ); // forward = true
         }
       } else { // set station to next leg shot
         ++id;
@@ -709,7 +757,7 @@ public class ShotWindow extends Activity
     updateDisplay( ); 
   }
 
-  void insertPhoto( )
+  public void insertPhoto( )
   {
     // long shotid = 0;
     mApp.mData.insertPhoto( mApp.mSID, mPhotoId, mShotId, "", TopoDroidUtil.currentDate(), mComment ); // FIXME TITLE has to go
@@ -768,7 +816,8 @@ public class ShotWindow extends Activity
   // private Button mButtonHelp;
   HorizontalListView mListView;
   HorizontalButtonView mButtonView1;
-  HorizontalButtonView mButtonView2;
+  // HorizontalListView mFootList;
+  HorizontalButtonView mFooterView;
   ListView   mMenu = null;
   Button     mImage;
   // HOVER
@@ -812,7 +861,9 @@ public class ShotWindow extends Activity
     mDataAdapter = new DBlockAdapter( this, this, R.layout.dblock_row, new ArrayList<DBlock>() );
 
     mListView = (HorizontalListView) findViewById(R.id.listview);
+    // mFootList = (HorizontalListView) findViewById(R.id.footlist);
     mButtonSize = mApp.setListViewHeight( mListView );
+    // mButtonSize = mApp.setListViewHeight( mFootList );
 
     Resources res = getResources();
     mNrButton1 = TDSetting.mLevelOverNormal ? 8 : ( TDSetting.mLevelOverBasic ? 6 : 5 );
@@ -837,11 +888,21 @@ public class ShotWindow extends Activity
       mButton1[ BTN_PLOT ].setOnLongClickListener( this );
     }
 
+    mButtonF = new Button[ mNrButtonF ];
+    for ( int k=0; k<mNrButtonF; ++k ) {
+      mButtonF[k] = MyButton.getButton( this, this, izonsF[k] );
+    }
+
     TDAzimuth.resetRefAzimuth( 90 );
     // setRefAzimuthButton( ); // called by mApp.resetRefAzimuth
 
     mButtonView1 = new HorizontalButtonView( mButton1 );
+    mFooterView  = new HorizontalButtonView( mButtonF );
     mListView.setAdapter( mButtonView1.mAdapter );
+    // mFootList.setAdapter( mFooterView.mAdapter );
+
+    // mFooter = (RelativeLayout)findViewById( R.id.footer );
+    // mFooter.setVisibility( View.GONE );
 
     mList = (ListView) findViewById(R.id.list);
     mList.setAdapter( mDataAdapter );
@@ -1011,7 +1072,7 @@ public class ShotWindow extends Activity
       if ( TDSetting.mLevelOverAdvanced && mApp.distoType() == Device.DISTO_X310 
 	     && TDSetting.mConnectionMode != TDSetting.CONN_MODE_MULTI
 	  ) {
-        CutNPaste.showPopupBT( mActivity, this, mApp, b );
+        CutNPaste.showPopupBT( mActivity, this, mApp, b, false );
       } else {
         mDataDownloader.setDownload( false );
         mDataDownloader.stopDownloadData();
@@ -1070,6 +1131,7 @@ public class ShotWindow extends Activity
       Intent intent;
 
       int k1 = 0;
+      int kf = 0;
       // int k2 = 0;
       if ( k1 < mNrButton1 && b == mButton1[k1++] ) {        // DOWNLOAD
         if ( mApp.mDevice != null ) {
@@ -1113,8 +1175,73 @@ public class ShotWindow extends Activity
             (new AzimuthDialDialog( mActivity, this, TDAzimuth.mRefAzimuth, mBMdial )).show();
           }
         }
+      } else if ( kf < mNrButtonF && b == mButtonF[kf++] ) { // LEFT
+        for ( DBlock blk : mDataAdapter.mSelect ) {
+          blk.setExtend( DBlock.EXTEND_LEFT );
+          mApp.mData.updateShotExtend( blk.mId, mApp.mSID, DBlock.EXTEND_LEFT, true );
+        }
+        clearMultiSelect( );
+        mList.invalidate();
+      } else if ( kf < mNrButtonF && b == mButtonF[kf++] ) { // RIGHT
+        for ( DBlock blk : mDataAdapter.mSelect ) {
+          blk.setExtend( DBlock.EXTEND_RIGHT );
+          mApp.mData.updateShotExtend( blk.mId, mApp.mSID, DBlock.EXTEND_RIGHT, true );
+        }
+        clearMultiSelect( );
+        mList.invalidate();
+      } else if ( kf < mNrButtonF && b == mButtonF[kf++] ) { // DELETE
+        askMultiDelete();
+      } else if ( kf < mNrButtonF && b == mButtonF[kf++] ) { // CANCEL
+        clearMultiSelect( );
+        mList.invalidate();
       }
     }
+  }
+
+  private void askMultiDelete()
+  {
+    Resources res = getResources();
+    TopoDroidAlertDialog.makeAlert( mActivity, res, res.getString(R.string.shots_delete),
+      res.getString(R.string.button_ok), 
+      res.getString(R.string.button_cancel),
+      new DialogInterface.OnClickListener() { // ok handler
+        @Override
+        public void onClick( DialogInterface dialog, int btn ) {
+          doMultiDelete();
+        } },
+      new DialogInterface.OnClickListener() { // cancel handler
+        @Override
+        public void onClick( DialogInterface dialog, int btn ) {
+          clearMultiSelect( );
+          mList.invalidate();
+        } }
+    );
+  }
+
+  void doMultiDelete()
+  {
+    for ( DBlock blk : mDataAdapter.mSelect ) {
+      long id = blk.mId;
+      mApp.mData.deleteShot( id, mApp.mSID, TopoDroidApp.STATUS_DELETED, true ); // forward = true
+      if ( blk != null && blk.type() == DBlock.BLOCK_MAIN_LEG ) {
+        if ( mLeg ) {
+          for ( ++id; ; ++id ) {
+            DBlock b = mApp.mData.selectShot( id, mApp.mSID );
+            if ( b == null || b.type() != DBlock.BLOCK_SEC_LEG ) break;
+            mApp.mData.deleteShot( id, mApp.mSID, TopoDroidApp.STATUS_DELETED, true ); // forward = true
+          }
+        } else { // set station to next leg shot
+          ++id;
+          DBlock b = mApp.mData.selectShot( id, mApp.mSID );
+          if ( b != null && b.type() == DBlock.BLOCK_SEC_LEG ) {
+            mApp.mData.updateShot( id, mApp.mSID, blk.mFrom, blk.mTo, blk.getFullExtend(), blk.mFlag, 0, blk.mComment, true ); // forward = true
+            mApp.mData.updateShotStatus( id, mApp.mSID, 0, true ); // status normal, forward = true
+          }
+        }
+      }
+    }
+    clearMultiSelect( );
+    updateDisplay( ); 
   }
 
   // ------------------------------------------------------------------
@@ -1250,12 +1377,6 @@ public class ShotWindow extends Activity
   }
 
   // ---------------------------------------------------------------------------------
-
-  // public void dropShot( DBlock blk )
-  // {
-  //   mApp.mData.deleteShot( blk.mId, mApp.mSID );
-  //   updateDisplay( ); // FIXME
-  // }
 
   public DBlock getNextBlankLegShot( DBlock blk )
   {
@@ -1591,7 +1712,7 @@ public class ShotWindow extends Activity
 
   void startAudio( DBlock blk )
   {
-    (new AudioDialog( this, mApp, this, blk )).show();
+    (new AudioDialog( this, mApp, /* this */ null, blk.mId )).show();
   }
 
 }

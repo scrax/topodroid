@@ -37,7 +37,7 @@ public class QCamCompass extends Dialog
                                   , IBearingAndClino
 {
   Context mContext;
-  ShotWindow mShotWindow;
+  IPhotoInserter mInserter;
   QCamDrawingSurface mSurface;
   QCamBox mBox;
   Button buttonClick;
@@ -60,16 +60,16 @@ public class QCamCompass extends Dialog
   boolean mHasSaved;
   boolean mHasShot;
 
-  QCamCompass( Context context, IBearingAndClino callback, ShotWindow shot_window, boolean with_box, boolean with_delay )
+  QCamCompass( Context context, IBearingAndClino callback, IPhotoInserter inserter, boolean with_box, boolean with_delay )
   {
     super( context );
-    mContext    = context;
-    mCallback   = callback;
-    mShotWindow = shot_window;
-    mWithBox    = with_box;
-    mWithDelay  = with_delay;
-    mHasSaved   = false;
-    mHasShot    = false;
+    mContext   = context;
+    mCallback  = callback;
+    mInserter  = inserter;
+    mWithBox   = with_box;
+    mWithDelay = with_delay;
+    mHasSaved  = false;
+    mHasShot   = false;
   }
 
   void enableButtons( boolean enable )
@@ -169,6 +169,7 @@ public class QCamCompass extends Dialog
         buttonClick.setBackgroundDrawable( mBDcameraRed );
         // buttonClick.setText( mContext.getString( R.string.button_eval ) );
         mSurface.start();
+        enableButtons( true );
       } else {
         int wait  = TDSetting.mTimerWait;
         int count = 10;
@@ -196,7 +197,7 @@ public class QCamCompass extends Dialog
     mSurface.close();
     try { Thread.sleep( 100 ); } catch ( InterruptedException e ) { }
 
-    if ( mHasSaved && mShotWindow != null ) mShotWindow.insertPhoto();
+    if ( mHasSaved && mInserter != null ) mInserter.insertPhoto();
 
     dismiss();
   }

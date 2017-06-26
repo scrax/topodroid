@@ -111,6 +111,7 @@ class TDSetting
     "DISTOX_LEG_SHOTS",           // 52 nr. of shots to make a leg
 
     // -------------------- 3D-MODEL PREFERENCES
+    "DISTOX_SKETCH_MODEL_TYPE",   
     "DISTOX_SKETCH_LINE_STEP",    // 53
     "DISTOX_DELTA_EXTRUDE",       // 54
     "DISTOX_COMPASS_READINGS",    // 55
@@ -136,7 +137,6 @@ class TDSetting
     "DISTOX_VERT_SPLAY",          // 68 over this splay are shown with dashed line
     "DISTOX_STATION_PREFIX",      // 69 whether to add cave-name prefix to stations (cSurvey/compass)
     "DISTOX_STATION_NAMES",
-    "DISTOX_TROBOT_NAMES",        // station names are TopoRobot
     "DISTOX_ZOOM_CTRL",           // 71
     "DISTOX_SIDE_DRAG",           // 72 whether to enable side-drag
     "DISTOX_DXF_SCALE", 
@@ -217,11 +217,10 @@ class TDSetting
   static float mOrthogonalLRUDCosine = 1;     // cosine of the angle
 
   static boolean mExportStationsPrefix = false;  // whether to prepend cave name to station in cSurvey/compass export
-  static boolean mTRobotNames = false;
 
   // static boolean mXTherionAreas = false;
-  static boolean mAutoStations = true; // whether to add stations automatically to scrap therion files
-  static boolean mTherionSplays = true; // whether to add splay segments to auto stations
+  static boolean mAutoStations  = true;  // whether to add stations automatically to scrap therion files
+  static boolean mTherionSplays = true;  // whether to add splay segments to auto stations
 
   static float mBitmapScale = 1.5f;
   static float mDxfScale = 1.0f;
@@ -409,6 +408,7 @@ class TDSetting
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   // 3D
+  static int   mSketchModelType = 1;
   static float mSketchSideSize;
   static float mDeltaExtrude;
   // static boolean mSketchUsesSplays; // whether 3D models surfaces use splays
@@ -427,7 +427,8 @@ class TDSetting
 
   static final int WALLS_NONE    = 0;
   static final int WALLS_CONVEX  = 1;
-  static final int WALLS_LAST    = 1; // placeholder
+  static final int WALLS_DLN     = 2;
+  static final int WALLS_LAST    = 2; // placeholder
   static int   mWallsType        = WALLS_NONE;
   static float mWallsPlanThr     = 70;
   static float mWallsExtendedThr = 45;
@@ -712,6 +713,7 @@ class TDSetting
     mMinNrLegShots = tryInt(   prefs, key[k++], "3" );              // DISTOX_LEG_SHOTS choice: 2, 3, 4
 
     // ------------------- SKETCH PREFERENCES
+    mSketchModelType = tryInt(  prefs, key[k++], "1" );             // DISTOX_SKETCH_MODEL_TYPE
     mSketchSideSize = tryFloat( prefs, key[k++], "0.5" );           // DISTOX_SKETCH_LINE_STEP
     mDeltaExtrude   = tryFloat( prefs, key[k++], "50"  );           // DISTOX_DELTA_EXTRUDE
     // mSketchUsesSplays  = prefs.getBoolean( key[k++], false );    
@@ -740,7 +742,6 @@ class TDSetting
     mVertSplay = tryFloat( prefs, key[k++], "50" );               // DISTOX_VERT_SPLAY
     mExportStationsPrefix =  prefs.getBoolean( key[k++], false ); // DISTOX_STATION_PREFIX
     mStationNames = (prefs.getString( key[k++], "alpha").equals("number"))? 1 : 0; // DISTOX_STATION_NAMES
-    mTRobotNames =  prefs.getBoolean( key[k++], false ); // DISTOX_TROBOT_NAMES
 
     // setZoomControls( prefs.getBoolean( key[k++], false ) ); // DISTOX_ZOOM_CONTROLS
     setZoomControls( prefs.getString( key[k++], "1"), app.isMultitouch() ); // DISTOX_ZOOM_CTRL
@@ -970,9 +971,9 @@ class TDSetting
       mLineAccuracy = tryFloat( prefs, k, "1" );
     } else if ( k.equals( key[ nk++ ] ) ) {           // DISTOX_LINE_CORNER
       mLineCorner   = tryFloat( prefs, k, "20" );
-    } else if ( k.equals( key[ nk++ ] ) ) {                           // DISTOX_LINE_STYLE
+    } else if ( k.equals( key[ nk++ ] ) ) {                      // DISTOX_LINE_STYLE
       setLineStyleAndType( prefs.getString( k, LINE_STYLE ) );
-    } else if ( k.equals( key[ nk++ ] ) ) {                           // DISTOX_DRAWING_UNIT
+    } else if ( k.equals( key[ nk++ ] ) ) {                      // DISTOX_DRAWING_UNIT
       try {
         f = Float.parseFloat( prefs.getString( k, "1.4" ) );
         if ( f > 0 && f != mUnit ) {
@@ -1025,6 +1026,8 @@ class TDSetting
       mMinNrLegShots    = tryInt( prefs, k, "3" );   // DISTOX_LEG_SHOTS (choice)
 
     } else if ( k.equals( key[ nk++ ] ) ) {
+      mSketchModelType = tryInt(  prefs, k, "1" );    // DISTOX_SKETCH_MODEL_TYPE
+    } else if ( k.equals( key[ nk++ ] ) ) {
       mSketchSideSize = tryFloat( prefs, k, "0.5" );  // 0.5 meter // DISTOX_SKETCH_LINE_STEP
     } else if ( k.equals( key[ nk++ ] ) ) { 
       mDeltaExtrude = tryFloat( prefs, k, "50" );     // DISTOX_DELTA_EXTRUDE
@@ -1075,8 +1078,6 @@ class TDSetting
       mExportStationsPrefix = prefs.getBoolean( k, false ); // DISTOX_STATION_PREFIX
     } else if ( k.equals( key[ nk++ ] ) ) {
       mStationNames = (prefs.getString( k, "alpha").equals("number"))? 1 : 0; // DISTOX_STATION_NAMES
-    } else if ( k.equals( key[ nk++ ] ) ) {
-      mTRobotNames = prefs.getBoolean( k, false ); // DISTOX_TROBOT_NAMES
     } else if ( k.equals( key[ nk++ ] ) ) {
       // setZoomControls( prefs.getBoolean( k, false ) ); // DISTOX_ZOOM_CONTROLS
       setZoomControls( prefs.getString( k, "1"), app.isMultitouch() ); // DISTOX_ZOOM_CTRL
@@ -1354,6 +1355,7 @@ class TDSetting
     if ( name.equals( "DISTOX_BEEP_VOLUME"    ) ) return parseIntValue( value, mBeepVolume, 10, 100 );
     // if ( name.equals( "DISTOX_LEG_SHOTS" )
 
+    //C if ( name.equals( "DISTOX_SKETCH_MODEL_TYPE" )
     if ( name.equals( "DISTOX_SKETCH_LINE_STEP" ) ) return parseFloatValue( value, mSketchSideSize,  0.01f );
     if ( name.equals( "DISTOX_DELTA_EXTRUDE"    ) ) return parseFloatValue( value, mDeltaExtrude,    0.01f );
     if ( name.equals( "DISTOX_COMPASS_READINGS" ) ) return parseIntValue(   value, mCompassReadings, 1 );
@@ -1401,7 +1403,7 @@ class TDSetting
     //B if ( name.equals( "DISTOX_AREA_BORDER" )
     if ( name.equals( "DISTOX_ORTHO_LRUD" ) ) return parseFloatValue( value, mOrthogonalLRUDAngle, 0, 90 );
 
-    // if ( name.equals( "DISTOX_WALLS_TYPE" )
+    //C if ( name.equals( "DISTOX_WALLS_TYPE" )
     if ( name.equals( "DISTOX_WALLS_PLAN_THR"     ) ) return parseFloatValue( value, mWallsPlanThr, 0, 90 );
     if ( name.equals( "DISTOX_WALLS_EXTENDED_THR" ) ) return parseFloatValue( value, mWallsExtendedThr, 0, 90 );
     if ( name.equals( "DISTOX_WALLS_XCLOSE"       ) ) return parseFloatValue( value, mWallsXClose, 0 );

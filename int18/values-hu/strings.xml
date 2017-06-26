@@ -84,7 +84,7 @@
    
     <string name="device_algo_failed">Az algoritmus automatikus kiválasztása nem sikerült\nLineáris eljárás használata</string>
     <string name="device_address">Cím %1$s</string>
-    <string name="device_busy">Az eszköz használatban</string>
+    <!-- UNUSED string name="device_busy">Az eszköz használatban</string -->
     <string name="device_illegal_addr">Helytelen memória cím</string>
     <string name="device_info">Eszköz információ</string>
     <string name="device_model_set">Valóban meg akarja változtatni az eszköz típusát?</string>
@@ -152,6 +152,8 @@
 
     <string name="illegal_data_value">Helytelen adat érték</string>
 
+    <!-- TODO string name="photo_title">PHOTO</string -->
+    <!-- TODO string name="photo_text">Enter photo comment</string -->
     <string name="label_title">FELIRAT</string>
     <string name="label_text">Írd be a feliratot.</string>
     <!-- UNUSED string name="altitude">Alt. </string -->
@@ -217,6 +219,7 @@
 
     <string name="no_bt">Nincs bluetooth</string>
     <string name="no_calib">Nincs kalibráció</string>
+    <!-- TODO string name="no_calib_check">No calibration-check shot</string -->
     <string name="no_calibration">Nincs kalibráció kiválasztva</string>
     <string name="no_capture_app">Nincs app fénykép készítéshez</string>
     <string name="no_cave3d">Cave3D nincs telepítve</string>
@@ -248,6 +251,7 @@
     <string name="menu_attach">KAPCSOL</string>
     <!-- UNUSED string name="menu_attached">ÖSSZEKAPCSOLT</string -->
     <!-- UNUSED string name="menu_ready">KÉSZ</string -->
+    <!-- TODO string name="menu_calib_check">CALIBR. CHECK</string -->
     <string name="menu_close">BEZÁR</string>
     <string name="menu_delete">TÖRÖL</string>
     <string name="menu_detach">SZÉTKAPCSOL</string>
@@ -292,6 +296,19 @@
     <string name="popup_erase_point">Pontok törlése</string>
     <string name="popup_erase_line">Vonalak törlése</string>
     <string name="popup_erase_area">Területek törlése</string>
+
+    <!-- TODO string name="popup_select_all">Select all</string -->
+    <!-- TODO string name="popup_select_point">Select points</string -->
+    <!-- TODO string name="popup_select_line">Select lines</string -->
+    <!-- TODO string name="popup_select_area">Select areas</string -->
+    <!-- TODO string name="popup_select_shot">Select shots</string -->
+    <!-- TODO string name="popup_select_station">Select stations</string -->
+
+    <!-- TODO string name="popup_cont_none">None</string -->
+    <!-- TODO string name="popup_cont_start">Start point</string -->
+    <!-- TODO string name="popup_cont_end">End point</string -->
+    <!-- TODO string name="popup_cont_both">Both points</string -->
+    <!-- TODO string name="popup_cont_continue">Continue</string -->
 
     <string name="connected_none">Nincs kapcsolat</string>
     <string name="connected_already">Már összekapcsolt</string>
@@ -340,6 +357,7 @@
     <!-- UNUSED string name="converted_tdr2th2">Converted sketches binary files to th2</string -->
     <!-- UNUSED string name="convert_tdr2th2">Overwrite th2 sketch files ?</string -->
     <string name="section_area">A keresztszelvény területe: %1$.1f</string>
+    <!-- TODO string name="scrap_outline">Sketch outline</string -->
 
     <!-- UNUSED string name="sensor">sensor</string -->
     <string name="sensor_gravity">gravitációs szenzor</string>
@@ -357,6 +375,8 @@
     <!-- UNUSED string name="shot_clino">clino</string -->
     <!-- UNUSED string name="shot_compass">compass</string -->
     <string name="shot_delete">Törli a mérést?</string>
+    <!-- TODO string name="shots_delete">Delete shots ?</string -->
+    <!-- TODO string name="shot_check">Mark shot as check-shot?</string -->
     <string name="shot_from">Honnan</string>
     <string name="shot_info">Írd be a mérés adatait</string>
     <!-- UNUSED string name="shot_length">length</string -->
@@ -396,6 +416,10 @@
     <string name="toggle_failed">Nem sikerült átkapcsolni a DistoX-et</string>
     <string name="toggle_ok">DistoX átkapcsolva kalibrációs üzemmódba</string>
     <string name="undelete_text">Érintse meg az elemet a visszaálításhoz</string>
+    <!-- TODO string name="undelete_shot">Shots</string -->
+    <!-- TODO string name="undelete_overshoot">Overshoots</string -->
+    <!-- TODO string name="undelete_check">Checks</string -->
+    <!-- TODO string name="undelete_plot">Sketches</string -->
     <string name="delete_whole_leg">Mérés törlése</string>
     <string name="visible_border">látható határ</string>
     <!-- UNUSED string name="vthreshold">vert. threshold</string -->
@@ -419,6 +443,7 @@
     <string name="stat_duplicate">Kettőzött mérés %1$d %2$.1f %3$s</string>
     <string name="stat_leg">Poligonmérések %1$d %2$.1f %3$s</string>
     <string name="stat_length">Hossz  %1$.1f %2$s</string>
+    <!-- TODO string name="stat_projlen">Plan length %1$.1f %2$s</string -->
     <string name="stat_loop">Hurkok %1$d</string>
     <string name="stat_origin">Nulla pont: %1$s</string>
     <string name="stat_azimuth">Oldalnézet vetítési iránya: %1$.1f</string>
@@ -515,6 +540,7 @@
 
     <string name="popup_do_splay">Segéd mérés</string>
     <string name="popup_do_leg">Poligon mérések</string>
+    <!-- TODO string name="popup_do_gm_data">Calib. shot</string -->
 
     <!-- UNUSED string name="btn_3d">3D</string -->
     <string name="btn_import">Importálás</string>
@@ -526,6 +552,7 @@
     <string name="symbol_mine">Bányászat</string>
     <string name="symbol_paleo">Őslénytan</string>
     <string name="symbol_speleo">Barlangászat</string>
+    <!-- TODO string name="symbol_extra">Speleo (2)</string -->
 
     <string name="symbol_reload">Rajz eszközök</string>
 
@@ -542,7 +569,7 @@
     <string name="sketch_mode_ngbh">Közeli mérések</string>
     <string name="sketch_mode_all">Minden mérés</string>
     <string name="sketch_delete">Törli a 3D modellt?</string>
-    <string name="sketch_no_split">Nem lehet finomítani. Csökkentsd az oldal max. hosszát a további pontosításhoz</string>
+    <!-- UNUSED string name="sketch_no_split">Nem lehet finomítani. Csökkentsd az oldal max. hosszát a további pontosításhoz</string -->
 
     <string name="length">Hossz [m]</string>
     <string name="azimuth">Irányszög [fok]</string>
@@ -584,7 +611,9 @@
     <string name="help_help">Ez a súgó</string>
     <!-- UNUSED string name="help_manual">User manual</string -->
     <string name="help_measure">Távolságmérés</string>
+    <!-- TODO string name="help_measure_type">Measuring mode: fixed point or polyline</string -->
     
+    <!-- TODO string name="help_calib_check">Calibration-check shots</string -->
     <string name="help_close">Súgó bezárása</string>
     <string name="help_coeff">Mutassa a kalibrációs együtthatókat</string>
     <string name="help_continue">Vonal folytatása</string>
@@ -681,18 +710,19 @@
     <string name="help_trash_model">3D modell törlése</string>
     <string name="help_head_model">3D modell tájolása</string>
     <!-- UNUSED string name="help_erase_model">Erase region</string -->
-    <string name="help_cut_model">Terület kivágása</string>
-    <string name="help_stretch_model">Terület kiterjesztése</string>
+    <!-- UNUSED string name="help_cut_model">Terület kivágása</string -->
+    <!-- UNUSED string name="help_stretch_model">Terület kiterjesztése</string -->
     <!-- UNUSED string name="help_extrude_model">Extrude region</string -->
-    <string name="help_refine_center">Felület finomítása a háromszögek középpontjában</string>
-    <string name="help_refine_sides">Felület finomítása a háromszögek oldalai mentén</string>
-    <string name="help_refine_point">Felület finomítása adott pontban</string>
-    <string name="help_refine_triangle">Felület finomítása a hosszú oldalak mentén</string>
+    <!-- UNUSED string name="help_refine_center">Felület finomítása a háromszögek középpontjában</string -->
+    <!-- UNUSED string name="help_refine_sides">Felület finomítása a háromszögek oldalai mentén</string -->
+    <!-- UNUSED string name="help_refine_point">Felület finomítása adott pontban</string -->
+    <!-- UNUSED string name="help_refine_triangle">Felület finomítása a hosszú oldalak mentén</string -->
   
 
     <string name="title_azimut">Vonatkozási rendszer</string>
     <string name="title_audio">Hangjegyzet</string>
     <string name="title_calib">Kalibrációk</string>
+    <!-- TODO string name="title_calib_check">Calibration-check shots</string -->
     <string name="title_coverage">Kalibrációs adatok eloszlása</string>
     <string name="title_coeff">Kalibrációs együtthatók</string>
     <string name="title_contour">Körvonal</string>
@@ -724,6 +754,7 @@
     <string name="title_projection">Vetített oldalnézet irányszöge %1$d</string>
     <string name="title_refs">Vázlat hivatkozásai</string>
     <string name="title_scraps">Felmérés vázlatok</string>
+    <!-- TODO string name="title_scraps_outline">Sketch outline</string -->
     <string name="title_select">Kiválaszt</string>
     <string name="title_shift">Váltás</string>
     <string name="title_shot_delete">Mérés törlése?</string>

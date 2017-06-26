@@ -15,6 +15,10 @@ import android.graphics.PointF;
 
 // import java.io.StringWriter;
 import java.io.PrintWriter;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -25,8 +29,10 @@ class SketchTriangle
 {
   // int type;       // 1: (n1, n1+1, n2), 2: (n1, n2+1, n2), 0: others
   boolean highlight;    // whether this triangle is highlighted
+/* if MODE_EDIT
   boolean inside;       // whether this triangle is inside the edit-border
   boolean splitted;     // whether this triangle has been splitted
+*/
   int i, j, k;          // vertex indices
   // int sjk, ski, sij; // side indices ( side sij is opposite to vertex k )
   SketchVertex  v1, v2, v3;
@@ -51,7 +57,7 @@ class SketchTriangle
   {
     surface = parent;
     highlight = false;
-    inside    = false;
+    // MODE_EDIT inside    = false;
     i = i0;
     j = j0;
     k = k0;
@@ -261,5 +267,14 @@ class SketchTriangle
   {
     // pw.format("  %d %d %d %d %d %d \n", i, j, k, sjk, ski, sij );
     pw.format("  %d %d %d\n", i, j, k );
+  }
+
+  void toTdr( BufferedOutputStream bos )  throws IOException
+  {
+    ByteBuffer b = ByteBuffer.allocate(6); // i, j, k
+    b.putShort( (short)(i) );
+    b.putShort( (short)(j) );
+    b.putShort( (short)(k) );
+    bos.write( b.array() );
   }
 }

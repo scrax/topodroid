@@ -84,7 +84,7 @@
    
     <string name="device_algo_failed">Алгоритм автоопределения не сработал\nИспользую линейный алгоритм</string>
     <string name="device_address">Адрес %1$s</string>
-    <string name="device_busy">Устройство занято</string>
+    <!-- UNUSED string name="device_busy">Устройство занято</string -->
     <string name="device_illegal_addr">Недопустимый адрес памяти</string>
     <string name="device_info">Информация об устройстве</string>
     <string name="device_model_set">Вы уверенны что хотите сменить модель прибора</string>
@@ -151,6 +151,8 @@
     <!-- UNUSED string name="pairing_failed">Не удалось соединить устройства</string -->
 
     <string name="illegal_data_value">Недопустимое значение</string>
+    <string name="photo_title">ФОТО</string>
+    <string name="photo_text">Введите коментарий к фото</string>
     <string name="label_title">ПОДПИСЬ</string>
     <string name="label_text">Введите текст подписи</string>
     <!-- UNUSED string name="altitude">Alt. </string -->
@@ -218,6 +220,7 @@
 
     <string name="no_bt">Нет Блютуфа</string>
     <string name="no_calib">Отсутствует калибровка</string>
+    <string name="no_calib_check">Нет замеров проверки-калибровки</string>
     <string name="no_calibration">Калибровка не выбрана</string>
     <string name="no_capture_app">Отсутствует приложение для фото</string>
     <string name="no_cave3d">Cave3D не установлен</string>
@@ -249,6 +252,7 @@
     <string name="menu_attach">СОЕДИНИТЬ</string>
     <!-- UNUSED string name="menu_attached">Connected</string -->
     <!-- UNUSED string name="menu_ready">Ready</string -->
+    <string name="menu_calib_check">КОНТРОЛЬ КАЛИБ.</string>
     <string name="menu_close">ЗАКРЫТЬ</string>
     <string name="menu_delete">Удалить</string>
     <string name="menu_detach">Отсоединить</string>
@@ -301,6 +305,12 @@
     <string name="popup_select_shot">Выбрать замеры</string>
     <string name="popup_select_station">Выбрать пикеты</string>
 
+    <string name="popup_cont_none">Не соединять</string>
+    <string name="popup_cont_start">Начальная точка</string>
+    <string name="popup_cont_end">Конечная точка</string>
+    <string name="popup_cont_both">Обе точки</string>
+    <string name="popup_cont_continue">Продолжить</string>
+
     <string name="connected_none">Не соединено</string>
     <string name="connected_already">Уже соединено</string>
 
@@ -348,6 +358,7 @@
     <!-- UNUSED string name="converted_tdr2th2">Конвертировать бинарные файлы абрисов в формат th2</string -->
     <!-- UNUSED string name="convert_tdr2th2">Перезаписать абрисы в формате th2 ?</string -->
     <string name="section_area">Площадь сечения: %1$.1f</string>
+    <string name="scrap_outline">Контуры другого абриса</string>
 
     <!-- UNUSED string name="sensor">датчик</string -->
     <string name="sensor_gravity">ускорение</string>
@@ -365,6 +376,8 @@
     <!-- UNUSED string name="shot_clino">угол</string -->
     <!-- UNUSED string name="shot_compass">азимут</string -->
     <string name="shot_delete">Удалить сегмент ?</string>
+    <string name="shots_delete">Удалить сегменты ?</string>
+    <string name="shot_check">Пометить замер как проверочный?</string>
     <string name="shot_from">№ ОТ</string>
     <string name="shot_info">Введите данные измерений</string>
     <!-- UNUSED string name="shot_length">длина</string -->
@@ -378,6 +391,7 @@
     <string name="sketch3d_name">Название</string>
     <string name="sketch3d_new">Новая 3D модель</string>
     <string name="sketch3d_next">следующий пикет</string>
+	<string name="sketch3d_loading">загрузка модели ...</string>
     <!-- UNUSED string name="sketch3d_null_name">Отсутствует название 3D абриса</string -->
     <!-- UNUSED string name="sketch3d_null_next">Отсутствует следующий пикет 3D абриса</string -->
     <!-- UNUSED string name="sketch3d_null_start">Отсутствует начальный пикет 3D абриса</string -->
@@ -404,6 +418,10 @@
     <string name="toggle_failed">Не удалось переключить DistoX</string>
     <string name="toggle_ok">Переключить DistoX в режим калибровки</string>
     <string name="undelete_text">Нажмите на элемент чтобы восстановить</string>
+    <string name="undelete_shot">Замеры</string>
+    <string name="undelete_overshoot">Сл.длинные замеры</string>
+    <string name="undelete_check">Проверочные</string>
+    <string name="undelete_plot">Абрисы</string>
     <string name="delete_whole_leg">Удалить все замеры</string>
     <string name="visible_border">видимая граница</string>
     <!-- UNUSED string name="vthreshold">верт. порог</string -->
@@ -427,6 +445,7 @@
     <string name="stat_duplicate">Дублированные пикеты %1$d длина: %2$.1f %3$s</string>
     <string name="stat_leg">Отрезки %1$d общая длина: %2$.1f %3$s</string>
     <string name="stat_length">Длина %1$.1f %2$s</string>
+    <string name="stat_projlen">Длина в плане %1$.1f %2$s</string>
     <string name="stat_loop">Петли %1$d</string>
     <string name="stat_origin">Нулевой пикет: %1$s</string>
     <string name="stat_azimuth">Азимут проекции разреза-развёртки: %1$.1f</string>
@@ -522,6 +541,7 @@
 
     <string name="popup_do_splay">Сделать замер</string>
     <string name="popup_do_leg">Сделать три замера</string>
+    <string name="popup_do_gm_data">Контроль Калибр.</string>
 
     <!-- UNUSED string name="btn_3d">3D</string -->
     <string name="btn_import">Импорт</string>
@@ -533,6 +553,7 @@
     <string name="symbol_mine">Шахты</string>
     <string name="symbol_paleo">Палео</string>
     <string name="symbol_speleo">Спелео</string>
+    <string name="symbol_extra">Спелео (2)</string>
 
     <string name="symbol_reload">Инструменты Рисования</string>
 
@@ -549,7 +570,7 @@
     <string name="sketch_mode_ngbh">Соседние пикеты</string>
     <string name="sketch_mode_all">Все пикеты</string>
     <string name="sketch_delete">Удалить 3D модель ?</string>
-    <string name="sketch_no_split">Не точно. Уменьшите боковую макс. длинну чтобы уточнить.</string>
+    <!-- UNUSED string name="sketch_no_split">Не точно. Уменьшите боковую макс. длинну чтобы уточнить.</string -->
     <string name="length">Длина [м]</string>
     <string name="azimuth">Азимут [грд]</string>
     <string name="clino">Угол [грд]</string>
@@ -590,7 +611,9 @@
     <string name="help_help">Помощь</string>
     <!-- UNUSED string name="help_manual">Инструкция</string -->
     <string name="help_measure">Измерить расстояния</string>
+    <string name="help_measure_type">Режим измерений: по прямой или ломаной</string>
     
+    <string name="help_calib_check">Контрольные замеры</string>
     <string name="help_close">Закрыть Окно</string>
     <string name="help_coeff">Показать коэффициенты калибровки</string>
     <string name="help_continue">Продолжить рисовать линию</string>
@@ -687,18 +710,19 @@
     <string name="help_trash_model">Удалить 3D модель</string>
     <string name="help_head_model">Ориентировать 3D модель</string>
     <!-- UNUSED string name="help_erase_model">Удалить область</string -->
-    <string name="help_cut_model">Обрезать область</string>
-    <string name="help_stretch_model">Растянуть область</string>
+    <!-- UNUSED string name="help_cut_model">Обрезать область</string -->
+    <!-- UNUSED string name="help_stretch_model">Растянуть область</string -->
     <!-- UNUSED string name="help_extrude_model">Вырезать область</string -->
-    <string name="help_refine_center">Уточнить поверхность в центре треугольников</string>
-    <string name="help_refine_sides">Уточнить поверхность в сторонах треугольников</string>
-    <string name="help_refine_point">Уточнить поверхность в точке</string>
-    <string name="help_refine_triangle">Уточнить поверхность вдоль длинной стороны</string>
+    <!-- UNUSED string name="help_refine_center">Уточнить поверхность в центре треугольников</string -->
+    <!-- UNUSED string name="help_refine_sides">Уточнить поверхность в сторонах треугольников</string -->
+    <!-- UNUSED string name="help_refine_point">Уточнить поверхность в точке</string -->
+    <!-- UNUSED string name="help_refine_triangle">Уточнить поверхность вдоль длинной стороны</string -->
   
 
     <string name="title_azimut">Направление развёртки</string>
     <string name="title_audio">Аудио заметка</string>
     <string name="title_calib">Калибровки</string>
+    <string name="title_calib_check">Замеры контроля калибровки</string>
     <string name="title_coverage">Калибровка и распределение данных</string>
     <string name="title_coeff">Калибровочные коэффициенты</string>
     <string name="title_contour">Контур</string>
@@ -730,6 +754,7 @@
     <string name="title_projection">Проекция разреза на вертикальную плоскость Аз. %1$d</string>
     <string name="title_refs">Вид</string>
     <string name="title_scraps">Абрисы в съёмке</string>
+    <string name="title_scraps_outline">Контуры абриса</string>
     <string name="title_select">Выбрать</string>
     <string name="title_shift">Сдвиг</string>
     <string name="title_shot_delete">Удалить отрезок ?</string>
@@ -1121,13 +1146,13 @@
   <!-- UNUSED string name="line_normal">нормальный</string -->
   <!-- UNUSED string name="line_coarse">грубый</string -->
   <!-- UNUSED string name="units_ddmmss">ddmmss</string -->
-  <!-- UNUSED string name="units_dd">degrees</string -->
-  <!-- UNUSED string name="units_grads">grads</string -->
-  <!-- UNUSED string name="units_meters">meters</string -->
-  <!-- UNUSED string name="units_feet">feet</string -->
-  <!-- UNUSED string name="alt_wgs">ellipsoid</string -->
-  <!-- UNUSED string name="alt_ortho">orthometric</string -->
-  <!-- UNUSED string name="splay_extend">estimate splay extend</string -->
+  <!-- UNUSED string name="units_dd">градусы</string -->
+  <!-- UNUSED string name="units_grads">грады</string -->
+  <!-- UNUSED string name="units_meters">метры</string -->
+  <!-- UNUSED string name="units_feet">футы</string -->
+  <!-- UNUSED string name="alt_wgs">элипсоид</string -->
+  <!-- UNUSED string name="alt_ortho">ортометрическая</string -->
+  <!-- UNUSED string name="splay_extend">вычислять развертку сплеев</string -->
 
     <string name="welcome_title">TopoDroid %1$s</string>
 

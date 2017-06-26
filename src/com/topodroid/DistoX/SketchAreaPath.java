@@ -18,6 +18,9 @@ import android.graphics.Matrix;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+
 import java.util.Iterator;
 // import java.util.List;
 import java.util.ArrayList;
@@ -95,6 +98,19 @@ public class SketchAreaPath extends SketchPath
     pw.format("  a%d\n", mAreaCnt );
     pw.format("endarea\n");
     return sw.getBuffer().toString();
+  }
+
+  public void toTdr( BufferedOutputStream bos ) throws IOException
+  {
+    SketchModel.toTdr( bos, (short)3 );
+    SketchModel.toTdr( bos, BrushManager.mAreaLib.getSymbolThName( mThType ) );
+    SketchModel.toTdr( bos, st1 );
+    SketchModel.toTdr( bos, st2 );
+    // SketchModel.toTdr( bos, mAreaCnt );
+    SketchModel.toTdr( bos, (short)(mLine.points.size()) );
+    for ( Vector pt : mLine.points ) {
+      SketchModel.toTdr( bos, pt.x, pt.y, pt.z);
+    }
   }
 
 }

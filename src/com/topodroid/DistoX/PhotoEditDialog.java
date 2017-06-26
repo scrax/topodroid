@@ -54,6 +54,7 @@ public class PhotoEditDialog extends MyDialog
   private float mClino   = 0;
   private int mOrientation = 0;
   private String mDate = "";
+  private boolean mAtShot;
 
   /**
    * @param context   context
@@ -65,6 +66,7 @@ public class PhotoEditDialog extends MyDialog
     mApp    = app;
     mPhoto  = photo;
     mFilename = filename;
+    mAtShot   = (mPhoto.shotid >= 0);
     // TDLog.Log(TDLog.LOG_PHOTO, "PhotoEditDialog " + mFilename);
 
     mAzimuth = mClino = 0;
@@ -130,8 +132,7 @@ public class PhotoEditDialog extends MyDialog
         int h2 = image.getHeight() / 8;
         Bitmap image2 = Bitmap.createScaledBitmap( image, w2, h2, true );
         if ( image2 != null ) {
-          mIVimage.setImageBitmap( image2 );
-          MyBearingAndClino.applyOrientation( mIVimage, mOrientation );
+          MyBearingAndClino.applyOrientation( mIVimage, image2, mOrientation );
           // mIVimage.setHeight( h2 );
           // mIVimage.setWidth( w2 );
           mIVimage.setOnClickListener( this );
@@ -144,7 +145,11 @@ public class PhotoEditDialog extends MyDialog
     }
 
     mButtonOK.setOnClickListener( this );
-    mButtonDelete.setOnClickListener( this );
+    if ( mAtShot ) {
+      mButtonDelete.setOnClickListener( this );
+    } else {
+      mButtonDelete.setVisibility( View.GONE );
+    }
     // mButtonCancel.setOnClickListener( this );
   }
 

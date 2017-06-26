@@ -83,6 +83,8 @@ public class ShotNewDialog extends MyDialog
   private Button   mBtnCamera;
   private byte[] mJpegData; // camera jpeg data
 
+  private static boolean mLRUDatTo = false;
+
   TimerTask mTimer;
   private MyKeyboard mKeyboard = null;
 
@@ -247,6 +249,7 @@ public class ShotNewDialog extends MyDialog
 
     mCBsplayAtTo = new CheckBox( mContext );
     mCBsplayAtTo.setText( R.string.splay_at_to );
+    mCBsplayAtTo.setChecked( mLRUDatTo );
     layout4.addView( mCBsplayAtTo );
 
 
@@ -261,6 +264,12 @@ public class ShotNewDialog extends MyDialog
     //   ArrayAdapter.createFromResource( mContext, R.array.extend_name, android.R.layout.simple_spinner_item );   
     // adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
     // mExtend.setAdapter( adapter );
+
+    // if ( TDAzimuth.mFixedExtend == -1L ) {
+    //   mRadioLeft.setChecked( true );
+    // } else if ( TDAzimuth.mFixedExtend == 1L ) {
+    //   mRadioRight.setChecked( true );
+    // }
 
     mBtnOk.setOnClickListener( this );
     mBtnSave.setOnClickListener( this );
@@ -369,7 +378,8 @@ public class ShotNewDialog extends MyDialog
       else if ( mRadioRight.isChecked() ) { shot_extend = 1; }
       else { // let TopoDroid choose
         try {
-          shot_extend = TDAzimuth.computeLegExtend( Float.parseFloat(bearing.replace(',','.') ) );
+          float bx = Float.parseFloat( bearing.replace(',','.') );
+          shot_extend = TDAzimuth.computeLegExtend( bx );
         } catch ( NumberFormatException e ) { }
       }
 
@@ -385,7 +395,8 @@ public class ShotNewDialog extends MyDialog
       DBlock blk = null;
       try {
         if ( shot_to.length() > 0 ) {
-          String splay_station = mCBsplayAtTo.isChecked() ? shot_to : shot_from;
+          mLRUDatTo = mCBsplayAtTo.isChecked();
+          String splay_station = mLRUDatTo ? shot_to : shot_from;
           if ( distance.length() == 0 ) {
             distance = backdistance;
           } else if ( backdistance.length() == 0 ) {

@@ -84,7 +84,7 @@
    
     <!-- FIXME string name="device_algo_failed">Neuspešna definicija automatičnega lgoritma_uporaba linearnega algoritma</string bad chararcter backslash-u  -->
     <!-- TODO string name="device_address">Address %1$s</string -->
-    <string name="device_busy">Aparat zaseden</string>
+    <!-- UNUSED string name="device_busy">Aparat zaseden</string -->
     <string name="device_illegal_addr">Ilegalen naslov spomina naprave</string>
     <string name="device_info">Podatki o napravi</string>
     <string name="device_model_set">Želiš spremeniti model naprave</string>
@@ -152,6 +152,8 @@
 
     <string name="illegal_data_value">Neustrezni podatki</string>
 
+    <!-- TODO string name="photo_title">PHOTO</string -->
+    <!-- TODO string name="photo_text">Enter photo comment</string -->
     <string name="label_title">TEKST</string>
     <string name="label_text">Piši tekst</string>
     <!-- UNUSED string name="altitude">Alt. </string -->
@@ -220,6 +222,7 @@
 
     <string name="no_bt">Ni Bluetootha</string>
     <string name="no_calib">Ni kalibracije</string>
+    <!-- TODO string name="no_calib_check">No calibration-check shot</string -->
     <string name="no_calibration">Ni izbrane kalibracije</string>
     <string name="no_capture_app">Ni app za foto</string>
     <string name="no_cave3d">Cave3D ni instaliran</string>
@@ -251,6 +254,7 @@
     <string name="menu_attach">PRIPNI</string>
     <!-- UNUSED string name="menu_attached">Connected</string -->
     <!-- UNUSED string name="menu_ready">Ready</string -->
+    <!-- TODO string name="menu_calib_check">CALIBR. CHECK</string -->
     <!-- TODO string name="menu_close">CLOSE</string -->
     <string name="menu_delete">BRIŠI</string>
     <string name="menu_detach">ODPNI</string>
@@ -295,6 +299,19 @@
     <!-- TODO string name="popup_erase_point">Erase points</string -->
     <!-- TODO string name="popup_erase_line">Erase lines</string -->
     <!-- TODO string name="popup_erase_area">Erase areas</string -->
+
+    <!-- TODO string name="popup_select_all">Select all</string -->
+    <!-- TODO string name="popup_select_point">Select points</string -->
+    <!-- TODO string name="popup_select_line">Select lines</string -->
+    <!-- TODO string name="popup_select_area">Select areas</string -->
+    <!-- TODO string name="popup_select_shot">Select shots</string -->
+    <!-- TODO string name="popup_select_station">Select stations</string -->
+
+    <!-- TODO string name="popup_cont_none">None</string -->
+    <!-- TODO string name="popup_cont_start">Start point</string -->
+    <!-- TODO string name="popup_cont_end">End point</string -->
+    <!-- TODO string name="popup_cont_both">Both points</string -->
+    <!-- TODO string name="popup_cont_continue">Continue</string -->
 
     <string name="connected_none">Ni povezano</string>
     <string name="connected_already">Že povezano</string>
@@ -343,6 +360,7 @@
     <!-- UNUSED string name="converted_tdr2th2">Pretvorjena skice iz binarnega formata v th2</string -->
     <!-- UNUSED string name="convert_tdr2th2">Pretvori  skico iz binarnega formata v th2</string -->
     <string name="section_area">Površina preseka: %1$.1f</string>
+    <!-- TODO string name="scrap_outline">Sketch outline</string -->
 
     <!-- UNUSED string name="sensor">sensore</string -->
     <string name="sensor_gravity">teža</string>
@@ -360,6 +378,8 @@
     <!-- UNUSED string name="shot_clino">clino</string -->
     <!-- UNUSED string name="shot_compass">bussola</string -->
     <string name="shot_delete">Brisati vizuro</string>
+    <!-- TODO string name="shots_delete">Delete shots ?</string -->
+    <!-- TODO string name="shot_check">Mark shot as check-shot?</string -->
     <string name="shot_from">Od</string>
     <string name="shot_info">Podatki vizure</string>
     <!-- UNUSED string name="shot_length">lunghezza</string -->
@@ -399,6 +419,10 @@
     <string name="toggle_failed">Neuspela aktivacija kalibracije</string>
     <string name="toggle_ok">DistoX v opciji kalibracija</string>
     <string name="undelete_text">Izberi objekt za ponvono uporabo</string>
+    <!-- TODO string name="undelete_shot">Shots</string -->
+    <!-- TODO string name="undelete_overshoot">Overshoots</string -->
+    <!-- TODO string name="undelete_check">Checks</string -->
+    <!-- TODO string name="undelete_plot">Sketches</string -->
     <!-- TODO string name="delete_whole_leg">Delete whole leg</string -->
     <string name="visible_border">Vidni robovi</string>
     <!-- UNUSED string name="vthreshold">soglia vert.</string -->
@@ -422,6 +446,7 @@
     <string name="stat_duplicate">Dvojne vizure %1$d %2$.1f %3$s</string>
     <string name="stat_leg">Vizure %1$d %2$.1f %3$s</string>
     <string name="stat_length">Dolžina %1$.1f %2$s</string>
+    <!-- TODO string name="stat_projlen">Plan length %1$.1f %2$s</string -->
     <string name="stat_loop">Zanke %1$d</string>
     <string name="stat_origin">Merilna točka 0: %1$s</string>
     <!-- TODO string name="stat_azimuth">Profile projection azimuth: %1$.1f</string -->
@@ -518,6 +543,7 @@
 
     <string name="popup_do_splay">Stranske meritve</string>
     <string name="popup_do_leg">Vizura</string>
+    <!-- TODO string name="popup_do_gm_data">Calib. shot</string -->
 
     <!-- UNUSED string name="btn_3d">3D</string -->
     <string name="btn_import">Uvozi</string>
@@ -529,6 +555,7 @@
     <!-- TODO string name="symbol_mine">Mining</string -->
     <!-- TODO string name="symbol_paleo">Paleo</string -->
     <!-- TODO string name="symbol_speleo">Speleo</string -->
+    <!-- TODO string name="symbol_extra">Speleo (2)</string -->
 
     <!-- TODO string name="symbol_reload">Drawing Tools</string -->
 
@@ -545,7 +572,7 @@
     <!-- NO string name="sketch_mode_ngbh">Nearby shots</string -->
     <!-- NO string name="sketch_mode_all">All shots</string -->
     <!-- NO string name="sketch_delete">Delete 3D model ?</string -->
-    <!-- NO string name="sketch_no_split">No refinement. Decrease side max. length to refine further.</string -->
+    <!-- UNUSED string name="sketch_no_split">No refinement. Decrease side max. length to refine further.</string -->
 
     <string name="length">Dolžina [m]</string>
     <string name="azimuth">Azimut [deg]</string>
@@ -584,7 +611,9 @@
     <string name="help_help">Pomoč</string>
     <!-- UNUSED string name="help_manual">Manuale online</string -->
     <string name="help_measure">Meriti razdaljo</string>
+    <!-- TODO string name="help_measure_type">Measuring mode: fixed point or polyline</string -->
     
+    <!-- TODO string name="help_calib_check">Calibration-check shots</string -->
     <!-- TODO string name="help_close">Close window</string -->
     <string name="help_coeff">Koeficient kalibracije</string>
     <!-- TODO string name="help_continue">Continue drawing a line</string -->
@@ -681,18 +710,19 @@
     <!-- NO string name="help_trash_model">Delete 3D model</string -->
     <!-- NO string name="help_head_model">Orient 3D model</string -->
     <!-- UNUSED string name="help_erase_model">Erase region</string -->
-    <!-- NO string name="help_cut_model">Cut region</string -->
-    <!-- NO string name="help_stretch_model">Stretch region</string -->
+    <!-- UNUSED string name="help_cut_model">Cut region</string -->
+    <!-- UNUSED string name="help_stretch_model">Stretch region</string -->
     <!-- UNUSED string name="help_extrude_model">Extrude region</string -->
-    <!-- NO string name="help_refine_center">Refine surface at triangle centers</string -->
-    <!-- NO string name="help_refine_sides">Refine surface at triangle sides</string -->
-    <!-- NO string name="help_refine_point">Refine surface at point</string -->
-    <!-- NO string name="help_refine_triangle">Refine surface al the long sides</string -->
+    <!-- UNUSED string name="help_refine_center">Refine surface at triangle centers</string -->
+    <!-- UNUSED string name="help_refine_sides">Refine surface at triangle sides</string -->
+    <!-- UNUSED string name="help_refine_point">Refine surface at point</string -->
+    <!-- UNUSED string name="help_refine_triangle">Refine surface al the long sides</string -->
  
 
     <string name="title_azimut">Referenca Extend</string>
     <!-- TODO string name="title_audio">Audio comment</string -->
     <string name="title_calib">Kalibracija</string>
+    <!-- TODO string name="title_calib_check">Calibration-check shots</string -->
     <string name="title_coverage">Razporeditev podatkov kalibracije</string>
     <string name="title_coeff">Kalibracija</string>
     <!-- TODO string name="title_contour">Contour</string -->
@@ -724,6 +754,7 @@
     <!-- TODO string name="title_projection">Projected profile azimuth %1$d</string -->
     <string name="title_refs">Grafične reference</string>
     <string name="title_scraps">Skice</string>
+    <!-- TODO string name="title_scraps_outline">Sketch outline</string -->
     <string name="title_shift">Premakni</string>
     <!-- TODO string name="title_select">Select</string -->
     <string name="title_shot_delete">Odstrani vizuro</string>

@@ -44,7 +44,7 @@
     <!-- UNUSED string name="missing_warning">Следните символи за рисуване липсват\n</string -->
     <string name="failed_snap_to_line">Няма близка точка за прикачане на границата на площта</string>
     <string name="failed_snap_to_point">Няма близка точка за прикачане на избраната точка</string>
-    <!-- TODO string name="failed_snap_to_splays">No close splay to snap the line to</string -->
+    <string name="failed_snap_to_splays">Няма близки измервания за прикачане на линията</string>
 
     <string name="calibration_title">Калбриране на инструменти</string>
     <string name="calibration_length">Рулетка</string>
@@ -84,7 +84,7 @@
 
     <string name="device_algo_failed">Невъзможно автоматично определяне на алгоритъма\nЩе бъде използван линеен</string>
     <string name="device_address">Адрес %1$s</string>
-    <string name="device_busy">Устройството е заето</string>
+    <!-- UNUSED string name="device_busy">Устройството е заето</string -->
     <string name="device_illegal_addr">Грешен адрес в паметта</string>
     <string name="device_info">Информация за устройството</string>
     <string name="device_model_set">Наистина ли искате да промените модела на устройството?</string>
@@ -152,6 +152,8 @@
 
     <string name="illegal_data_value">Невалидни данни</string>
 
+    <!-- TODO string name="photo_title">PHOTO</string -->
+    <!-- TODO string name="photo_text">Enter photo comment</string -->
     <string name="label_title">надпис</string>
     <string name="label_text">Въведете текст за надписа</string>
     <!-- UNUSED string name="altitude">Надм. височина</string -->
@@ -218,6 +220,7 @@
 
     <string name="no_bt">Липсва Bluetooth</string>
     <string name="no_calib">Липсва калибрация</string>
+    <string name="no_calib_check">Липсва контролно измерване</string>
     <string name="no_calibration">Не е избрана калибрация</string>
     <string name="no_capture_app">Липсва програма за камера</string>
     <string name="no_cave3d">Cave3D не е инсталирана</string>
@@ -240,8 +243,8 @@
     <string name="no_thmanager">ThManager не е инсталирана</string>
     <string name="no_db_viewer">Програмата SQliteViewer не е инсталирана</string>
     <string name="no_undelete">Няма елементи за възстановяване</string>
-    <!-- FIXME string name="format_measure_plan">D %1$.2f Dx %2$.2f Dy %3$.2f Азимут %4$.1f"</string -->
-    <!-- FIXME string name="format_measure_profile">D %1$.2f Dx %2$.2f Dy %3$.2f Наклон %4$.1f"</string -->
+    <string name="format_measure_plan">D %1$.2f %2$.2f Dx %3$.2f Dy %4$.2f Азимут %5$.1f"</string>
+    <string name="format_measure_profile">D %1$.2f %2$.2f Dx %3$.2f Dy %4$.2f Наклон %5$.1f"</string>
 
     <!-- OK string name="menu_3d">3D</string -->
     <string name="menu_about">За програмата</string>
@@ -249,6 +252,7 @@
     <string name="menu_attach">Свързване</string>
     <!-- UNUSED string name="menu_attached">connected</string -->
     <!-- UNUSED string name="menu_ready">ready</string -->
+    <string name="menu_calib_check">Проверка калибрация</string>
     <string name="menu_close">Затваряне</string>
     <string name="menu_delete">Изтриване</string>
     <string name="menu_detach">Прек. на връзката</string>
@@ -264,7 +268,7 @@
     <string name="menu_help">Помощ</string>
     <string name="menu_join_survey">Ко-картиране</string>
     <string name="menu_logs">Лог файлове</string>
-    <string name="menu_manual_calibration">Калибрация</string>
+    <string name="menu_manual_calibration">Калибрация инстр.</string>
     <string name="menu_options">Настройки</string>
     <string name="menu_overview">Общ изглед</string>
     <string name="menu_pair">Сдвояване</string>
@@ -282,17 +286,30 @@
 
     <string name="popup_join_pt">Прикачване към близка точка</string>
     <string name="popup_snap_ln">Прикачване към близка линия</string>
-    <!-- TODO string name="popup_snap_to_splays">Snap to nearby splays</string -->
+    <string name="popup_snap_to_splays">Прикачване към близки стр. измервания</string>
     <string name="popup_split_pt">Дублиране на точката</string>
     <string name="popup_split_ln">Разделяне на линията в точката</string>
     <string name="popup_sharp_pt">Изправяне (премахване Безие)</string>
     <string name="popup_curve_pt">Изглаждане (с Безие)</string>
     <string name="popup_remove_pt">Изтриване на точката</string>
 
-    <!-- TODO string name="popup_erase_all">Erase all</string -->
-    <!-- TODO string name="popup_erase_point">Erase points</string -->
-    <!-- TODO string name="popup_erase_line">Erase lines</string -->
-    <!-- TODO string name="popup_erase_area">Erase areas</string -->
+    <string name="popup_erase_all">Изтрива всичко</string>
+    <string name="popup_erase_point">Изтрива точки</string>
+    <string name="popup_erase_line">Изтрива линии</string>
+    <string name="popup_erase_area">Изтрива площи</string>
+
+    <!-- TODO string name="popup_select_all">Select all</string -->
+    <!-- TODO string name="popup_select_point">Select points</string -->
+    <!-- TODO string name="popup_select_line">Select lines</string -->
+    <!-- TODO string name="popup_select_area">Select areas</string -->
+    <!-- TODO string name="popup_select_shot">Select shots</string -->
+    <!-- TODO string name="popup_select_station">Select stations</string -->
+
+    <!-- TODO string name="popup_cont_none">None</string -->
+    <!-- TODO string name="popup_cont_start">Start point</string -->
+    <!-- TODO string name="popup_cont_end">End point</string -->
+    <!-- TODO string name="popup_cont_both">Both points</string -->
+    <!-- TODO string name="popup_cont_continue">Continue</string -->
 
     <string name="connected_none">Няма връзка</string>
     <string name="connected_already">Вече има връзка</string>
@@ -303,9 +320,9 @@
     <!-- UNUSED string name="not_implemented">Тази функционалност не достъпна все още</string -->
     <string name="null_bitmap">Не може да бъде създадено изображение. Недостатъчна памет</string>
     <string name="photo">снимка</string>
-    <!-- TODO string name="photo_camera">Camera App</string -->
+    <string name="photo_camera">Приложение за камера</string>
     <string name="photo_comment_prompt">Въведете коментар към снимката</string>
-    <!-- TODO string name="photo_azimuth_clino">Azimuth: %1$.1f Clino %2$.1f</string -->
+    <string name="photo_azimuth_clino">Азимут: %1$.1f Наклон %2$.1f</string>
     <!-- UNUSED string name="photo_name">репер/име</string -->
     <!-- UNUSED string name="photo_photo">снимка</string -->
     <!-- UNUSED string name="photo_sensor">сензор</string -->
@@ -316,7 +333,7 @@
     <!-- UNUSED string name="picture_no_station">Необходимо е име на репер</string -->
     <string name="plot_delete">Изтриване на скица?</string>
     <string name="item_delete">Изтриване на елемент %1$s ?</string>
-    <!-- TODO string name="splay_delete">Delete splay %1$s ?</string -->
+    <string name="splay_delete">Изтриване на стр. измерване %1$s ?</string>
     <string name="plot_duplicate_name">Дублирано име на скица</string>
     <!-- UNUSED string name="plot_name">Име на скица</string -->
     <string name="plot_new">Нова скица</string>
@@ -341,6 +358,7 @@
     <!-- UNUSED string name="converted_tdr2th2">Конвертиране на файлове със скици от двоични в th2</string -->
     <!-- UNUSED string name="convert_tdr2th2">Презаписване на съшествуващи th2 файлове?</string -->
     <string name="section_area">Площ на сечение: %1$.1f</string>
+    <!-- TODO string name="scrap_outline">Sketch outline</string -->
 
     <!-- UNUSED string name="sensor">сензор</string -->
     <string name="sensor_gravity">гравитация</string>
@@ -358,6 +376,8 @@
     <!-- string name="shot_clino">clino</string -->
     <!-- string name="shot_compass">compass</string -->
     <string name="shot_delete">Изтриване на измерване?</string>
+    <!-- TODO string name="shots_delete">Delete shots ?</string -->
+    <string name="shot_check">Маркиране като контролно измерване?</string>
     <string name="shot_from">от</string>
     <string name="shot_info">Въведете данни за отсечката</string>
     <!-- string name="shot_length">length</string -->
@@ -397,6 +417,10 @@
     <string name="toggle_failed">Грешка при превключване на DistoX</string>
     <string name="toggle_ok">Включен/изключен режим на калибрация на DistoX</string>
     <string name="undelete_text">Изберете какво искате да възстановите</string>
+    <string name="undelete_shot">Измервания</string>
+    <string name="undelete_overshoot">Дълги измервания</string>
+    <string name="undelete_check">Проверки</string>
+    <string name="undelete_plot">Скици</string>
     <string name="delete_whole_leg">Изтриване на отсечка</string>
     <string name="visible_border">видима граница</string>
     <!-- UNUSED string name="vthreshold">вертикална граница</string -->
@@ -420,6 +444,7 @@
     <string name="stat_duplicate">Дублирани отсечки %1$d %2$.1f %3$s</string>
     <string name="stat_leg">Отсечки %1$d %2$.1f %3$s</string>
     <string name="stat_length">Дължина %1$.1f %2$s</string>
+    <string name="stat_projlen">Редуцирана дължина %1$.1f %2$s</string>
     <string name="stat_loop">Полигони %1$d</string>
     <string name="stat_origin">Начален репер: %1$s</string>
     <string name="stat_azimuth">Азимут на проект. разрез: %1$.1f</string>
@@ -427,7 +452,7 @@
     <string name="stat_splay">Странични %1$d</string>
     <string name="stat_station">Репери %1$d</string>
     <string name="stat_surface">Повърхн. отсечки %1$d %2$.1f %3$s</string>
-    <string name="stat_wens">З %1$.0f  И %2$.0f  С %3$.0f  Ю %4$.0f [%5$s]"</string>
+    <string name="stat_wens">З %1$.0f,  И %2$.0f,  С %3$.0f,  Ю %4$.0f [%5$s]"</string>
     <string name="stat_angle_error">Ъглова грешка %1$.2f ± %2$.2f"</string>
     <string name="shot_title">Отсечка %1$s - %2$s"</string>
     <string name="shot_data">Дълж. %1$.2f  Азимут %2$.1f  Наклон %3$.1f"</string>
@@ -505,7 +530,7 @@
     <string name="mode_grid">Мащабна мрежа</string>
     <string name="mode_fixed">Преместване на скица</string>
     <string name="mode_outline">Само очертания</string>
-    <!-- TODO string name="mode_scale_ref">Scale reference bar</string -->
+    <string name="mode_scale_ref">Линеен мащаб</string>
 
     <!-- UNUSED string name="remote_title">Дист. управление</string -->
     <string name="remote_on">Вкл. лазер</string>
@@ -516,6 +541,7 @@
 
     <string name="popup_do_splay">Странично измерване</string>
     <string name="popup_do_leg">Отсечка</string>
+    <string name="popup_do_gm_data">Контр. измерване</string>
 
     <!-- UNUSED string name="btn_3d">3D</string -->
     <string name="btn_import">Импортиране</string>
@@ -527,6 +553,7 @@
     <string name="symbol_mine">Минни разр.</string>
     <string name="symbol_paleo">Палео</string>
     <string name="symbol_speleo">Спелео</string>
+    <string name="symbol_extra">Спелео допълнителни</string>
 
     <string name="symbol_reload">Символи за рисуване</string>
 
@@ -543,7 +570,7 @@
     <string name="sketch_mode_ngbh">Близки отсечки</string>
     <string name="sketch_mode_all">Всички отсечки</string>
     <string name="sketch_delete">Изтриване на 3D модел?</string>
-    <string name="sketch_no_split">Невъзможно изчистване. Намалете макс. дължина на страната за допълнително изчистване.</string>
+    <!-- UNUSED string name="sketch_no_split">Невъзможно изчистване. Намалете макс. дължина на страната за допълнително изчистване.</string -->
 
     <string name="length">Дължина [метри]</string>
     <string name="azimuth">Азимут [градуси]</string>
@@ -585,7 +612,9 @@
     <string name="help_help">Помощ</string>
     <!-- UNUSED string name="help_manual">Ръководство</string -->
     <string name="help_measure">Измерване на разстояния</string>
+    <!-- TODO string name="help_measure_type">Measuring mode: fixed point or polyline</string -->
 
+    <string name="help_calib_check">Контролни измервания</string>
     <string name="help_close">Затваряне на прозореца</string>
     <string name="help_coeff">Показване на коеф. на калибрация</string>
     <string name="help_continue">Продължаване на линия</string>
@@ -620,8 +649,8 @@
     <string name="help_sensor">Сензорни измервания</string>
     <string name="help_3d">3D програма (Cave3D)</string>
     <string name="help_move">Режим на преместване/приближаване</string>
-    <string name="help_draw">Вкл. на режим на скициране</string>
-    <string name="help_edit">Вкл. на режим на редактиране</string>
+    <string name="help_draw">Режим на скициране</string>
+    <string name="help_edit">Режим на редактиране</string>
     <string name="help_refs">Избор на данни, които да се показват</string>
     <string name="help_rename">Преименуване на картировката</string>
     <string name="help_plot_rename">Преименуване на скицата</string>
@@ -631,15 +660,15 @@
     <!-- UNUSED string name="help_tdr2th2">Конвертиране на двоични файлове на скици в th2</string -->
     <string name="help_toggle_plot">Превключване на хор. план/верт. разрез</string>
     <!-- UNUSED string name="help_trash">Изтриване на скица</string -->
-    <string name="help_undo">Изтриване на действие от скицата</string>
-    <string name="help_redo">Възстановяване на действие от скицата</string>
+    <string name="help_undo">Обратно (Undo)</string>
+    <string name="help_redo">Възстановяване (Redo)</string>
     <string name="help_symbol_plot">Избор на елемент за рисуване</string>
     <string name="help_delete_item">Изтриване на елемент от скицата</string>
     <string name="help_range">Преместване на част от линия</string>
     <!-- string name="help_clear">Clear selection</string -->
     <string name="help_eraser">Изтриване на елемент</string>
-    <!-- TODO string name="help_erase_mode">Eraser type</string -->
-    <!-- TODO string name="help_erase_size">Eraser size [S/M/L]</string -->
+    <string name="help_erase_mode">Тип изтриване</string>
+    <string name="help_erase_size">Размер на гумата [S/M/L]</string>
     <string name="help_previous">Предишен избран елемент</string>
     <string name="help_next">Следващ избран елемент</string>
     <string name="help_recover">Възстановяване на скица от резервно копие</string>
@@ -682,18 +711,19 @@
     <string name="help_trash_model">Изтриване на 3D модел</string>
     <string name="help_head_model">Ориентиране на 3D модел</string>
     <!-- UNUSED string name="help_erase_model">Изтриване на регион</string -->
-    <string name="help_cut_model">Отрязване на регион</string>
-    <string name="help_stretch_model">Разтягане на регион</string>
+    <!-- UNUSED string name="help_cut_model">Отрязване на регион</string -->
+    <!-- UNUSED string name="help_stretch_model">Разтягане на регион</string -->
     <!-- UNUSED string name="help_extrude_model">Екструд. на регион</string -->
-    <string name="help_refine_center">Изчистване на повърхност в центровете на триъгълниците</string>
-    <string name="help_refine_sides">Изчистване на повърхност в страните на триъгълниците</string>
-    <string name="help_refine_point">Изчистване на повърхност в точка</string>
-    <string name="help_refine_triangle">Изчистване на повърхност в дългите страни</string>
+    <!-- UNUSED string name="help_refine_center">Изчистване на повърхност в центровете на триъгълниците</string -->
+    <!-- UNUSED string name="help_refine_sides">Изчистване на повърхност в страните на триъгълниците</string -->
+    <!-- UNUSED string name="help_refine_point">Изчистване на повърхност в точка</string -->
+    <!-- UNUSED string name="help_refine_triangle">Изчистване на повърхност в дългите страни</string -->
 
 
     <string name="title_azimut">Разгъване спрямо азим.</string>
-    <!-- TODO string name="title_audio">Audio comment</string -->
+    <string name="title_audio">Аудио коментар</string>
     <string name="title_calib">Калибрации</string>
+    <string name="title_calib_check">Контролни измервания</string>
     <string name="title_coverage">Разпределение на данните от калибрацията</string>
     <string name="title_coeff">Коефициенти на калибрацията</string>
     <!-- NO string name="title_contour">Contour</string -->
@@ -725,6 +755,7 @@
     <string name="title_projection">Азимут на проектиран разрез %1$d</string>
     <string name="title_refs">Показване в скицата на:</string>
     <string name="title_scraps">Скици в картировката</string>
+    <!-- TODO string name="title_scraps_outline">Sketch outline</string -->
     <string name="title_select">Избор</string>
     <string name="title_shift">Изместване</string>
     <string name="title_shot_delete">Изтриване на отсечката?</string>
@@ -873,12 +904,12 @@
   <string name="pref_leg_title">Толеранс на отсечките</string>
   <string name="pref_leg_summary">Толеранс между измерванията за отсечка на антената</string>
   <string name="pref_leg_message">Толеранс между измерванията за отсечка на антената</string>
-  <!-- TODO string name="pref_max_shot_title">Maximum shot length</string -->
-  <!-- TODO string name="pref_max_shot_summary">Maximum length of shooting [m]</string -->
-  <!-- TODO string name="pref_max_shot_message">Shots over this length are marked as overshoot</string -->
-  <!-- TODO string name="pref_min_leg_title">Minimum leg length</string -->
-  <!-- TODO string name="pref_min_leg_summary">Minimum length of legs [m]</string -->
-  <!-- TODO string name="pref_min_leg_message">Legs shorter than the minimum have orange background</string -->
+  <string name="pref_max_shot_title">Макс. дължина на измерване [m]</string>
+  <string name="pref_max_shot_summary">Максимално приемлива дължина на измерване [m]</string>
+  <string name="pref_max_shot_message">Измервания над тази дължина се маркират като прекалено дълги и вероятно грешни</string>
+  <string name="pref_min_leg_title">Мин. дължина на отсечка [m]</string>
+  <string name="pref_min_leg_summary">Минимална приемлива дължина на отсечка [m]</string>
+  <string name="pref_min_leg_message">Отсечки под тази дължина се маркират като вероятно грешни</string>
   <string name="pref_backsight_title">Обратна отсечка</string>
   <string name="pref_backsight_summary">Въвеждане на обр. азимут/накл/разст при ръчно добавяне на отсечка</string>
   <string name="pref_prev_next_title">Пред./Следваща бутони</string>

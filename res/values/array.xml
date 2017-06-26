@@ -36,10 +36,12 @@
   <string-array name="wallsType">
      <item name="none">None</item>
      <item name="convex">Convex</item>
+     <item name="delaunay">Delaunay</item>
   </string-array>
   <string-array name="wallsTypeValue">
      <item name="none">0</item>
      <item name="convex">1</item>
+     <item name="delaunay">2</item>
   </string-array>
 
   <!-- string-array name="acadVersion">
@@ -431,6 +433,17 @@
      <item name="none">0</item>
      <item name="dec">1</item>
      <item name="hex">2</item>
+  </string-array>
+
+  <string-array name="modelType">
+     <item name="none">None</item>
+     <item name="convexhull">Convex Hull</item>
+     <item name="powercrust">Powercrust</item>
+  </string-array>
+  <string-array name="modelTypeValue">
+     <item name="none">0</item>
+     <item name="convexhull">1</item>
+     <item name="powercrust">2</item>
   </string-array>
 
 </resources>

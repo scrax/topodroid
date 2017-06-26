@@ -900,12 +900,12 @@ public class DataHelper extends DataSetObservable
   }
 
 
-  public void deleteShot( long id, long sid, boolean forward ) 
+  public void deleteShot( long id, long sid, int status, boolean forward ) 
   {
     // if ( myDB == null ) return;
-    if ( updateStatus( SHOT_TABLE, id, sid, TopoDroidApp.STATUS_DELETED ) ) {
+    if ( updateStatus( SHOT_TABLE, id, sid, status ) ) {
       if ( forward ) { // synchronized( mListeners )
-        for ( DataListener listener : mListeners ) listener.onDeleteShot( id, sid );
+        for ( DataListener listener : mListeners ) listener.onDeleteShot( id, sid, status );
       }
     }
   }
@@ -1008,6 +1008,7 @@ public class DataHelper extends DataSetObservable
         ih.bind( extendCol, s.extend );
         ih.bind( flagCol, s.duplicate ? DBlock.BLOCK_DUPLICATE 
                         : s.surface ? DBlock.BLOCK_SURFACE 
+                        // : s.commented ? DBlock.BLOCK_COMMENTED // ParserShots are not "commented"
                         // : s.backshot ? DBlock.BLOCK_BACKSHOT
                         : 0 );
         ih.bind( legCol, 0 );
@@ -1032,6 +1033,7 @@ public class DataHelper extends DataSetObservable
         listener.onInsertShot( sid, id, s.from, s.to, s.len, s.ber, s.cln, s.rol, s.extend, 
                           s.duplicate ? DBlock.BLOCK_DUPLICATE    // flag
                           : s.surface ? DBlock.BLOCK_SURFACE 
+                          // : s.commented ? DBlock.BLOCK_COMMENTED 
                           // : s.backshot ? DBlock.BLOCK_BACKSHOT
                           : 0,
                           0L, // leg
@@ -1123,8 +1125,8 @@ public class DataHelper extends DataSetObservable
     List< Sketch3dInfo > sketches = selectSketchesAtStation( old_sid, station );
     for ( Sketch3dInfo sketch : sketches ) {
       transferSketch( sid, old_sid, sketch.id );
-      File oldfile = new File( TDPath.getTh3File( old_survey_name + "-" + sketch.name + ".th3" ) );
-      File newfile = new File( TDPath.getTh3File( new_survey_name + "=" + sketch.name + ".th3" ) );
+      File oldfile = new File( TDPath.getTdr3File( old_survey_name + "-" + sketch.name + ".tdr3" ) );
+      File newfile = new File( TDPath.getTdr3File( new_survey_name + "=" + sketch.name + ".tdr3" ) );
       if ( oldfile.exists() && ! newfile.exists() ) {
         oldfile.renameTo( newfile );
       } else {
@@ -1530,9 +1532,16 @@ public class DataHelper extends DataSetObservable
     return ret;
   }
 
-  public void insertAudio( long sid, long id, long bid, String date )
+  // negative id used for sketch audios
+  // positive id used for blocks audios
+  public long nextAudioNegId( long sid )
   {
-    if ( myDB == null ) return;
+    return minId( AUDIO_TABLE, sid );
+  }
+
+  public long insertAudio( long sid, long id, long bid, String date )
+  {
+    if ( myDB == null ) return -1L;
     if ( id == -1L ) id = maxId( AUDIO_TABLE, sid );
     ContentValues cv = new ContentValues();
     cv.put( "surveyId", sid );
@@ -1543,6 +1552,7 @@ public class DataHelper extends DataSetObservable
         myDB.insert( AUDIO_TABLE, null, cv );
     } catch ( SQLiteDiskIOException e ) { handleDiskIOError( e );
     } catch ( SQLiteException e ) { logError("insert audio " + sid + "/" + bid, e); }
+    return id;
   }
 
   public void setAudio( long sid, long bid, String date )
@@ -2949,22 +2959,39 @@ public class DataHelper extends DataSetObservable
      return id;
    }
 
-   private long maxId( String table, long sid )
-   {
-     long id = 1;
-     if ( myDB == null ) return 1L;
-     Cursor cursor = myDB.query( table, new String[] { "max(id)" },
-                          "surveyId=?", 
-                          new String[] { Long.toString(sid) },
-                          null, null, null );
-     if (cursor != null ) {
-       if (cursor.moveToFirst() ) {
-         id = 1 + cursor.getLong(0);
-       }
-       if (!cursor.isClosed()) cursor.close();
-     }
-     return id;
-   }
+  private long maxId( String table, long sid )
+  {
+    long id = 1;
+    if ( myDB == null ) return 1L;
+    Cursor cursor = myDB.query( table, new String[] { "max(id)" },
+                         "surveyId=?", 
+                         new String[] { Long.toString(sid) },
+                         null, null, null );
+    if (cursor != null ) {
+      if (cursor.moveToFirst() ) {
+        id = 1 + cursor.getLong(0);
+      }
+      if (!cursor.isClosed()) cursor.close();
+    }
+    return id;
+  }
+
+  private long minId( String table, long sid )
+  {
+    if ( myDB == null ) return -2L;
+    long id = -1L;
+    Cursor cursor = myDB.query( table, new String[] { "min(id)" },
+                         "surveyId=?", 
+                         new String[] { Long.toString(sid) },
+                         null, null, null );
+    if (cursor != null ) {
+      if (cursor.moveToFirst() ) {
+        if ( cursor.getLong(0) < id ) id = cursor.getLong(0);
+      }
+      if (!cursor.isClosed()) cursor.close();
+    }
+    return id - 1L;
+  }
 
   public long getLastShotId( long sid )
   {
@@ -3467,7 +3494,7 @@ public class DataHelper extends DataSetObservable
        if (cursor.moveToFirst()) {
          do {
            pw.format(Locale.US,
-                     "INSERT into %s values( %d, %d, %d, %d, \"%s\", \"%s\", \"%s\" );\n",
+                     "INSERT into %s values( %d, %d, %d, \"%s\" );\n",
                      AUDIO_TABLE,
                      sid,
                      cursor.getLong(0),   // id

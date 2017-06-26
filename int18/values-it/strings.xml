@@ -84,7 +84,7 @@
    
     <string name="device_algo_failed">Fallita determinazione automatica algoritmo\nUso algoritmo lineare</string>
     <string name="device_address">Indirizzo %1$s</string>
-    <string name="device_busy">Dispositivo occupato</string>
+    <!-- UNUSED string name="device_busy">Dispositivo occupato</string -->
     <string name="device_illegal_addr">Indirizzo di memoria illegale</string>
     <string name="device_info">Dati dispositivo</string>
     <string name="device_model_set">Vuoi davvero cambiare il modello del dispositivo</string>
@@ -152,6 +152,8 @@
 
     <string name="illegal_data_value">Dati non corretti</string>
 
+    <!-- TODO string name="photo_title">PHOTO</string -->
+    <!-- TODO string name="photo_text">Enter photo comment</string -->
     <string name="label_title">TESTO</string>
     <string name="label_text">Scrivi il testo</string>
     <!-- UNUSED string name="altitude">Alt. </string -->
@@ -217,6 +219,7 @@
 
     <string name="no_bt">No Bluetooth</string>
     <string name="no_calib">Nessuna calibrazione</string>
+    <!-- TODO string name="no_calib_check">No calibration-check shot</string -->
     <string name="no_calibration">Nessuna calibrazione selezionata</string>
     <string name="no_capture_app">Nessuna app per foto</string>
     <string name="no_cave3d">Cave3D non installato</string>
@@ -248,6 +251,7 @@
     <string name="menu_attach">CONNETTI</string>
     <!-- UNUSED string name="menu_attached">Connected</string -->
     <!-- UNUSED string name="menu_ready">Ready</string -->
+    <!-- TODO string name="menu_calib_check">CALIBR. CHECK</string -->
     <string name="menu_close">CHIUDI</string>
     <string name="menu_delete">ELIMINA</string>
     <string name="menu_detach">SCONNETTI</string>
@@ -292,6 +296,19 @@
     <!-- TODO string name="popup_erase_point">Erase points</string -->
     <!-- TODO string name="popup_erase_line">Erase lines</string -->
     <!-- TODO string name="popup_erase_area">Erase areas</string -->
+
+    <!-- TODO string name="popup_select_all">Select all</string -->
+    <!-- TODO string name="popup_select_point">Select points</string -->
+    <!-- TODO string name="popup_select_line">Select lines</string -->
+    <!-- TODO string name="popup_select_area">Select areas</string -->
+    <!-- TODO string name="popup_select_shot">Select shots</string -->
+    <!-- TODO string name="popup_select_station">Select stations</string -->
+
+    <!-- TODO string name="popup_cont_none">None</string -->
+    <!-- TODO string name="popup_cont_start">Start point</string -->
+    <!-- TODO string name="popup_cont_end">End point</string -->
+    <!-- TODO string name="popup_cont_both">Both points</string -->
+    <!-- TODO string name="popup_cont_continue">Continue</string -->
 
     <string name="connected_none">Non connesso</string>
     <string name="connected_already">Gia\' connesso</string>
@@ -340,6 +357,7 @@
     <!-- UNUSED string name="converted_tdr2th2">Convertito disegno da formato binario a th2</string -->
     <!-- UNUSED string name="convert_tdr2th2">Sovrascrivo il file del disegno th2 ?</string -->
     <string name="section_area">Area della sezione: %1$.1f</string>
+    <!-- TODO string name="scrap_outline">Sketch outline</string -->
 
     <!-- UNUSED string name="sensor">sensore</string -->
     <string name="sensor_gravity">gravità</string>
@@ -357,6 +375,8 @@
     <!-- UNUSED string name="shot_clino">clino</string -->
     <!-- UNUSED string name="shot_compass">bussola</string -->
     <string name="shot_delete">Cancellare la misura?</string>
+    <!-- TODO string name="shots_delete">Delete shots ?</string -->
+    <!-- TODO string name="shot_check">Mark shot as check-shot?</string -->
     <string name="shot_from">da</string>
     <string name="shot_info">Scrivi i dati</string>
     <!-- UNUSED string name="shot_length">lunghezza</string -->
@@ -396,6 +416,10 @@
     <string name="toggle_failed">Attivazione modo calibrazione fallita</string>
     <string name="toggle_ok">DistoX in modo calibrazione</string>
     <string name="undelete_text">Seleziona oggetto da recuoperare</string>
+    <!-- TODO string name="undelete_shot">Shots</string -->
+    <!-- TODO string name="undelete_overshoot">Overshoots</string -->
+    <!-- TODO string name="undelete_check">Checks</string -->
+    <!-- TODO string name="undelete_plot">Sketches</string -->
     <string name="delete_whole_leg">Cancella l\'intera battuta</string>
     <string name="visible_border">bordo visibile</string>
     <!-- UNUSED string name="vthreshold">soglia vert.</string -->
@@ -419,6 +443,7 @@
     <string name="stat_duplicate">Battute doppie %1$d %2$.1f %3$s</string>
     <string name="stat_leg">Battute %1$d %2$.1f %3$s</string>
     <string name="stat_length">Sviluppo %1$.1f %2$s</string>
+    <!-- TODO string name="stat_projlen">Plan length %1$.1f %2$s</string -->
     <string name="stat_loop">Anelli %1$d</string>
     <string name="stat_origin">Caposaldo zero: %1$s</string>
     <string name="stat_azimuth">Profilo proiezione azimut: %1$.1f</string>
@@ -515,6 +540,7 @@
 
     <string name="popup_do_splay">Splay</string>
     <string name="popup_do_leg">Battuta</string>
+    <!-- TODO string name="popup_do_gm_data">Calib. shot</string -->
 
     <!-- UNUSED string name="btn_3d">3D</string -->
     <string name="btn_import">Importa</string>
@@ -526,6 +552,7 @@
     <string name="symbol_mine">Minerario</string>
     <string name="symbol_paleo">Paleologico</string>
     <string name="symbol_speleo">Speleologico</string>
+    <!-- TODO string name="symbol_extra">Speleo (2)</string -->
 
     <string name="symbol_reload">Strumenti Disegno</string>
 
@@ -543,7 +570,7 @@
     <string name="sketch_mode_ngbh">Tiri vicini</string>
     <string name="sketch_mode_all">Tutti i tiri</string>
     <string name="sketch_delete">Cancella modello 3D ?</string>
-    <string name="sketch_no_split">Nessun raffinamento. Diminuire lato max. Lunghezza da raffinare ulteriormente.</string>
+    <!-- UNUSED string name="sketch_no_split">Nessun raffinamento. Diminuire lato max. Lunghezza da raffinare ulteriormente.</string -->
     <string name="length">Lunghezza [m]</string>
     <string name="azimuth">Azimut [deg]</string>
     <string name="clino">Inclinazione [deg]</string>
@@ -583,7 +610,9 @@
     <string name="help_help">Questo aiuto</string>
     <!-- UNUSED string name="help_manual">Manuale online</string -->
     <string name="help_measure">Misurare le distanze</string>
+    <!-- TODO string name="help_measure_type">Measuring mode: fixed point or polyline</string -->
     
+    <!-- TODO string name="help_calib_check">Calibration-check shots</string -->
     <string name="help_close">Chiusura finestra</string>
     <string name="help_coeff">Coefficienti della calibrazione</string>
     <string name="help_continue">Continuare il disegno di una linea</string>
@@ -680,18 +709,19 @@
     <string name="help_trash_model">Delete 3D model</string>
     <string name="help_head_model">Orient 3D model</string>
     <!-- UNUSED string name="help_erase_model">Erase region</string -->
-    <string name="help_cut_model">Cut region</string>
-    <string name="help_stretch_model">Stretch region</string>
+    <!-- UNUSED string name="help_cut_model">Cut region</string -->
+    <!-- UNUSED string name="help_stretch_model">Stretch region</string -->
     <!-- UNUSED string name="help_extrude_model">Extrude region</string -->
-    <string name="help_refine_center">Refine surface at triangle centers</string>
-    <string name="help_refine_sides">Refine surface at triangle sides</string>
-    <string name="help_refine_point">Refine surface at point</string>
-    <string name="help_refine_triangle">Refine surface al the long sides</string>
+    <!-- UNUSED string name="help_refine_center">Refine surface at triangle centers</string -->
+    <!-- UNUSED string name="help_refine_sides">Refine surface at triangle sides</string -->
+    <!-- UNUSED string name="help_refine_point">Refine surface at point</string -->
+    <!-- UNUSED string name="help_refine_triangle">Refine surface al the long sides</string -->
   
 
     <string name="title_azimut">Riferimento Extend</string>
     <!-- TODO string name="title_audio">Audio comment</string -->
     <string name="title_calib">Calibrazioni</string>
+    <!-- TODO string name="title_calib_check">Calibration-check shots</string -->
     <string name="title_coverage">Distribuzione dati calibrazione</string>
     <string name="title_coeff">Calibrazione</string>
     <!-- NO string name="title_contour">Contour</string -->
@@ -723,6 +753,7 @@
     <string name="title_projection">Proiezione azimutale profilo %1$d</string>
     <string name="title_refs">Riferimenti grafici</string>
     <string name="title_scraps">Disegni</string>
+    <!-- TODO string name="title_scraps_outline">Sketch outline</string -->
     <string name="title_select">Seleziona</string>
     <string name="title_shift">Sposta</string>
     <string name="title_shot_delete">Rimuovi battuta ?</string>

@@ -364,7 +364,7 @@ public class DrawingSurface extends SurfaceView
     }
     if ( xsections != null ) {
       for ( PlotInfo plot : xsections ) {
-        if ( plot.start.equals( st.mName ) ) {
+        if ( plot.start.equals( st.name() ) ) {
           st.setXSection( plot.azimuth, plot.clino, mType );
           break;
         }
@@ -415,6 +415,8 @@ public class DrawingSurface extends SurfaceView
   public void addGridPath( DrawingPath path, int k ) { commandManager.addGrid( path, k ); }
 
   public void addDrawingPath (DrawingPath drawingPath) { commandManager.addCommand(drawingPath); }
+
+  public void addScrapOutlinePath( DrawingLinePath path ) { commandManager.addScrapOutlinePath( path ); }
 
   public void deleteSectionPoint( String scrap_name )
   {
@@ -495,6 +497,8 @@ public class DrawingSurface extends SurfaceView
   {
     return commandManager.setRangeAt( x, y, zoom, type, size );
   }
+
+  DrawingAudioPath getAudioPoint( long bid ) { return commandManager.getAudioPoint( bid ); }
 
   boolean moveHotItemToNearestPoint() { return commandManager.moveHotItemToNearestPoint(); }
   
@@ -763,5 +767,14 @@ public class DrawingSurface extends SurfaceView
     commandManager.deleteSectionPoint( scrap, cmd );
     commandManager.addEraseCommand( cmd );
   }
+  
+  void clearScrapOutline() { commandManager.clearScrapOutline(); }
+
+  void addScrapDataStream( String tdr, float xdelta, float ydelta )
+  {
+    commandManager.clearScrapOutline( );
+    DrawingIO.doLoadOutlineDataStream( this, tdr, xdelta, ydelta );
+  }
+
 
 }

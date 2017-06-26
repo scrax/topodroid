@@ -273,14 +273,14 @@ class DrawingSvg
   {
     pw.format("<text font-size=\"20\" font=\"sans-serif\" fill=\"violet\" stroke=\"none\" text-amchor=\"middle\"");
     pw.format(Locale.US, " x=\"%.2f\" y=\"%.2f\">", xoff + name.cx, yoff + name.cy );
-    pw.format("%s</text>\n", name.mName );
+    pw.format("%s</text>\n", name.name() );
   }
 
   static private void toSvg( PrintWriter pw, DrawingStationPath st, float xoff, float yoff )
   {
     pw.format("<text font-size=\"20\" font=\"sans-serif\" fill=\"black\" stroke=\"none\" text-amchor=\"middle\"");
     pw.format(Locale.US, " x=\"%.2f\" y=\"%.2f\">", xoff + st.cx, yoff + st.cy );
-    pw.format("%s</text>\n", st.mName );
+    pw.format("%s</text>\n", st.name() );
   }
 
   static private void toSvg( PrintWriter pw, DrawingLinePath line, String color, float xoff, float yoff ) 
@@ -294,9 +294,9 @@ class DrawingSvg
     else if ( th_name.equals( "ceiling-meander" ) ) pw.format(" stroke-dasharray=\"6 2 \"");
     pw.format(" d=\"");
     LinePoint p = line.mFirst;
-    pw.format(Locale.US, "M %.2f %.2f", xoff+p.mX, yoff+p.mY );
+    pw.format(Locale.US, "M %.2f %.2f", xoff+p.x, yoff+p.y );
     for ( p = p.mNext; p != null; p = p.mNext ) { 
-      pw.format(Locale.US, " L %.2f %.2f", xoff+p.mX, yoff+p.mY );
+      pw.format(Locale.US, " L %.2f %.2f", xoff+p.x, yoff+p.y );
     }
     pw.format("\" />\n");
   }
@@ -305,9 +305,9 @@ class DrawingSvg
   {
     pw.format("  <path stroke=\"black\" stroke-width=\"1\" fill=\"%s\" fill-opacity=\"0.5\" d=\"", color );
     LinePoint p = area.mFirst;
-    pw.format(Locale.US, "M %.2f %.2f", xoff+p.mX, yoff+p.mY );
+    pw.format(Locale.US, "M %.2f %.2f", xoff+p.x, yoff+p.y );
     for ( p = p.mNext; p != null; p = p.mNext ) { 
-      pw.format(Locale.US, " L %.2f %.2f", xoff+p.mX, yoff+p.mY );
+      pw.format(Locale.US, " L %.2f %.2f", xoff+p.x, yoff+p.y );
     }
     pw.format(" Z\" />\n");
   }
@@ -321,7 +321,7 @@ class DrawingSvg
     if ( name.equals("label") ) {
       DrawingLabelPath label = (DrawingLabelPath)point;
       pw.format(Locale.US, "<text x=\"%.2f\" y=\"%.2f\" ", xoff+point.cx, yoff+point.cy );
-      pw.format(" style=\"fill:black;stroke:black;stroke-width:0.3\">%s</text>\n", label.mText );
+      pw.format(" style=\"fill:black;stroke:black;stroke-width:0.3\">%s</text>\n", label.mPointText );
     // } else if ( name.equals("continuation") ) {
     //   pw.format(Locale.US, "<text x=\"%.2f\" y=\"%.2f\" ", xoff+point.cx, yoff+point.cy );
     //   pw.format(" style=\"fill:none;stroke:black;stroke-width:0.3\">\?</text>\n" );

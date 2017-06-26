@@ -35,6 +35,7 @@ class DistoXNum
   private float mZmin; // Z depth 
   private float mZmax;
   private float mLength; // survey length 
+  private float mProjLen;  // survey projected length (on horiz plane)
   private int mDupNr;  // number of duplicate shots
   private int mSurfNr; // number of surface shots
 
@@ -45,6 +46,7 @@ class DistoXNum
   void resetStats()
   {
     mLength = 0.0f;
+    mProjLen = 0.0f;
     mDupNr  = 0;
     mSurfNr = 0;
     mErr0 = mErr1 = mErr2 = 0;
@@ -65,21 +67,23 @@ class DistoXNum
     }
   }
 
-  void addToStats( boolean d, boolean s, float l )
+  void addToStats( boolean d, boolean s, float l, float h )
   {
     if ( d ) ++mDupNr;
     if ( s ) ++mSurfNr;
     if ( ! ( d || s ) ) {
       mLength += l;
+      mProjLen += h;
     }
   }
 
-  void addToStats( boolean d, boolean s, float l, float v )
+  void addToStats( boolean d, boolean s, float l, float h, float v )
   {
     if ( d ) ++mDupNr;
     if ( s ) ++mSurfNr;
     if ( ! ( d || s ) ) {
       mLength += l;
+      mProjLen += h;
       if ( v < mZmin ) { mZmin = v; }
       if ( v > mZmax ) { mZmax = v; }
     }
@@ -104,6 +108,7 @@ class DistoXNum
   public int loopNr()      { return mClosures.size(); }
 
   public float surveyLength() { return mLength; }
+  public float surveyProjLen() { return mProjLen; }
   public float surveyTop()    { return -mZmin; } // top must be positive
   public float surveyBottom() { return -mZmax; } // bottom must be negative
 
@@ -123,6 +128,19 @@ class DistoXNum
     for ( NumSplay splay : mSplays ) {
       if ( splay.getBlock().isSplay() && st == splay.from ) {
         ret.add( splay );
+      }
+    }
+    return ret;
+  }
+
+  // get shots at station st, except shot [st,except]
+  public List<NumShot> getShotsAt( NumStation st, NumStation except )
+  {
+    ArrayList<NumShot> ret = new ArrayList<NumShot>();
+    for ( NumShot shot : mShots ) {
+      if ( ( shot.from == st && shot.to   != except ) 
+        || ( shot.to   == st && shot.from != except ) ) {
+        ret.add( shot );
       }
     }
     return ret;
@@ -311,6 +329,16 @@ class DistoXNum
     return null;
   }
 
+  NumShot getShot( NumStation st1, NumStation st2 )
+  {
+    if ( st1 == null || st2 == null ) return null;
+    for (NumShot sh : mShots ) {
+      if ( ( st1 == sh.from && st2 == sh.to ) ||
+           ( st2 == sh.from && st1 == sh.to ) ) return sh;
+    }
+    return null;
+  }
+
   // return +1 if has shot s1-s2
   //        -1 if has shot s2-s1
   //         0 otherwise
@@ -441,6 +469,9 @@ class DistoXNum
   //             // } 
   //             // if ( block.mFlag == DBlock.BLOCK_SURFACE ) { // FIXME
   //             //   ++mSurfNr;
+  //             // }
+  //             // if ( block.mFlag == DBlock.BLOCK_COMMENTED ) { // FIXME
+  //             //   ++mCmtdNr;
   //             // }
   //             // do close loop also on duplicate shots
   //             // need the loop length to compute the fractional closure error
@@ -612,9 +643,9 @@ class DistoXNum
       if ( cl.nrStations() > 2 ) {
         Trilateration trilateration = new Trilateration( cl );
         // use trilateration.points and legs
-        for ( TrilaterationLeg leg : trilateration.legs ) {
-          TrilaterationPoint p1 = leg.pi;
-          TrilaterationPoint p2 = leg.pj;
+        for ( TriLeg leg : trilateration.legs ) {
+          TriPoint p1 = leg.pi;
+          TriPoint p2 = leg.pj;
           // compute azimuth (p2-p1)
           double dx = p2.x - p1.x; // east
           double dy = p2.y - p1.y; // north
@@ -687,6 +718,7 @@ class DistoXNum
           lastLeg = new TriShot( blk, blk.mFrom, blk.mTo, blk.getExtend(), +1 );
           lastLeg.duplicate = ( blk.mFlag == DBlock.BLOCK_DUPLICATE );
           lastLeg.surface   = ( blk.mFlag == DBlock.BLOCK_SURFACE );
+          lastLeg.commented = ( blk.mFlag == DBlock.BLOCK_COMMENTED );
           // lastLeg.backshot  = ( blk.mFlag == DBlock.BLOCK_BACKSHOT ); // FIXME
           tmpshots.add( lastLeg );
           break;
@@ -897,7 +929,7 @@ class DistoXNum
                 sh = makeShotFromTmp( sf, st, ts, 0, sf.mAnomaly, mDecl ); 
                 addShotToStations( sh, sf, st );
               }
-              addToStats( ts.duplicate, ts.surface, Math.abs(ts.d() ) ); // NOTE Math.abs is not necessary
+              addToStats( ts.duplicate, ts.surface, Math.abs(ts.d()), ts.h() ); // NOTE Math.abs is not necessary
 
               // do close loop also on duplicate shots
               // need the loop length to compute the fractional closure error
@@ -914,7 +946,7 @@ class DistoXNum
               st.addAzimuth( (ts.b()+180)%360, -ext );
               st.mAnomaly = anomaly;
               updateBBox( st );
-              addToStats( ts.duplicate, ts.surface, Math.abs(ts.d() ), st.v );
+              addToStats( ts.duplicate, ts.surface, Math.abs(ts.d()), ts.h(), st.v );
               mStations.addStation( st );
 
               // if ( TDLog.LOG_DEBUG ) {
@@ -942,7 +974,7 @@ class DistoXNum
             // }
 
             updateBBox( sf );
-            addToStats( ts.duplicate, ts.surface, Math.abs(ts.d() ), sf.v );
+            addToStats( ts.duplicate, ts.surface, Math.abs(ts.d() ), ts.h(), sf.v );
             mStations.addStation( sf );
 
             // FIXME is st.mAnomaly OK ?

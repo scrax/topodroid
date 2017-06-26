@@ -30,8 +30,8 @@ public class DrawingStationName extends DrawingPointPath
 {
   private static float toTherion = TDConst.TO_THERION;
 
-  String mName; // station name
-  NumStation mStation;
+  private String mName; // station name
+  private NumStation mStation;
   // float mX;     // scene coordinates (cx, cy)
   // float mY;
 
@@ -50,10 +50,10 @@ public class DrawingStationName extends DrawingPointPath
     super( BrushManager.mPointLib.mPointLabelIndex,
            x, // scene coordinate
            y, 
-           DrawingPointPath.SCALE_M, null );
+           DrawingPointPath.SCALE_M, null, null ); // no text no options
     mType = DRAWING_PATH_NAME; // override DrawingPath.mType
     mStation = null;
-    mName = name;
+    mName = ( name == null )? "" : name;
     mXSectionType = PlotInfo.PLOT_NULL;
 
     // TDLog.Log( TDLog.LOG_PLOT, "DrawingStationName cstr " + mName + " " + x + " " + y );
@@ -61,6 +61,7 @@ public class DrawingStationName extends DrawingPointPath
     setCenter( x, y ); // scene coords
     mDuplicate = false;
     makeStraightPath( 0, 0, 2*TDSetting.mStationSize*mName.length(), 0, cx, cy );
+    mPaint = BrushManager.fixedStationPaint;
   }
 
   public DrawingStationName( NumStation num_st, float x, float y )
@@ -68,14 +69,15 @@ public class DrawingStationName extends DrawingPointPath
     super( BrushManager.mPointLib.mPointLabelIndex,
            x, // scene coordinate
            y, 
-           DrawingPointPath.SCALE_M, null );
+           DrawingPointPath.SCALE_M, null, null );
     mType = DRAWING_PATH_NAME; // override DrawingPath.mType
     mStation = num_st;
-    mName = num_st.name;
+    mName = (num_st.name == null)? "" : num_st.name;
     mXSectionType = PlotInfo.PLOT_NULL;
 
     // TDLog.Log( TDLog.LOG_PLOT, "DrawingStationName cstr " + mName + " " + x + " " + y );
-    if ( num_st.mDuplicate ) mPaint = BrushManager.duplicateStationPaint;
+    mPaint = ( num_st.mDuplicate )? BrushManager.duplicateStationPaint
+                                  : BrushManager.fixedStationPaint;
     setCenter( x, y ); // scene coords
     mDuplicate = num_st.mDuplicate;
     
@@ -83,6 +85,9 @@ public class DrawingStationName extends DrawingPointPath
   }
 
   static final int LENGTH = 20;
+
+  String name() { return mName; }
+  NumStation station() { return mStation; }
 
   // FIXME OK PROFILE
   void setXSection( float azimuth, float clino, long type )
@@ -137,9 +142,11 @@ public class DrawingStationName extends DrawingPointPath
   {
     if ( intersects( bbox ) ) {
       // TDLog.Log( TDLog.LOG_PATH, "DrawingStationName::draw[matrix] LABEL " + mName );
-      mTransformedPath = new Path( mPath );
-      mTransformedPath.transform( matrix );
-      canvas.drawTextOnPath( mName, mTransformedPath, 0f, 0f, mPaint );
+      if ( mName != null && mPaint != null ) {
+        mTransformedPath = new Path( mPath );
+        mTransformedPath.transform( matrix );
+        canvas.drawTextOnPath( mName, mTransformedPath, 0f, 0f, mPaint );
+      }
       if ( mXSectionType != PlotInfo.PLOT_NULL ) {
         Path path = new Path();
         path.moveTo( cx, cy );

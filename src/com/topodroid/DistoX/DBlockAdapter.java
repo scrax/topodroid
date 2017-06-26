@@ -35,6 +35,7 @@ class DBlockAdapter extends ArrayAdapter< DBlock >
   private Context mContext;
   private ShotWindow mParent;
   ArrayList< DBlock > mItems;
+  ArrayList< DBlock > mSelect;
   boolean show_ids;  //!< whether to show data ids
   private LayoutInflater mLayoutInflater;
 
@@ -46,9 +47,46 @@ class DBlockAdapter extends ArrayAdapter< DBlock >
     mContext = ctx;
     mParent  = parent;
     mItems   = items;
+    mSelect  = new ArrayList< DBlock >();
     mLayoutInflater = (LayoutInflater)ctx.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
     mViews = new ArrayList< View >();
   }
+
+  boolean isMultiSelect() { return ( mSelect.size() > 0 ); }
+
+  boolean multiSelect(int pos ) 
+  {
+    DBlock blk = mItems.get( pos );
+    if ( blk != null ) {
+      if ( mSelect.size() > 0 ) {
+        if ( mSelect.remove( blk ) ) {
+          blk.mMultiSelected = false;
+          if ( blk.mView != null ) blk.mView.setBackgroundColor( TDColor.TRANSPARENT );
+        } else {
+          mSelect.add( blk );
+          blk.mMultiSelected = true;
+          if ( blk.mView != null ) blk.mView.setBackgroundColor( TDColor.GRID );
+        }
+      } else {
+        mSelect.add( blk );
+        blk.mMultiSelected = true;
+        if ( blk.mView != null ) blk.mView.setBackgroundColor( TDColor.GRID );
+      }
+    } else {
+      // Log.v("DistoX", "adapter multiselect. null blk. size " + mSelect.size() );
+    }
+    return ( mSelect.size() > 0 );
+  }
+
+  void clearMultiSelect() 
+  { 
+    for ( DBlock b : mSelect ) {
+      if ( b.mView != null ) b.mView.setBackgroundColor( TDColor.TRANSPARENT );
+      b.mMultiSelected = false;
+    }
+    mSelect.clear();
+  }
+   
 
   /** this is not efficient because it scans the list of shots
    *  skips oven non-mail_leg, still it would be better to keep a tree of 
@@ -223,12 +261,15 @@ class DBlockAdapter extends ArrayAdapter< DBlock >
         tvFrom.setBackgroundColor( TDColor.DARK_GREEN );
         tvTo.setBackgroundColor( TDColor.DARK_GREEN );
       } 
-      if ( b.mType == DBlock.BLOCK_MAIN_LEG && b.mLength < TDSetting.mMinLegLength ) {
+
+      if ( b.isCommented() ) {
+        tvLength.setBackgroundColor( TDColor.VERYDARK_GRAY );
+      } else if ( b.mType == DBlock.BLOCK_MAIN_LEG && b.mLength < TDSetting.mMinLegLength ) {
         tvLength.setBackgroundColor( TDColor.BROWN );
       } else if ( b.isMagneticBad( ) ) {
         tvLength.setBackgroundColor( TDColor.DARK_RED );
       } else {
-        // tvLength.setBackgroundColor( TDColor.BLACK );
+        tvLength.setBackgroundColor( TDColor.BLACK );
       }
     }
   }
@@ -252,6 +293,7 @@ class DBlockAdapter extends ArrayAdapter< DBlock >
     holder.pos = pos;
     b.mView = convertView;
     holder.setViewText( b, this );
+    b.mView.setBackgroundColor( b.mMultiSelected ? TDColor.GRID : TDColor.TRANSPARENT );
     convertView.setVisibility( b.mVisible );
     return convertView;
   }

@@ -14,4 +14,6 @@ package com.topodroid.DistoX;
 public interface ILabelAdder
 {
   public void addLabel( String text, float x, float y );
+
+  public void addPhotoPoint( String text, float x, float y );
 }

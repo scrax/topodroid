@@ -199,10 +199,11 @@ class DrawingDxf
     printInt( pw2, 70, flag );    // layer flag
     printInt( pw2, 62, color );   // layer color
     printString( pw2, 6, linetype ); // linetype name
-    printInt( pw2, 370, -3 );
-    printString( pw2, 390, "F" );
-    printInt( pw2, 347, 46 );
-    printInt( pw2, 348, 0 );
+    printInt( pw2, 330, 2 );       // softpointer id/handle to owner dictionary 
+    printInt( pw2, 370, -3 );      // lineweight enum value
+    printString( pw2, 390, "F" );  // hardpointer id/handle or plotstylename object
+    // printInt( pw2, 347, 46 );
+    // printInt( pw2, 348, 0 );
   }
 
   // static void printEndText( PrintWriter pw, String style )
@@ -231,7 +232,7 @@ class DrawingDxf
          printInt( pw, 70, 32 ); // flag 32 = 3D polyline vertex
        // }
        printString( pw, 8, layer );
-       printXYZ( pw, (p.mX+xoff) * scale, -(p.mY+yoff) * scale, 0.0f, 0 );
+       printXYZ( pw, (p.x+xoff) * scale, -(p.y+yoff) * scale, 0.0f, 0 );
      }
      if ( closed ) {
        printString( pw, 0, "VERTEX" );
@@ -240,7 +241,7 @@ class DrawingDxf
          printInt( pw, 70, 32 ); // flag 32 = 3D polyline vertex
        // }
        printString( pw, 8, layer );
-       printXYZ( pw, (line.mFirst.mX+xoff) * scale, -(line.mFirst.mY+yoff) * scale, 0.0f, 0 );
+       printXYZ( pw, (line.mFirst.x+xoff) * scale, -(line.mFirst.y+yoff) * scale, 0.0f, 0 );
      }
      pw.printf("  0%sSEQEND%s", EOL, EOL );
      // if ( mVersion13 ) {
@@ -262,7 +263,7 @@ class DrawingDxf
      printInt( pw, 70, close ); // not closed
      printInt( pw, 90, line.size() ); // nr. of points
      for (LinePoint p = line.mFirst; p != null; p = p.mNext ) { 
-       printXY( pw, (p.mX+xoff) * scale, -(p.mY+yoff) * scale, 0 );
+       printXY( pw, (p.x+xoff) * scale, -(p.y+yoff) * scale, 0 );
      }
      return handle;
   }
@@ -298,11 +299,11 @@ class DrawingDxf
      LinePoint pn = p.mNext;
      if ( pn != null ) {
        if ( pn.has_cp ) {
-         xt = pn.mX1 - p.mX;
-         yt = pn.mY1 - p.mY;
+         xt = pn.x1 - p.x;
+         yt = pn.y1 - p.y;
        } else {
-         xt = pn.mX - p.mX;
-         yt = pn.mY - p.mY;
+         xt = pn.x - p.x;
+         yt = pn.y - p.y;
        }
        float d = (float)Math.sqrt( xt*xt + yt*yt );
        printXYZ( pw, xt/d, -yt/d, 0, 2 );
@@ -313,11 +314,11 @@ class DrawingDxf
          ++np;
        }
        if ( pn.has_cp ) {
-         xt = pn.mX - pn.mX2;
-         yt = pn.mY - pn.mY2;
+         xt = pn.x - pn.x2;
+         yt = pn.y - pn.y2;
        } else {
-         xt = pn.mX - p.mX;
-         yt = pn.mY - p.mY;
+         xt = pn.x - p.x;
+         yt = pn.y - p.y;
        }
        d = (float)Math.sqrt( xt*xt + yt*yt );
        printXYZ( pw, xt/d, -yt/d, 0, 3 );
@@ -340,23 +341,23 @@ class DrawingDxf
      printInt( pw, 40, np-1 );
 
      p = line.mFirst; 
-     xt = p.mX;
-     yt = p.mY;
-     printXYZ( pw, (p.mX+xoff) * scale, -(p.mY+yoff) * scale, 0.0f, 0 );         // control points: 1 + 3 * (NP - 1) = 3 NP - 2
+     xt = p.x;
+     yt = p.y;
+     printXYZ( pw, (p.x+xoff) * scale, -(p.y+yoff) * scale, 0.0f, 0 );         // control points: 1 + 3 * (NP - 1) = 3 NP - 2
      for ( p = p.mNext; p != null; p = p.mNext ) { 
        if ( p.has_cp ) {
-         printXYZ( pw, (p.mX1+xoff) * scale, -(p.mY1+yoff) * scale, 0.0f, 0 );
-         printXYZ( pw, (p.mX2+xoff) * scale, -(p.mY2+yoff) * scale, 0.0f, 0 );
+         printXYZ( pw, (p.x1+xoff) * scale, -(p.y1+yoff) * scale, 0.0f, 0 );
+         printXYZ( pw, (p.x2+xoff) * scale, -(p.y2+yoff) * scale, 0.0f, 0 );
        } else {
          printXYZ( pw, (xt+xoff) * scale, -(yt+yoff) * scale, 0.0f, 0 );
-         printXYZ( pw, (p.mX+xoff) * scale, -(p.mY+yoff) * scale, 0.0f, 0 );
+         printXYZ( pw, (p.x+xoff) * scale, -(p.y+yoff) * scale, 0.0f, 0 );
        }
-       printXYZ( pw, (p.mX+xoff) * scale, -(p.mY+yoff) * scale, 0.0f, 0 );
-       xt = p.mX;
-       yt = p.mY;
+       printXYZ( pw, (p.x+xoff) * scale, -(p.y+yoff) * scale, 0.0f, 0 );
+       xt = p.x;
+       yt = p.y;
      }
      for ( p = line.mFirst; p != null; p = p.mNext ) { 
-       printXYZ( pw, (p.mX+xoff) * scale, -(p.mY+yoff) * scale, 0.0f, 1 );  // fit points: NP
+       printXYZ( pw, (p.x+xoff) * scale, -(p.y+yoff) * scale, 0.0f, 1 );  // fit points: NP
      }
      return handle;
   }
@@ -449,14 +450,30 @@ class DrawingDxf
         printString( pw1, 9, "$LIMMAX" ); printXY( pw1, 420.0f, 297.0f, 0 );
         out.write( sw1.getBuffer().toString() );
       }
+      writeString( out, 9, "$DIMSCALE" );    writeString( out, 40, "1.0" ); // 
+      writeString( out, 9, "$DIMTXT" );      writeString( out, 40, "2.5" ); // 
+      writeString( out, 9, "$LTSCALE" );     writeInt( out, 40, 1 ); // 
+      writeString( out, 9, "$LIMCHECK" );    writeInt( out, 70, 0 ); // 
+      writeString( out, 9, "$ORTHOMODE" );   writeInt( out, 70, 0 ); // 
+      writeString( out, 9, "$FILLMODE" );    writeInt( out, 70, 1 ); // 
+      writeString( out, 9, "$QTEXTMODE" );   writeInt( out, 70, 0 ); // 
+      writeString( out, 9, "$REGENMODE" );   writeInt( out, 70, 1 ); // 
+      writeString( out, 9, "$MIRRMODE" );    writeInt( out, 70, 0 ); // 
+      writeString( out, 9, "$UNITMODE" );    writeInt( out, 70, 0 ); // 
+
       writeString( out, 9, "$TEXTSIZE" );    writeInt( out, 40, 5 ); // default text size
       writeString( out, 9, "$TEXTSTYLE" );   writeString( out, 7, standard );
+      writeString( out, 9, "$CELTYPE" );     writeString( out, 6, "BYLAYER" ); // 
+      writeString( out, 9, "$CELTSCALE" );   writeInt( out, 40, 1 ); // 
+      writeString( out, 9, "$CECOLOR" );     writeInt( out, 62, 256 ); // 
 
-      writeString( out, 9, "$UNITMODE" );    writeInt( out, 70, 0 ); // 
       writeString( out, 9, "$MEASUREMENT" ); writeInt( out, 70, 1 ); // drawing units 1=metric
       writeString( out, 9, "$INSUNITS" );    writeInt( out, 70, 4 ); // defaulty draing units 0=unitless 4=mm
       writeString( out, 9, "$DIMASSOC" );    writeInt( out, 280, 0 ); // 0=no association
-      
+
+      writeEndSection( out );
+
+      writeSection( out, "CLASSES" );
       writeEndSection( out );
       
       writeSection( out, "TABLES" );
@@ -860,7 +877,7 @@ class DrawingDxf
           if ( path.mType == DrawingPath.DRAWING_PATH_STATION )
           {
             DrawingStationPath st = (DrawingStationPath)path;
-            handle = printText( pw5, handle, st.mName, (st.cx+xoff) * scale, -(st.cy+yoff) * scale,
+            handle = printText( pw5, handle, st.name(), (st.cx+xoff) * scale, -(st.cy+yoff) * scale,
                                 0, LABEL_SCALE, "STATION", my_style, xoff, yoff );
           } 
           else if ( path.mType == DrawingPath.DRAWING_PATH_LINE )
@@ -903,7 +920,7 @@ class DrawingDxf
       }
       writeEndSection( out );
 
-      // handle = writeSectionObjects( out, handle );
+      handle = writeSectionObjects( out, handle );
 
       writeString( out, 0, "EOF" );
       out.flush();
@@ -915,13 +932,13 @@ class DrawingDxf
 
   static private int toDxf( PrintWriter pw, int handle, DrawingStationName sn, float scale, float xoff, float yoff )
   { // FIXME point scale factor is 0.3
-    return printText( pw, handle, sn.mName,  (sn.cx+xoff)*scale, -(sn.cy+yoff)*scale, 0,
+    return printText( pw, handle, sn.name(),  (sn.cx+xoff)*scale, -(sn.cy+yoff)*scale, 0,
                         STATION_SCALE, "STATION", my_style, xoff, yoff );
   }
 
   static private int toDxf( PrintWriter pw, int handle, DrawingStationPath st, float scale, float xoff, float yoff )
   { // FIXME point scale factor is 0.3
-    return printText( pw, handle, st.mName,  (st.cx+xoff)*scale, -(st.cy+yoff)*scale, 0,
+    return printText( pw, handle, st.name(),  (st.cx+xoff)*scale, -(st.cy+yoff)*scale, 0,
                         STATION_SCALE, "STATION", my_style, xoff, yoff );
   }
 
@@ -929,7 +946,7 @@ class DrawingDxf
   { // FIXME point scale factor is 0.3
     if ( point.mPointType == BrushManager.getPointLabelIndex() ) {
       DrawingLabelPath label = (DrawingLabelPath)point;
-      return printText( pw, handle, label.mText,  (point.cx+xoff)*scale, -(point.cy+yoff)*scale, (float)label.mOrientation,
+      return printText( pw, handle, label.mPointText,  (point.cx+xoff)*scale, -(point.cy+yoff)*scale, (float)label.mOrientation,
                         LABEL_SCALE, "POINT", my_style, xoff, yoff );
     }
 
@@ -986,9 +1003,9 @@ class DrawingDxf
         printInt( pw, 73, 1 );          // is-closed flag
         printInt( pw, 93, area.size() ); // nr. of points (not polyline) vertices (polyline)
         for (LinePoint p = area.mFirst; p != null; p = p.mNext ) { 
-          printXY( pw, (p.mX+xoff)*scale, -(p.mY+yoff)*scale, 0 );
+          printXY( pw, (p.x+xoff)*scale, -(p.y+yoff)*scale, 0 );
         }
-        // printXY( pw, area.mFirst.mX * scale, -area.mFirst.mY * scale, 0 );
+        // printXY( pw, area.mFirst.x * scale, -area.mFirst.y * scale, 0 );
         printInt( pw, 97, 0 );            // nr. source boundary objects
       printInt( pw, 75, 0 );            // hatch style: 0:normal, 1:outer, 2:ignore
       printInt( pw, 76, 0 );            // hatch pattern type: 0:user, 1:predefined, 2:custom
@@ -1072,8 +1089,36 @@ class DrawingDxf
     return handle;
   }
 
-/* SECTION OBJECTS
+// SECTION OBJECTS
+  static int writeSectionObjects( BufferedWriter out, int handle ) throws IOException
+  {
+    writeSection( out, "OBJECTS" );
 
+    StringWriter swx = new StringWriter();
+    PrintWriter pwx  = new PrintWriter(swx);
+
+    printString( pwx, 0, "DICTIONARY" );
+    int saved = ++handle;
+    printAcDb( pwx, handle, AcDbDictionary );
+    // printInt( pwx, 280, 0 );
+    printInt( pwx, 281, 1 );
+    printString( pwx, 3, "ACAD_GROUP" );
+    ++handle; printHex( pwx, 350, handle );
+
+    printString( pwx, 0, "DICTIONARY" );
+    ++handle; printAcDb( pwx, handle, AcDbDictionary );
+    // printInt( pwx, 280, 0 );
+    printInt( pwx, 281, 1 );
+    printHex( pwx, 330, saved );
+
+    out.write( swx.getBuffer().toString() );
+    out.flush();
+
+    writeEndSection( out );
+    return handle;
+  }
+
+/*
   static int writeSectionObjects( BufferedWriter out, int handle ) throws IOException
   {
     writeSection( out, "OBJECTS" );

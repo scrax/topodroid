@@ -84,7 +84,7 @@
    
     <string name="device_algo_failed">Algorithm auto-determination failed\nUsing linear algorithm</string>
     <string name="device_address">Address %1$s</string>
-    <string name="device_busy">Device busy</string>
+    <!-- UNUSED string name="device_busy">Device busy</string -->
     <string name="device_illegal_addr">Illegal memory address</string>
     <string name="device_info">Device info</string>
     <string name="device_model_set">Do you really want to change the model of the device</string>
@@ -152,6 +152,8 @@
 
     <string name="illegal_data_value">Illegal data value</string>
 
+    <string name="photo_title">PHOTO</string>
+    <string name="photo_text">Enter photo comment</string>
     <string name="label_title">LABEL</string>
     <string name="label_text">Enter the label text</string>
     <!-- UNUSED string name="altitude">Alt. </string -->
@@ -218,6 +220,7 @@
 
     <string name="no_bt">No Bluetooth</string>
     <string name="no_calib">No calibration</string>
+    <string name="no_calib_check">No calibration-check shot</string>
     <string name="no_calibration">No calibration selected</string>
     <string name="no_capture_app">No image capture app</string>
     <string name="no_cave3d">Cave3D not installed</string>
@@ -249,7 +252,9 @@
     <string name="menu_attach">CONNECT</string>
     <!-- UNUSED string name="menu_attached">Connected</string -->
     <!-- UNUSED string name="menu_ready">Ready</string -->
+    <string name="menu_calib_check">CALIB. CHECK</string>
     <string name="menu_close">CLOSE</string>
+    <string name="menu_clear">CLEAR</string>
     <string name="menu_delete">DELETE</string>
     <string name="menu_detach">DISCONNECT</string>
     <string name="menu_display">DISPLAY</string>
@@ -301,6 +306,12 @@
     <string name="popup_select_shot">Select shots</string>
     <string name="popup_select_station">Select stations</string>
 
+    <string name="popup_cont_none">None</string>
+    <string name="popup_cont_start">Start point</string>
+    <string name="popup_cont_end">End point</string>
+    <string name="popup_cont_both">Both points</string>
+    <string name="popup_cont_continue">Continue</string>
+
     <string name="connected_none">Not connected</string>
     <string name="connected_already">Already connected</string>
 
@@ -348,6 +359,7 @@
     <!-- UNUSED string name="converted_tdr2th2">Converted sketches binary files to th2</string -->
     <!-- UNUSED string name="convert_tdr2th2">Overwrite th2 sketch files ?</string -->
     <string name="section_area">Section area: %1$.1f</string>
+    <string name="scrap_outline">Sketch outline</string>
 
     <!-- UNUSED string name="sensor">sensor</string -->
     <string name="sensor_gravity">gravity</string>
@@ -365,6 +377,8 @@
     <!-- UNUSED string name="shot_clino">clino</string -->
     <!-- UNUSED string name="shot_compass">compass</string -->
     <string name="shot_delete">Delete shot ?</string>
+    <string name="shots_delete">Delete shots ?</string>
+    <string name="shot_check">Mark shot as check-shot?</string>
     <string name="shot_from">from</string>
     <string name="shot_info">Enter shot data</string>
     <!-- UNUSED string name="shot_length">length</string -->
@@ -378,6 +392,7 @@
     <string name="sketch3d_name">name</string>
     <string name="sketch3d_new">New 3D model</string>
     <string name="sketch3d_next">next station</string>
+    <string name="sketch3d_loading">loading model ...</string>
     <!-- UNUSED string name="sketch3d_null_name">Missing 3D sketch name</string -->
     <!-- UNUSED string name="sketch3d_null_next">Missing 3D sketch next station</string -->
     <!-- UNUSED string name="sketch3d_null_start">Missing 3D sketch base station</string -->
@@ -404,6 +419,10 @@
     <string name="toggle_failed">Failed to toggle DistoX</string>
     <string name="toggle_ok">Toggled DistoX calibration mode</string>
     <string name="undelete_text">Tap item to recover</string>
+    <string name="undelete_shot">Shots</string>
+    <string name="undelete_overshoot">Overshoots</string>
+    <string name="undelete_check">Checks</string>
+    <string name="undelete_plot">Sketches</string>
     <string name="delete_whole_leg">Delete whole leg</string>
     <string name="visible_border">visible border</string>
     <!-- UNUSED string name="vthreshold">vert. threshold</string -->
@@ -427,6 +446,7 @@
     <string name="stat_duplicate">Duplicate shots %1$d %2$.1f %3$s</string>
     <string name="stat_leg">Legs %1$d %2$.1f %3$s</string>
     <string name="stat_length">Length %1$.1f %2$s</string>
+    <string name="stat_projlen">Plan length %1$.1f %2$s</string>
     <string name="stat_loop">Loops %1$d</string>
     <string name="stat_origin">Zero station: %1$s</string>
     <string name="stat_azimuth">Profile projection azimuth: %1$.1f</string>
@@ -523,6 +543,7 @@
 
     <string name="popup_do_splay">Splay shot</string>
     <string name="popup_do_leg">Leg shots</string>
+    <string name="popup_do_gm_data">Calib. shot</string>
 
     <!-- UNUSED string name="btn_3d">3D</string -->
     <string name="btn_import">Import</string>
@@ -534,6 +555,7 @@
     <string name="symbol_mine">Mining</string>
     <string name="symbol_paleo">Paleo</string>
     <string name="symbol_speleo">Speleo</string>
+    <string name="symbol_extra">Speleo (2)</string>
 
     <string name="symbol_reload">Drawing Tools</string>
 
@@ -549,8 +571,10 @@
     <string name="sketch_mode_single">Single shot</string>
     <string name="sketch_mode_ngbh">Nearby shots</string>
     <string name="sketch_mode_all">All shots</string>
+    <string name="sketch_mode_none">No surface</string>
     <string name="sketch_delete">Delete 3D model ?</string>
-    <string name="sketch_no_split">No refinement. Decrease side max. length to refine further.</string>
+    <string name="sketch_clear">Clear 3D model ?</string>
+    <!-- UNUSED string name="sketch_no_split">No refinement. Decrease side max. length to refine further.</string -->
 
     <string name="length">Length [m]</string>
     <string name="azimuth">Azimuth [deg]</string>
@@ -592,7 +616,9 @@
     <string name="help_help">This help</string>
     <!-- UNUSED string name="help_manual">User manual</string -->
     <string name="help_measure">Measure distances</string>
+    <string name="help_measure_type">Measuring mode: fixed point or polyline</string>
     
+    <string name="help_calib_check">Calibration-check shots</string>
     <string name="help_close">Close window</string>
     <string name="help_coeff">Show calibration coefficients</string>
     <string name="help_continue">Continue drawing a line</string>
@@ -687,15 +713,16 @@
     <string name="help_surface">Make surface</string>
     <string name="help_save_model">Export 3D model</string>
     <string name="help_trash_model">Delete 3D model</string>
+    <string name="help_clear_model">Clear 3D model</string>
     <string name="help_head_model">Orient 3D model</string>
     <!-- UNUSED string name="help_erase_model">Erase region</string -->
-    <string name="help_cut_model">Cut region</string>
-    <string name="help_stretch_model">Stretch region</string>
+    <!-- UNUSED string name="help_cut_model">Cut region</string -->
+    <!-- UNUSED string name="help_stretch_model">Stretch region</string -->
     <!-- UNUSED string name="help_extrude_model">Extrude region</string -->
-    <string name="help_refine_center">Refine surface at triangle centers</string>
-    <string name="help_refine_sides">Refine surface at triangle sides</string>
-    <string name="help_refine_point">Refine surface at point</string>
-    <string name="help_refine_triangle">Refine surface al the long sides</string>
+    <!-- UNUSED string name="help_refine_center">Refine surface at triangle centers</string -->
+    <!-- UNUSED string name="help_refine_sides">Refine surface at triangle sides</string -->
+    <!-- UNUSED string name="help_refine_point">Refine surface at point</string -->
+    <!-- UNUSED string name="help_refine_triangle">Refine surface al the long sides</string -->
   
     <string name="audio_paused">Paused</string>
     <string name="audio_playing">Playing</string>
@@ -706,6 +733,7 @@
     <string name="title_azimut">Extend reference</string>
     <string name="title_audio">Audio comment</string>
     <string name="title_calib">Calibrations</string>
+    <string name="title_calib_check">Calibration-check shots</string>
     <string name="title_coverage">Calibration data distribution</string>
     <string name="title_coeff">Calibration coefficients</string>
     <string name="title_contour">Contour</string>
@@ -737,6 +765,7 @@
     <string name="title_projection">Projected profile azimuth %1$d</string>
     <string name="title_refs">Sketch References</string>
     <string name="title_scraps">Survey sketches</string>
+    <string name="title_scraps_outline">Sketch outlines</string>
     <string name="title_select">Select</string>
     <string name="title_shift">Shift</string>
     <string name="title_shot_delete">Delete shot ?</string>
@@ -897,8 +926,8 @@
   <string name="pref_prev_next_summary">Prev/Next buttons in the shot dialog</string>
   <string name="pref_mag_anomaly_title">Magnetic Anomaly</string>
   <string name="pref_mag_anomaly_summary">Compensate Local Magnetic Anomaly</string>
-  <string name="pref_azimuth_manual_title">Settable extend reference</string>
-  <string name="pref_azimuth_manual_summary">Settable or fixed extend L/R reference</string>
+  <string name="pref_azimuth_manual_title">Fixed extend reference</string>
+  <string name="pref_azimuth_manual_summary">Fixed R/L or settable extend reference</string>
 
   <string name="pref_team_title">Team</string>
   <string name="pref_team_summary">Surveying team</string>
@@ -1054,6 +1083,8 @@
   <string name="pref_sketchCompassReadings_title">Compass readings</string>
   <string name="pref_sketchCompassReadings_summary">Number of readings to average</string>
   <string name="pref_sketchCompassReadings_message">Number of compass readings to average</string>
+  <string name="pref_sketchModelType_title">Model type</string>
+  <string name="pref_sketchModelType_summary">Model wall reconstruction</string>
 
   <string name="pref_unit_length_title">Length units</string>
   <string name="pref_unit_length_summary">Display units for lengths</string>

@@ -2,12 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.topodroid.DistoX"
       android:installLocation="auto"
-      android:versionCode="303057"
-      android:versionName="3.3.2g"
+      android:versionCode="304003"
+      android:versionName="3.4.0c"
     >
     <uses-sdk
        android:minSdkVersion="8"
-       android:targetSdkVersion="16"
+       android:targetSdkVersion="8"
     />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -179,13 +179,13 @@
         </receiver -->
 
 
-    <service
+    <!-- service
       android:name="TD_DistoX"
       android:icon="@drawable/icon3"
       android:label="TD_DistoX"
       android:process=":td_distox_process"
       >
-    </service>
+    </service -->
 
     </application>
 </manifest> 

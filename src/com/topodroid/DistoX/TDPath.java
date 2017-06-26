@@ -47,11 +47,13 @@ public class TDPath
   final static String SVG = ".svg";
   final static String SVX = ".svx";
   final static String TDR = ".tdr";
+  final static String TDR3 = ".tdr3";
   final static String TH  = ".th";
   final static String TH2 = ".th2";
   final static String TH3 = ".th3";
   final static String TMP = ".tmp";
   final static String TOP = ".top";
+  final static String TRB = ".trb";
   final static String TRO = ".tro";
   final static String TXT = ".txt";
   final static String ZIP = ".zip";
@@ -100,10 +102,12 @@ public class TDPath
   private static String PATH_SVX;    //  = PATH_BASE + "svx/";
   private static String PATH_TH;     //  = PATH_BASE + "th/";
   private static String PATH_TDR;    //  = PATH_BASE + "tdr/";
+  private static String PATH_TDR3;   //  = PATH_BASE + "tdr3/";
   private static String PATH_TH2;    //  = PATH_BASE + "th2/";
   private static String PATH_TH3;    //  = PATH_BASE + "th3/";
   private static String APP_TMP_PATH;    //  = PATH_BASE + "tmp/";
   private static String PATH_TOP;    //  = PATH_BASE + "top/";
+  private static String PATH_TRB;    //  = PATH_BASE + "trb/";
   private static String PATH_TRO;    //  = PATH_BASE + "tro/";
   private static String PATH_ZIP;    //  = PATH_BASE + "zip/";
   // private static String APP_TLX_PATH ; //  = PATH_BASE + "tlx/";
@@ -192,6 +196,9 @@ public class TDPath
     PATH_TH3 = PATH_BASE + "th3/";
     checkDirs( PATH_TH3 );
 
+    PATH_TDR3 = PATH_BASE + "tdr3/";
+    checkDirs( PATH_TDR3 );
+
     APP_TMP_PATH = PATH_BASE + "tmp/";
     checkDirs( APP_TMP_PATH );
 
@@ -209,6 +216,9 @@ public class TDPath
 
     PATH_TRO = PATH_BASE + "tro/";
     // FIXME checkDirs( PATH_TRO );
+
+    PATH_TRB = PATH_BASE + "trb/";
+    // FIXME checkDirs( PATH_TRB );
 
     PATH_PNG = PATH_BASE + "png/";
     // FIXME checkDirs( PATH_PNG );
@@ -241,10 +251,10 @@ public class TDPath
     // FIXME checkDirs( PATH_CCSV );
 
     APP_SYMBOL_PATH  = PATH_DEFAULT + "symbol/";
-    APP_SYMBOL_SAVE_PATH  = APP_SYMBOL_PATH + "save/";
     APP_POINT_PATH  = APP_SYMBOL_PATH + "point/";
     APP_LINE_PATH   = APP_SYMBOL_PATH + "line/";
     APP_AREA_PATH   = APP_SYMBOL_PATH + "area/";
+    APP_SYMBOL_SAVE_PATH  = APP_SYMBOL_PATH + "save/";
     APP_SAVE_POINT_PATH  = APP_SYMBOL_SAVE_PATH + "point/";
     APP_SAVE_LINE_PATH   = APP_SYMBOL_SAVE_PATH + "line/";
     APP_SAVE_AREA_PATH   = APP_SYMBOL_SAVE_PATH + "area/";
@@ -295,6 +305,7 @@ public class TDPath
   static String getSymbolSaveFile( String name ) { return APP_SYMBOL_SAVE_PATH + name; }
 
   static boolean hasTdrDir() { return (new File( PATH_TDR )).exists(); }
+  static boolean hasTdr3Dir() { return (new File( PATH_TDR3 )).exists(); }
   static boolean hasTh2Dir() { return (new File( PATH_TH2 )).exists(); }
   static boolean hasTh3Dir() { return (new File( PATH_TH3 )).exists(); }
   static boolean hasPngDir() { return (new File( PATH_PNG )).exists(); }
@@ -307,6 +318,7 @@ public class TDPath
   static String getImportFile( String name ) { return PATH_IMPORT + name; }
   static String getZipFile( String name )    { return PATH_ZIP + name; }
   static String getTdrFile( String name )    { return PATH_TDR + name; }
+  static String getTdr3File( String name )   { return PATH_TDR3 + name; }
   static String getTh2File( String name )    { return PATH_TH2 + name; }
   static String getTh3File( String name )    { return PATH_TH3 + name; }
 
@@ -327,6 +339,7 @@ public class TDPath
   static String getCsxFile( String name )    { return PATH_CSX + name; }
   static String getDumpFile( String name )   { return PATH_DUMP + name; }
   static String getTopFile( String name )    { return PATH_TOP + name; }
+  static String getTrbFile( String name )    { return PATH_TRB + name; }
   static String getTroFile( String name )    { return PATH_TRO + name; }
   static String getPngFile( String name )    { return PATH_PNG + name; }
 
@@ -350,7 +363,8 @@ public class TDPath
   static String getSurveyPlotPngFile( String survey, String name ) { return PATH_PNG + survey + "-" + name + PNG ; }
   static String getSurveyPlotCsxFile( String survey, String name ) { return PATH_CSX + survey + "-" + name + CSX ; }
 
-  static String getSurveySketchFile( String survey, String name ) { return PATH_TH3 + survey + "-" + name + TH3 ; }
+  static String getSurveySketchInFile( String survey, String name ) { return PATH_TH3 + survey + "-" + name + TH3 ; }
+  static String getSurveySketchOutFile( String survey, String name ) { return PATH_TDR3 + survey + "-" + name + TDR3 ; }
 
   private static String getFile( String directory, String name, String ext ) 
   {
@@ -363,6 +377,7 @@ public class TDPath
   static String getSurveyNoteFile( String title ) { return getFile( APP_NOTE_PATH, title, TXT ); }
   static String getTmpFileWithExt( String name ) { return getFile( APP_TMP_PATH, name, TMP ); }
   static String getTdrFileWithExt( String name ) { return getFile( PATH_TDR, name, TDR ); }
+  static String getTdr3FileWithExt( String name ) { return getFile( PATH_TDR3, name, TDR3 ); }
   static String getTh2FileWithExt( String name ) { return getFile( PATH_TH2, name, TH2 ); }
   static String getTh3FileWithExt( String name ) { return getFile( PATH_TH3, name, TH3 ); }
   static String getDxfFileWithExt( String name ) { return getFile( PATH_DXF, name, DXF ); }
@@ -394,6 +409,7 @@ public class TDPath
   static String getSurveySurFile( String survey ) { return getFile( PATH_SUR, survey, SUR ); }
   static String getSurveySvxFile( String survey ) { return getFile( PATH_SVX, survey, SVX ); }
   static String getSurveyTopFile( String survey ) { return getFile( PATH_TOP, survey, TOP ); }
+  static String getSurveyTrbFile( String survey ) { return getFile( PATH_TRB, survey, TRB ); }
   static String getSurveyTroFile( String survey ) { return getFile( PATH_TRO, survey, TRO ); }
 
   private static File[] getFiles( String dirname, final String[] ext )
@@ -480,10 +496,10 @@ public class TDPath
   static void symbolsCheckDirs()
   {
     checkDirs( APP_SYMBOL_PATH );
-    checkDirs( APP_SYMBOL_SAVE_PATH );
     checkDirs( APP_POINT_PATH );
     checkDirs( APP_LINE_PATH );
     checkDirs( APP_AREA_PATH );
+    checkDirs( APP_SYMBOL_SAVE_PATH );
     checkDirs( APP_SAVE_POINT_PATH );
     checkDirs( APP_SAVE_LINE_PATH );
     checkDirs( APP_SAVE_AREA_PATH );
@@ -522,6 +538,7 @@ public class TDPath
     t = new File( getSurFile( survey + SUR ) ); if ( t.exists() ) t.delete();
     t = new File( getTopFile( survey + TOP ) ); if ( t.exists() ) t.delete();
     t = new File( getTroFile( survey + TRO ) ); if ( t.exists() ) t.delete();
+    t = new File( getTrbFile( survey + TRB ) ); if ( t.exists() ) t.delete();
   }
 
   static void rotateBackups( String filename, int rotate ) // filename has suffix BCK_SUFFIX
@@ -616,6 +633,11 @@ public class TDPath
     if ( hasTh3Dir() ) {
       for ( Sketch3dInfo s : sketches ) {
         File t = new File( getTh3FileWithExt( survey + "-" + s.name + TH3 ) ); if ( t.exists() ) t.delete();
+      }
+    }
+    if ( hasTdr3Dir() ) {
+      for ( Sketch3dInfo s : sketches ) {
+        File t = new File( getTdr3FileWithExt( survey + "-" + s.name + TDR3 ) ); if ( t.exists() ) t.delete();
       }
     }
   }

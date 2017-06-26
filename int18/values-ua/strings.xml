@@ -84,7 +84,7 @@
 
     <string name="device_algo_failed">Алгоритм автовизначення не спрацював\nВикористовую лінійний алгоритм</string>
     <string name="device_address">Адреса %1$s</string>
-    <string name="device_busy">Пристрій зайнятий</string>
+    <!-- UNUSED string name="device_busy">Пристрій зайнятий</string -->
     <string name="device_illegal_addr">Недопустима адреса пам\'яті</string>
     <string name="device_info">Інформація про пристрій</string>
     <string name="device_model_set">Ви впевнені що хочете змінити модель пристрою</string>
@@ -153,6 +153,8 @@
     <string name="illegal_data_value">Недопустиме значенння</string>
 
     <string name="label_title">ПІДПИС</string>
+    <!-- TODO string name="photo_title">PHOTO</string -->
+    <!-- TODO string name="photo_text">Enter photo comment</string -->
     <string name="label_text">Введіть текст підпису</string>
     <!-- UNUSED string name="altitude">Alt. </string -->
     <string name="h_ellipsoid">H еліпсоїд. </string>
@@ -218,6 +220,7 @@
 
     <string name="no_bt">Нема Bluetooth</string>
     <string name="no_calib">Відсутнє калібрування</string>
+    <!-- TODO string name="no_calib_check">No calibration-check shot</string -->
     <string name="no_calibration">Калібрування не вибране</string>
     <string name="no_capture_app">Відсутній додаток для фото</string>
     <string name="no_cave3d">Cave3D не встановлений</string>
@@ -249,6 +252,7 @@
     <string name="menu_attach">З\'ЄДНАТИ</string>
     <!-- UNUSED string name="menu_attached">Connected</string -->
     <!-- UNUSED string name="menu_ready">Ready</string -->
+    <!-- TODO string name="menu_calib_check">CALIBR. CHECK</string -->
     <string name="menu_close">ЗАКРИТИ</string>
     <string name="menu_delete">Видалити</string>
     <string name="menu_detach">Від\'єднати</string>
@@ -293,6 +297,19 @@
     <string name="popup_erase_point">Стерти точки</string>
     <string name="popup_erase_line">Стерти лінії</string>
     <string name="popup_erase_area">Стерти області</string>
+
+    <!-- TODO string name="popup_select_all">Select all</string -->
+    <!-- TODO string name="popup_select_point">Select points</string -->
+    <!-- TODO string name="popup_select_line">Select lines</string -->
+    <!-- TODO string name="popup_select_area">Select areas</string -->
+    <!-- TODO string name="popup_select_shot">Select shots</string -->
+    <!-- TODO string name="popup_select_station">Select stations</string -->
+
+    <!-- TODO string name="popup_cont_none">None</string -->
+    <!-- TODO string name="popup_cont_start">Start point</string -->
+    <!-- TODO string name="popup_cont_end">End point</string -->
+    <!-- TODO string name="popup_cont_both">Both points</string -->
+    <!-- TODO string name="popup_cont_continue">Continue</string -->
 
     <string name="connected_none">Не з\'єднано</string>
     <string name="connected_already">Уже з\'єднано</string>
@@ -341,6 +358,7 @@
     <!-- UNUSED string name="converted_tdr2th2">Конвертувати бінарні файли абрисов в формат th2</string -->
     <!-- UNUSED string name="convert_tdr2th2">Перезаписати абриси в форматі th2 ?</string -->
     <string name="section_area">Площа перерізу: %1$.1f</string>
+    <!-- TODO string name="scrap_outline">Sketch outline</string -->
 
     <!-- UNUSED string name="sensor">датчик</string -->
     <string name="sensor_gravity">прискорення</string>
@@ -358,6 +376,8 @@
     <!-- UNUSED string name="shot_clino">кут</string -->
     <!-- UNUSED string name="shot_compass">азимут</string -->
     <string name="shot_delete">Видалити сегмент ?</string>
+    <!-- TODO string name="shots_delete">Delete shots ?</string -->
+    <!-- TODO string name="shot_check">Mark shot as check-shot?</string -->
     <string name="shot_from">№ ОТ</string>
     <string name="shot_info">Введіть дані замірів</string>
     <!-- UNUSED string name="shot_length">довжина</string -->
@@ -397,6 +417,10 @@
     <string name="toggle_failed">Не вдалось перемкнути DistoX</string>
     <string name="toggle_ok">Перемкнути DistoX в режим калібрування</string>
     <string name="undelete_text">Натисніть на елемент щоб відновити</string>
+    <!-- TODO string name="undelete_shot">Shots</string -->
+    <!-- TODO string name="undelete_overshoot">Overshoots</string -->
+    <!-- TODO string name="undelete_check">Checks</string -->
+    <!-- TODO string name="undelete_plot">Sketches</string -->
     <string name="delete_whole_leg">Видалити замір</string>
     <string name="visible_border">видима межа</string>
     <!-- UNUSED string name="vthreshold">верт. поріг</string -->
@@ -420,6 +444,7 @@
     <string name="stat_duplicate">Дубльовані пікети %1$d довжина: %2$.1f %3$s</string>
     <string name="stat_leg">Відрізки %1$d загальна довжина: %2$.1f %3$s</string>
     <string name="stat_length">Довжина %1$.1f %2$s</string>
+    <!-- TODO string name="stat_projlen">Plan length %1$.1f %2$s</string -->
     <string name="stat_loop">Петлі %1$d</string>
     <string name="stat_origin">Нульовий пікет: %1$s</string>
     <string name="stat_azimuth">Азимут проекції розрізу-розгортки: %1$.1f</string>
@@ -516,6 +541,7 @@
 
     <string name="popup_do_splay">Зробити замір</string>
     <string name="popup_do_leg">Зробити три заміра</string>
+    <!-- TODO string name="popup_do_gm_data">Calib. shot</string -->
 
     <!-- UNUSED string name="btn_3d">3D</string -->
     <string name="btn_import">Імпорт</string>
@@ -527,6 +553,7 @@
     <string name="symbol_mine">Шахти</string>
     <string name="symbol_paleo">Палео</string>
     <string name="symbol_speleo">Спелео</string>
+    <!-- TODO string name="symbol_extra">Speleo (2)</string -->
 
     <string name="symbol_reload">Інструменти Малювання</string>
 
@@ -543,7 +570,7 @@
     <string name="sketch_mode_ngbh">Сусідні пікети</string>
     <string name="sketch_mode_all">Всі пікети</string>
     <string name="sketch_delete">Видалити 3D модель ?</string>
-    <string name="sketch_no_split">Не точно. Зменшити бокову макс. довжину щоб уточнити.</string>
+    <!-- UNUSED string name="sketch_no_split">Не точно. Зменшити бокову макс. довжину щоб уточнити.</string -->
 
     <string name="length">Довжина [м]</string>
     <string name="azimuth">Азимут [грд]</string>
@@ -585,7 +612,9 @@
     <string name="help_help">Допомога</string>
     <!-- UNUSED string name="help_manual">Інструкція</string -->
     <string name="help_measure">Виміряти відстань</string>
+    <!-- TODO string name="help_measure_type">Measuring mode: fixed point or polyline</string -->
 
+    <!-- TODO string name="help_calib_check">Calibration-check shots</string -->
     <string name="help_close">Закрити вікно</string>
     <string name="help_coeff">Показать коэфіцієнти калібрування</string>
     <string name="help_continue">Продовжити малювати лінію</string>
@@ -682,18 +711,19 @@
     <string name="help_trash_model">Видалити 3D модель</string>
     <string name="help_head_model">Ориентуватиь 3D модель</string>
     <!-- UNUSED string name="help_erase_model">Видалити область</string -->
-    <string name="help_cut_model">Вирізати область</string>
-    <string name="help_stretch_model">Ростягнути область</string>
+    <!-- UNUSED string name="help_cut_model">Вирізати область</string -->
+    <!-- UNUSED string name="help_stretch_model">Ростягнути область</string -->
     <!-- UNUSED string name="help_extrude_model">Вирезати область</string -->
-    <string name="help_refine_center">Уточнити поверхню в центрі трикутників</string>
-    <string name="help_refine_sides">Уточнити поверхню в сторонах трикутників</string>
-    <string name="help_refine_point">Уточнити поверхню в точке</string>
-    <string name="help_refine_triangle">Уточнити поверхню вздовж довгої сторони</string>
+    <!-- UNUSED string name="help_refine_center">Уточнити поверхню в центрі трикутників</string -->
+    <!-- UNUSED string name="help_refine_sides">Уточнити поверхню в сторонах трикутників</string -->
+    <!-- UNUSED string name="help_refine_point">Уточнити поверхню в точке</string -->
+    <!-- UNUSED string name="help_refine_triangle">Уточнити поверхню вздовж довгої сторони</string -->
 
 
     <string name="title_azimut">Азимут</string>
     <string name="title_audio">Аудіо коментар</string>
     <string name="title_calib">Калібрування</string>
+    <!-- TODO string name="title_calib_check">Calibration-check shots</string -->
     <string name="title_coverage">Калібрування и розподіл даних</string>
     <string name="title_coeff">Калібрувальні коефіцієнти</string>
     <string name="title_contour">Контур</string>
@@ -725,6 +755,7 @@
     <string name="title_projection">Проекція розрізу на азимут %1$d</string>
     <string name="title_refs">Вид</string>
     <string name="title_scraps">Абриси в зйомці</string>
+    <!-- TODO string name="title_scraps_outline">Sketch outline</string -->
     <string name="title_select">Вибрати</string>
     <string name="title_shift">Зсув</string>
     <string name="title_shot_delete">Видалити відрізок?</string>

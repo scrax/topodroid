@@ -72,6 +72,7 @@ public class ShotDialog extends MyDialog
   
   private MyCheckBox mRBdup;
   private MyCheckBox mRBsurf;
+  private MyCheckBox mRBcmtd;
   private MyCheckBox mCBlegPrev;
   private MyCheckBox mCBlegNext;
   private MyCheckBox mCBallSplay;
@@ -79,6 +80,9 @@ public class ShotDialog extends MyDialog
   private MyCheckBox mCBrenumber;
   // private MyCheckBox mCBhighlight;
 
+  HorizontalListView mListView;
+  HorizontalButtonView mButtonView;
+  private Button[] mButton;
 
   private CheckBox mRBleft;
   private CheckBox mRBvert;
@@ -223,6 +227,7 @@ public class ShotDialog extends MyDialog
     // if ( shot_flag == DBlock.BLOCK_SURVEY ) { mRBreg.setChecked( true ); }
     if ( shot_flag == DBlock.BLOCK_DUPLICATE ) { mRBdup.setChecked( true ); }
     else if ( shot_flag == DBlock.BLOCK_SURFACE ) { mRBsurf.setChecked( true ); }
+    else if ( shot_flag == DBlock.BLOCK_COMMENTED ) { mRBcmtd.setChecked( true ); }
     // else if ( shot_flag == DBlock.BLOCK_BACKSHOT ) { mRBback.setChecked( true ); }
 
     mCBlegPrev.setChecked( shot_leg );
@@ -322,10 +327,11 @@ public class ShotDialog extends MyDialog
       // mETup.setInputType( InputType.TYPE_CLASS_NUMBER );
       // mETdown.setInputType( InputType.TYPE_CLASS_NUMBER );
     }
+
+    int size = TopoDroidApp.getScaledSize( mContext );
     
     LinearLayout layout4 = (LinearLayout) findViewById( R.id.layout4 );
     // LinearLayout layout9 = (LinearLayout) findViewById( R.id.layout9 );
-    int size = TopoDroidApp.getScaledSize( mContext );
     layout4.setMinimumHeight( size + 20 );
     // layout9.setMinimumHeight( size + 20 );
 
@@ -335,6 +341,7 @@ public class ShotDialog extends MyDialog
 
     mRBdup       = new MyCheckBox( mContext, size, R.drawable.iz_dup_ok, R.drawable.iz_dup_no );
     mRBsurf      = new MyCheckBox( mContext, size, R.drawable.iz_surface_ok, R.drawable.iz_surface_no );
+    mRBcmtd      = new MyCheckBox( mContext, size, R.drawable.iz_comment_ok, R.drawable.iz_comment_no );
     mCBlegPrev   = new MyCheckBox( mContext, size, R.drawable.iz_leg2_ok, R.drawable.iz_leg2_no );
     mCBlegNext   = new MyCheckBox( mContext, size, R.drawable.iz_legnext_ok, R.drawable.iz_legnext_no );
     mCBallSplay  = new MyCheckBox( mContext, size, R.drawable.iz_splays_ok, R.drawable.iz_splays_no );
@@ -346,39 +353,28 @@ public class ShotDialog extends MyDialog
     mCBrenumber  = new MyCheckBox( mContext, size, R.drawable.iz_numbers_ok, R.drawable.iz_numbers_no );
     // mCBhighlight = new MyCheckBox( mContext, size, R.drawable.iz_highlight_ok, R.drawable.iz_highlight_no );
 
-    layout4.addView( mRBdup, lp );
-    layout4.addView( mRBsurf, lp );
-    layout4.addView( mCBlegPrev, lp );
-    layout4.addView( mCBlegNext, lp );
-    layout4.addView( mCBrenumber );
-    layout4.addView( mCBallSplay, lp );
-    layout4.addView( mCBxSplay, lp );
-    // layout4.addView( mCBhighlight );
+    mButton = new Button[8];
+
+    mButton[0] = mRBdup;
+    mButton[1] = mRBsurf;
+    mButton[2] = mRBcmtd;
+    mButton[3] = mCBlegPrev;
+    mButton[4] = mCBlegNext;
+    mButton[5] = mCBrenumber;
+    mButton[6] = mCBallSplay;
+    mButton[7] = mCBxSplay;
+
+    mListView = (HorizontalListView) findViewById(R.id.listview);
+    /* size = */ TopoDroidApp.setListViewHeight( mContext, mListView );
+    mButtonView = new HorizontalButtonView( mButton );
+    mListView.setAdapter( mButtonView.mAdapter );
+
     layout4.invalidate();
 
     mCBlegPrev.setOnClickListener( this );
     mCBlegNext.setOnClickListener( this );
     mCBallSplay.setOnClickListener( this );
     mCBxSplay.setOnClickListener( this );
-
-    // mBTphoto  = new MyCheckBox( mContext, size, R.drawable.iz_camera, R.drawable.iz_camera ); 
-    // mBTsensor = new MyCheckBox( mContext, size, R.drawable.iz_sensor, R.drawable.iz_sensor ); 
-    // mBTshot   = new MyCheckBox( mContext, size, R.drawable.iz_add_leg, R.drawable.iz_add_leg );
-    // mBTsurvey = new MyCheckBox( mContext, size, R.drawable.iz_split, R.drawable.iz_split );
-    // mBTdelete = new MyCheckBox( mContext, size, R.drawable.iz_delete, R.drawable.iz_delete );
-
-    // layout9.addView( mBTphoto,  lp );
-    // layout9.addView( mBTsensor, lp );
-    // layout9.addView( mBTshot,   lp );
-    // layout9.addView( mBTsurvey, lp );
-    // layout9.addView( mBTdelete, lp );
-    // layout9.invalidate();
-
-    // mBTphoto.setOnClickListener( this );
-    // mBTsensor.setOnClickListener( this );
-    // mBTshot.setOnClickListener( this );
-    // mBTsurvey.setOnClickListener( this );
-    // mBTdelete.setOnClickListener( this );
 
     mButtonReverse = (Button)  findViewById(R.id.shot_reverse );
 
@@ -475,6 +471,7 @@ public class ShotDialog extends MyDialog
     shot_flag = DBlock.BLOCK_SURVEY;
     if ( mRBdup.isChecked() )       { shot_flag = DBlock.BLOCK_DUPLICATE; }
     else if ( mRBsurf.isChecked() ) { shot_flag = DBlock.BLOCK_SURFACE; }
+    else if ( mRBcmtd.isChecked() ) { shot_flag = DBlock.BLOCK_COMMENTED; }
     // else if ( mRBback.isChecked() ) { shot_flag = DBlock.BLOCK_BACKSHOT; }
     // else                            { shot_flag = DBlock.BLOCK_SURVEY; }
 
@@ -611,11 +608,19 @@ public class ShotDialog extends MyDialog
       mRBdup.toggleState();
       if ( mRBdup.isChecked() ) {
         mRBsurf.setState( false );
+        mRBcmtd.setState( false );
       }
     } else if ( b == mRBsurf ) {
       mRBsurf.toggleState();
       if ( mRBsurf.isChecked() ) {
         mRBdup.setState( false );
+        mRBcmtd.setState( false );
+      }
+    } else if ( b == mRBcmtd ) {
+      mRBcmtd.toggleState();
+      if ( mRBcmtd.isChecked() ) {
+        mRBdup.setState( false );
+        mRBsurf.setState( false );
       }
 
     // } else if ( b == mBTphoto ) {

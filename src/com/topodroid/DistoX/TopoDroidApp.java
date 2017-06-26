@@ -152,7 +152,11 @@ public class TopoDroidApp extends Application
   void notifyDisconnected()
   {
     if ( mListerSet.size() > 0 ) {
-      new ReconnectTask( mDataDownloader ).execute();
+      try {
+        new ReconnectTask( mDataDownloader ).execute();
+      } catch ( RuntimeException e ) {
+        TDLog.Error("reconnect error: " + e.getMessage() );
+      }
     }
   }
 
@@ -181,9 +185,10 @@ public class TopoDroidApp extends Application
   private SharedPreferences mPrefs;
   // FIXME INSTALL_SYMBOL boolean askSymbolUpdate = false; // by default do not ask
 
-  static final int STATUS_NORMAL  = 0;   // item (shot, plot, fixed) status
-  static final int STATUS_DELETED = 1;  
+  static final int STATUS_NORMAL    = 0;   // item (shot, plot, fixed) status
+  static final int STATUS_DELETED   = 1;  
   static final int STATUS_OVERSHOOT = 2;  
+  static final int STATUS_CHECK     = 3;  
 
   String[] DistoXConnectionError;
   BluetoothAdapter mBTAdapter = null;     // BT connection
@@ -886,8 +891,8 @@ public class TopoDroidApp extends Application
       { // rename sketch files: th3
         List< Sketch3dInfo > sketches = mData.selectAllSketches( sid );
         for ( Sketch3dInfo s : sketches ) {
-          old = new File( TDPath.getSurveySketchFile( mySurvey, s.name ) );
-          nev = new File( TDPath.getSurveySketchFile( name, s.name ) );
+          old = new File( TDPath.getSurveySketchOutFile( mySurvey, s.name ) );
+          nev = new File( TDPath.getSurveySketchOutFile( name, s.name ) );
           if ( old.exists() && ! nev.exists() ) old.renameTo( nev );
         }
       }
@@ -1355,6 +1360,17 @@ public class TopoDroidApp extends Application
     return TDExporter.exportSurveyAsSur( mSID, mData, info, filename );
   }
 
+  public String exportSurveyAsTrb()
+  {
+    SurveyInfo info = mData.selectSurveyInfo( mSID );
+    if ( info == null ) {
+      TDLog.Error("Export TRB null survey info. sid " + mSID );
+      return null;
+    }
+    String filename = TDPath.getSurveyTrbFile( mySurvey );
+    return TDExporter.exportSurveyAsTrb( mSID, mData, info, filename );
+  }
+
   public String exportSurveyAsTro()
   {
     SurveyInfo info = mData.selectSurveyInfo( mSID );
@@ -1527,20 +1543,25 @@ public class TopoDroidApp extends Application
     clearSymbolsDir( TDPath.APP_AREA_PATH );
   }  
 
-  void reloadSymbols( boolean clear, boolean speleo, boolean mine, boolean geo, boolean archeo, boolean paleo, boolean bio )
+  void reloadSymbols( boolean clear, 
+                      boolean speleo, boolean extra, boolean mine, boolean geo, boolean archeo, boolean paleo, boolean bio )
   {
     // Log.v("DistoX", "Reload symbols " + speleo + " " + mine + " " + geo + " " + archeo + " " + paleo + " " + bio + " clear " + clear );
+    if ( extra ) speleo = true; // extra implies speleo
+
     if ( clear ) {
-      if (speleo || mine || geo || archeo || paleo || bio ) {
+      if (speleo || mine || geo || archeo || paleo || bio ) { 
         clearSymbols();
       }
     }
     if ( speleo ) installSymbols( R.raw.symbols, true );
+    if ( extra  ) installSymbols( R.raw.symbols_extra,  true );
     if ( mine   ) installSymbols( R.raw.symbols_mine,   true );
     if ( geo    ) installSymbols( R.raw.symbols_geo,    true );
     if ( archeo ) installSymbols( R.raw.symbols_archeo, true );
     if ( paleo  ) installSymbols( R.raw.symbols_paleo,  true );
     if ( bio    ) installSymbols( R.raw.symbols_bio,    true );
+
     mDData.setValue( "symbol_version", SYMBOL_VERSION );
     BrushManager.reloadAllLibraries( getResources() );
     // BrushManager.makePaths( getResources() );
@@ -1567,7 +1588,9 @@ public class TopoDroidApp extends Application
           String pathname = TDPath.getSymbolFile( filepath );
           File file = new File( pathname );
           if ( overwrite || ! file.exists() ) {
+            // APP_SAVE SYMBOLS
             if ( file.exists() ) file.renameTo( new File( TDPath.getSymbolSaveFile( filepath ) ) );
+
             TDPath.checkPath( pathname );
             FileOutputStream fout = new FileOutputStream( pathname );
             int c;
@@ -1806,7 +1829,7 @@ public class TopoDroidApp extends Application
           // String name = from + "-" + to;
           mData.updateShotName( id, mSID, from, to, true );
           // mData.updateShotExtend( id, mSID, extend0, true );
-          mData.updateShotExtend( id, mSID, DBlock.EXTEND_IGNORE, true );
+          // mData.updateShotExtend( id, mSID, DBlock.EXTEND_IGNORE, true ); // FIXME WHY ???
           // FIXME updateDisplay( );
         } else {
           if ( at >= 0L ) {
@@ -1818,7 +1841,7 @@ public class TopoDroidApp extends Application
           // String name = from + "-" + to;
           mData.updateShotName( id, mSID, from, to, true );
           // mData.updateShotExtend( id, mSID, extend0, true ); 
-          mData.updateShotExtend( id, mSID, DBlock.EXTEND_IGNORE, true ); 
+          // mData.updateShotExtend( id, mSID, DBlock.EXTEND_IGNORE, true );  // FIXME WHY ???
           // FIXME updateDisplay( );
 
           addManualSplays( at, splay_station, left, right, up, down, bearing, horizontal );
